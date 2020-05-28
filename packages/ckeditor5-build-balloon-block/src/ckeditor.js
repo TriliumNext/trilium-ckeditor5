@@ -6,7 +6,6 @@
 // The editor creator to use.
 import BalloonEditorBase from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
@@ -45,20 +44,24 @@ import Mention from '@ckeditor/ckeditor5-mention/src/mention';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import SelectAll from '@ckeditor/ckeditor5-select-all/src/selectall';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-import MentionCustomization from './mention_customization.js'
+import MentionCustomization from './mention_customization.js';
 import UploadimagePlugin from './uploadimage';
 import InternalLinkPlugin from './internallink';
 import MarkdownImportPlugin from './markdownimport';
 import CuttonotePlugin from './cuttonote';
 import IncludeNote from './includenote';
 import ReferenceLink from './referencelink';
+import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard.js';
+import Enter from '@ckeditor/ckeditor5-enter/src/enter.js';
+import ShiftEnter from '@ckeditor/ckeditor5-enter/src/shiftenter.js';
+import Typing from '@ckeditor/ckeditor5-typing/src/typing.js';
+import Undo from '@ckeditor/ckeditor5-undo/src/undo.js';
 
 export default class BalloonEditor extends BalloonEditorBase {}
 
 // Plugins to include in the build.
 BalloonEditor.builtinPlugins = [
-	Essentials,
+	Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo, // essentials package expanded to allow selectively disable Enter and ShiftEnter
 	UploadAdapter,
 	Autoformat,
 	Bold,

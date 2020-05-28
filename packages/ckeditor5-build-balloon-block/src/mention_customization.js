@@ -1,5 +1,6 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import Command from '@ckeditor/ckeditor5-core/src/command';
+import toMap from '@ckeditor/ckeditor5-utils/src/tomap.js';
 
 export default class MentionCustomization extends Plugin {
 	afterInit() {
@@ -18,7 +19,14 @@ class CustomMentionCommand extends Command {
 
 		const range = options.range || selection.getFirstRange();
 
-		if (mention.id === 'create') {
+		if (mention.id.startsWith('#') || mention.id.startsWith('~')) {
+			model.change(writer => {
+				// Replace a range with the text with a mention.
+				model.insertContent( writer.createText( mention.id, {} ), range );
+				model.insertContent( writer.createText( ' ', {} ), range.start.getShiftedBy( mention.id.length ) );
+			});
+		}
+		else if (mention.id === 'create') {
 			const editorEl = this.editor.editing.view.getDomRoot();
 			const component = glob.getComponentByEl(editorEl);
 
@@ -27,18 +35,18 @@ class CustomMentionCommand extends Command {
 			});
 		}
 		else {
-			this.insertReference(range, options.mention.path);
+			this.insertReference(range, options.mention.notePath);
 		}
 	}
 
-	insertReference(range, path) {
+	insertReference(range, notePath) {
 		const {model} = this.editor;
 
 		model.change(writer => {
 			// override the selection or at least the beginning @ character
 			model.insertContent(writer.createText(''), range);
 
-			this.editor.execute('referenceLink', {notePath: path});
+			this.editor.execute('referenceLink', {notePath: notePath});
 		});
 	}
 }
