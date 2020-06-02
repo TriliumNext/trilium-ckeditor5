@@ -1,5 +1,5 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import {toWidget, viewToModelPositionOutsideModelElement} from '@ckeditor/ckeditor5-widget/src/utils';
+import { toWidget, viewToModelPositionOutsideModelElement } from '@ckeditor/ckeditor5-widget/src/utils';
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
 import Command from '@ckeditor/ckeditor5-core/src/command';
 
@@ -96,11 +96,13 @@ class ReferenceLinkEditing extends Plugin {
 			view: ( modelItem, viewWriter ) => {
 				const notePath = modelItem.getAttribute( 'notePath' );
 
-				const referenceLinkView = viewWriter.createUIElement('a', {
+				const referenceLinkView = viewWriter.createContainerElement( 'a', {
 					href: '#' + notePath,
 					class: 'reference-link',
-					'data-note-path': notePath,
-				}, function( domDocument ) {
+					'data-note-path': notePath
+				} );
+
+				const noteTitleView = viewWriter.createUIElement('span', {}, function( domDocument ) {
 					const domElement = this.toDomElement( domDocument );
 					const noteId = notePath.split('/').pop();
 
@@ -111,6 +113,8 @@ class ReferenceLinkEditing extends Plugin {
 
 					return domElement;
 				});
+
+				viewWriter.insert( viewWriter.createPositionAt( referenceLinkView, 0 ), noteTitleView );
 
 				// Enable widget handling on a reference element inside the editing view.
 				return toWidget( referenceLinkView, viewWriter );

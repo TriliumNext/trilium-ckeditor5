@@ -44,7 +44,7 @@ class CustomMentionCommand extends Command {
 
 		model.change(writer => {
 			// override the selection or at least the beginning @ character
-			model.insertContent(writer.createText(''), range);
+			model.insertContent(writer.createText('', {}), range);
 
 			this.editor.execute('referenceLink', {notePath: notePath});
 		});
