@@ -109,8 +109,12 @@ export default class MentionUI extends Plugin {
 
 		// Key listener that handles navigation in mention view.
 		editor.editing.view.document.on( 'keydown', ( evt, data ) => {
-			if ( (this.isHandledKey( data.keyCode ) )
-				&& this._isUIVisible ) {
+			if ( isHandledKey( data.keyCode ) && this._isUIVisible ) {
+				// do it before preventing default since space should be inserted
+				if (data.keyCode == keyCodes.space) {
+					this._hideUIAndRemoveMarker();
+					return;
+				}
 
 				data.preventDefault();
 				evt.stop(); // Required for Enter key overriding.
@@ -125,14 +129,6 @@ export default class MentionUI extends Plugin {
 
 				if ( data.keyCode == keyCodes.enter || data.keyCode == keyCodes.tab ) {
 					this._mentionsView.executeSelected();
-				}
-
-				if (this.isAttributeMention() && data.keyCode === 61) {
-					this._hideUIAndRemoveMarker();
-				}
-
-				if (this.isAttributeMention() && data.keyCode == keyCodes.space) {
-					this._hideUIAndRemoveMarker();
 				}
 
 				if ( data.keyCode == keyCodes.esc ) {
@@ -178,37 +174,14 @@ export default class MentionUI extends Plugin {
 			const feedCallback = typeof feed == 'function' ? feed.bind( this.editor ) : createFeedCallback( feed );
 			const watcher = this._setupTextWatcherForFeed( marker, minimumCharacters );
 			const itemRenderer = mentionDescription.itemRenderer;
-			const attributeMention = mentionDescription.attributeMention;
 
-			const definition = { watcher, marker, feedCallback, itemRenderer, attributeMention };
+			const definition = { watcher, marker, feedCallback, itemRenderer };
 
 			this._mentionsConfigurations.set( marker, definition );
 		}
 
 		this.on( 'requestFeed:response', ( evt, data ) => this._handleFeedResponse( data ) );
 		this.on( 'requestFeed:error', () => this._hideUIAndRemoveMarker() );
-	}
-
-	isAttributeMention() {
-		const config = this._mentionsConfigurations.get(this.currentMarker);
-
-		return !!(config && config.attributeMention);
-	}
-
-	// Checks if a given key code is handled by the mention UI.
-	//
-	// @param {Number}
-	// @returns {Boolean}
-	isHandledKey( keyCode ) {
-		if (this.isAttributeMention() && keyCode === 61) {
-			return true;
-		}
-
-		if (!this.isAttributeMention() && keyCode === keyCodes.space) {
-			return false;
-		}
-
-		return handledKeyCodes.includes( keyCode );
 	}
 
 	/**
@@ -248,8 +221,6 @@ export default class MentionUI extends Plugin {
 
 		mentionsView.items.bindTo( this._items ).using( data => {
 			const { item, marker } = data;
-
-			this.currentMarker = marker;
 
 			const listItemView = new MentionListItemView( locale );
 
@@ -730,6 +701,14 @@ function createFeedCallback( feedItems ) {
 
 		return filteredItems;
 	};
+}
+
+// Checks if a given key code is handled by the mention UI.
+//
+// @param {Number}
+// @returns {Boolean}
+function isHandledKey( keyCode ) {
+	return handledKeyCodes.includes( keyCode );
 }
 
 // Checks if position in inside or right after a text with a mention.
