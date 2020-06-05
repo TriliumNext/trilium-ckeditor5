@@ -998,6 +998,11 @@
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-inspector/-/ckeditor5-inspector-2.0.0.tgz#378ef4ca5dbdf652b04b50ca9455b3f5b00aa899"
   integrity sha512-o446mgCwat0NLXZdE7w+h/Vu6Slh2e4I050Y3jN/ZF6qmh/MKlwknpUF1jBYYfVWCqlcn9JjpK1f9CnBIyB/KA==
 
+"@ckeditor/ckeditor5-inspector@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-inspector/-/ckeditor5-inspector-2.1.0.tgz#278a97a49b0fea35e8c76c9d8032f25c9b4372b7"
+  integrity sha512-2F6AnlT4Gk9TFXs/328vJ6DTOwlvYNhvCaKQWAjnLV8rpfYLcVtfGBtr791gSfzoB82VJF4/Dd0LeeY6buGEhA==
+
 "@ckeditor/ckeditor5-operations-compressor@^19.0.2":
   version "19.0.2"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-operations-compressor/-/ckeditor5-operations-compressor-19.0.2.tgz#452b23ce97e3a679b9b6f108156e40136b114d26"
