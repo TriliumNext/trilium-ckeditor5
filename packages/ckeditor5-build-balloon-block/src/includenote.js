@@ -157,7 +157,9 @@ class InsertIncludeNoteCommand extends Command {
  */
 function preventCKEditorHandling( domElement, editor ) {
 	// Prevent the editor from listening on below events in order to stop rendering selection.
-	domElement.addEventListener( 'click', stopEventPropagationAndHackRendererFocus, { capture: true } );
+
+	// commenting out click events to allow link click handler to still work
+	//domElement.addEventListener( 'click', stopEventPropagationAndHackRendererFocus, { capture: true } );
 	domElement.addEventListener( 'mousedown', stopEventPropagationAndHackRendererFocus, { capture: true } );
 	domElement.addEventListener( 'focus', stopEventPropagationAndHackRendererFocus, { capture: true } );
 
