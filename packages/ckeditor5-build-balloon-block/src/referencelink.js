@@ -97,7 +97,7 @@ class ReferenceLinkEditing extends Plugin {
 				const notePath = modelItem.getAttribute( 'notePath' );
 
 				const referenceLinkView = viewWriter.createContainerElement( 'a', {
-					href: '#' + notePath,
+					href: 'javascript:',
 					class: 'reference-link',
 					'data-note-path': notePath
 				} );

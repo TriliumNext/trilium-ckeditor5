@@ -63,7 +63,7 @@ class IncludeNoteEditing extends Plugin {
 			// Behaves like a self-contained object (e.g. an image).
 			isObject: true,
 
-			allowAttributes: ['noteId', 'boxSize'],
+			allowAttributes: [ 'noteId', 'boxSize' ],
 
 			// Allow in places where other blocks are allowed (e.g. directly in the root).
 			allowWhere: '$block'
@@ -78,8 +78,8 @@ class IncludeNoteEditing extends Plugin {
 		conversion.for( 'upcast' ).elementToElement( {
 			model: ( viewElement, modelWriter ) => {
 				return modelWriter.createElement( 'includeNote', {
-					noteId: viewElement.getAttribute('data-note-id'),
-					boxSize: viewElement.getAttribute('data-box-size'),
+					noteId: viewElement.getAttribute( 'data-note-id' ),
+					boxSize: viewElement.getAttribute( 'data-box-size' ),
 				} );
 			},
 			view: {
@@ -91,19 +91,19 @@ class IncludeNoteEditing extends Plugin {
 			model: 'includeNote',
 			view: ( modelElement, viewWriter ) => {
 				// it would make sense here to downcast to <iframe>, with this even HTML export can support note inclusion
-				return viewWriter.createContainerElement('section', {
+				return viewWriter.createContainerElement( 'section', {
 					class: 'include-note',
-					'data-note-id': modelElement.getAttribute('noteId'),
-					'data-box-size': modelElement.getAttribute('boxSize'),
-				});
+					'data-note-id': modelElement.getAttribute( 'noteId' ),
+					'data-box-size': modelElement.getAttribute( 'boxSize' ),
+				} );
 			}
 		} );
 		conversion.for( 'editingDowncast' ).elementToElement( {
 			model: 'includeNote',
 			view: ( modelElement, viewWriter ) => {
 
-				const noteId = modelElement.getAttribute('noteId');
-				const boxSize = modelElement.getAttribute('boxSize');
+				const noteId = modelElement.getAttribute( 'noteId' );
+				const boxSize = modelElement.getAttribute( 'boxSize' );
 
 				const section = viewWriter.createContainerElement( 'section', {
 					class: 'include-note box-size-' + boxSize,
@@ -117,9 +117,11 @@ class IncludeNoteEditing extends Plugin {
 					const domElement = this.toDomElement( domDocument );
 
 					const editorEl = editor.editing.view.getDomRoot();
-					const component = glob.getComponentByEl(editorEl);
+					const component = glob.getComponentByEl( editorEl );
 
-					component.loadIncludedNote(noteId, $(domElement));
+					component.loadIncludedNote( noteId, $( domElement ) );
+
+					preventCKEditorHandling( domElement, editor );
 
 					return domElement;
 				} );
@@ -146,5 +148,25 @@ class InsertIncludeNoteCommand extends Command {
 		const allowedIn = model.schema.findAllowedParent( selection.getFirstPosition(), 'includeNote' );
 
 		this.isEnabled = allowedIn !== null;
+	}
+}
+
+/**
+ * Hack coming from https://github.com/ckeditor/ckeditor5/issues/4465
+ * Source issue: https://github.com/zadam/trilium/issues/1117
+ */
+function preventCKEditorHandling( domElement, editor ) {
+	// Prevent the editor from listening on below events in order to stop rendering selection.
+	domElement.addEventListener( 'click', stopEventPropagationAndHackRendererFocus, { capture: true } );
+	domElement.addEventListener( 'mousedown', stopEventPropagationAndHackRendererFocus, { capture: true } );
+	domElement.addEventListener( 'focus', stopEventPropagationAndHackRendererFocus, { capture: true } );
+
+	// Prevents TAB handling or other editor keys listeners which might be executed on editors selection.
+	domElement.addEventListener( 'keydown', stopEventPropagationAndHackRendererFocus, { capture: true } );
+
+	function stopEventPropagationAndHackRendererFocus( evt ) {
+		evt.stopPropagation();
+		// This prevents rendering changed view selection thus preventing to changing DOM selection while inside a widget.
+		editor.editing.view._renderer.isFocused = false;
 	}
 }

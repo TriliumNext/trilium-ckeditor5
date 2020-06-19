@@ -373,7 +373,8 @@ export default class MentionUI extends Plugin {
 
 		const watcher = new TextWatcher( editor.model, createTestCallback( marker, minimumCharacters ) );
 
-		watcher.on( 'matched', ( evt, data ) => {
+		// use "matched:data" instead of just "matched" so that mention is not triggered on mere click
+		watcher.on( 'matched:data', ( evt, data ) => {
 			const selection = editor.model.document.selection;
 			const focus = selection.focus;
 
