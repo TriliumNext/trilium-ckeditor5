@@ -24,6 +24,7 @@ import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import Link from '@ckeditor/ckeditor5-link/src/link';
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
@@ -81,6 +82,7 @@ BalloonEditor.builtinPlugins = [
 	ImageUpload,
 	ImageResize,
 	Link,
+	AutoLink,
 	List,
 	TodoList,
 	Paragraph,
@@ -131,11 +133,38 @@ BalloonEditor.defaultConfig = {
 		]
 	},
 	image: {
+		styles: [
+			'alignLeft',
+			'alignCenter',
+			'alignRight',
+			'full', // full and side are for BC since the old images have been created with these styles
+			'side'
+		],
+		resizeOptions: [
+			{
+				name: 'imageResize:original',
+				value: null,
+				icon: 'original'
+			},
+			{
+				name: 'imageResize:25',
+				value: '25',
+				icon: 'small'
+			},
+			{
+				name: 'imageResize:50',
+				value: '50',
+				icon: 'medium'
+			}
+		],
 		toolbar: [
-			'imageStyle:full',
-			'imageStyle:side',
+			'imageStyle:alignLeft',
+			'imageStyle:alignCenter',
+			'imageStyle:alignRight',
 			'|',
-			'imageTextAlternative'
+			'imageResize:25',
+			'imageResize:50',
+			'imageResize:original'
 		]
 	},
 	heading: {
