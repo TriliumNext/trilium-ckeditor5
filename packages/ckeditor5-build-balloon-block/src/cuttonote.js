@@ -42,9 +42,13 @@ export default class CutToNotePlugin extends Plugin {
 		return this.htmlDataProcessor.toData(content);
 	}
 
-	removeSelection() {
+	async removeSelection() {
 		const model = this.editor.model;
 
 		model.deleteContent(model.document.selection);
+
+		const component = glob.getComponentByEl(editorEl);
+
+		await component.triggerCommand('saveNoteDetailNow');
 	}
 }
