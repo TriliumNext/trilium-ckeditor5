@@ -34,7 +34,6 @@ const handledKeyCodes = [
 	keyCodes.arrowdown,
 	keyCodes.enter,
 	keyCodes.tab,
-	keyCodes.space,
 	keyCodes.esc
 ];
 
