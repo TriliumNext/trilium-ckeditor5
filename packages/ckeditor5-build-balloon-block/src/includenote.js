@@ -76,7 +76,8 @@ class IncludeNoteEditing extends Plugin {
 
 		// <includeNote> converters
 		conversion.for( 'upcast' ).elementToElement( {
-			model: ( viewElement, modelWriter ) => {
+			model: ( viewElement, { writer: modelWriter } ) => {
+
 				return modelWriter.createElement( 'includeNote', {
 					noteId: viewElement.getAttribute( 'data-note-id' ),
 					boxSize: viewElement.getAttribute( 'data-box-size' ),
@@ -89,7 +90,7 @@ class IncludeNoteEditing extends Plugin {
 		} );
 		conversion.for( 'dataDowncast' ).elementToElement( {
 			model: 'includeNote',
-			view: ( modelElement, viewWriter ) => {
+			view: ( modelElement, { writer: viewWriter } ) => {
 				// it would make sense here to downcast to <iframe>, with this even HTML export can support note inclusion
 				return viewWriter.createContainerElement( 'section', {
 					class: 'include-note',
@@ -100,7 +101,7 @@ class IncludeNoteEditing extends Plugin {
 		} );
 		conversion.for( 'editingDowncast' ).elementToElement( {
 			model: 'includeNote',
-			view: ( modelElement, viewWriter ) => {
+			view: ( modelElement, { writer: viewWriter } ) => {
 
 				const noteId = modelElement.getAttribute( 'noteId' );
 				const boxSize = modelElement.getAttribute( 'boxSize' );
