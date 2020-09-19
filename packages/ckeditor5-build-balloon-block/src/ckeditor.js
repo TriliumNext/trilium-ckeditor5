@@ -46,6 +46,12 @@ import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import SelectAll from '@ckeditor/ckeditor5-select-all/src/selectall';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
+import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard.js';
+import Enter from '@ckeditor/ckeditor5-enter/src/enter.js';
+import ShiftEnter from '@ckeditor/ckeditor5-enter/src/shiftenter.js';
+import Typing from '@ckeditor/ckeditor5-typing/src/typing.js';
+import Undo from '@ckeditor/ckeditor5-undo/src/undo.js';
+import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
 import MentionCustomization from './mention_customization.js';
 import UploadimagePlugin from './uploadimage';
 import InternalLinkPlugin from './internallink';
@@ -53,12 +59,8 @@ import MarkdownImportPlugin from './markdownimport';
 import CuttonotePlugin from './cuttonote';
 import IncludeNote from './includenote';
 import ReferenceLink from './referencelink';
-import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard.js';
-import Enter from '@ckeditor/ckeditor5-enter/src/enter.js';
-import ShiftEnter from '@ckeditor/ckeditor5-enter/src/shiftenter.js';
-import Typing from '@ckeditor/ckeditor5-typing/src/typing.js';
-import Undo from '@ckeditor/ckeditor5-undo/src/undo.js';
 import indentBlockShortcutPlugin from './indent_block_shortcut.js';
+import removeFormatLinksPlugin from './remove_format_links.js';
 
 export default class BalloonEditor extends BalloonEditorBase {}
 
@@ -108,11 +110,13 @@ BalloonEditor.builtinPlugins = [
 	CodeBlock,
 	SelectAll,
 	HorizontalLine,
+	RemoveFormat,
 	Mention,
 	MentionCustomization,
 	IncludeNote,
 	ReferenceLink,
-	indentBlockShortcutPlugin
+	indentBlockShortcutPlugin,
+	removeFormatLinksPlugin
 ];
 
 // Editor configuration.
@@ -130,6 +134,7 @@ BalloonEditor.defaultConfig = {
 			'fontBackgroundColor',
 			'code',
 			'link',
+			'removeFormat',
 			'internallink',
 			'cuttonote'
 		]
