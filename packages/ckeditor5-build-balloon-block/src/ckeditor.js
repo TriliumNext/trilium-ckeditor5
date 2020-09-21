@@ -61,6 +61,7 @@ import IncludeNote from './includenote';
 import ReferenceLink from './referencelink';
 import indentBlockShortcutPlugin from './indent_block_shortcut.js';
 import removeFormatLinksPlugin from './remove_format_links.js';
+import Mathematics from 'ckeditor5-math/src/math';
 
 export default class BalloonEditor extends BalloonEditorBase {}
 
@@ -116,7 +117,8 @@ BalloonEditor.builtinPlugins = [
 	IncludeNote,
 	ReferenceLink,
 	indentBlockShortcutPlugin,
-	removeFormatLinksPlugin
+	removeFormatLinksPlugin,
+	Mathematics
 ];
 
 // Editor configuration.
@@ -190,7 +192,7 @@ BalloonEditor.defaultConfig = {
 		'|',
 		'bulletedList', 'numberedList', 'todoList',
 		'|',
-		'blockQuote', 'codeBlock', 'insertTable', 'includeNote',
+		'blockQuote', 'codeBlock', 'insertTable', 'includeNote', 'math',
 		'|',
 		'outdent', 'indent', 'horizontalLine',
 		'|',
