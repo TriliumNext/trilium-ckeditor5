@@ -26,11 +26,11 @@ class CustomMentionCommand extends Command {
 				model.insertContent( writer.createText( ' ', {} ), range.start.getShiftedBy( mention.id.length ) );
 			});
 		}
-		else if (mention.id === 'create') {
+		else if (mention.action === 'create-note') {
 			const editorEl = this.editor.editing.view.getDomRoot();
 			const component = glob.getComponentByEl(editorEl);
 
-			component.createNoteForReferenceLink(mention.title).then(notePath => {
+			component.createNoteForReferenceLink(mention.noteTitle).then(notePath => {
 				this.insertReference(range, notePath);
 			});
 		}
