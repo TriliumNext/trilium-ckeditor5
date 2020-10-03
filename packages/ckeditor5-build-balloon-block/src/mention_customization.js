@@ -23,7 +23,6 @@ class CustomMentionCommand extends Command {
 			model.change(writer => {
 				// Replace a range with the text with a mention.
 				model.insertContent( writer.createText( mention.id, {} ), range );
-				model.insertContent( writer.createText( ' ', {} ), range.start.getShiftedBy( mention.id.length ) );
 			});
 		}
 		else if (mention.action === 'create-note') {
