@@ -5,7 +5,9 @@ export default function indentBlockShortcutPlugin(editor) {
 	editor.keystrokes.set( 'Tab', ( data, cancel ) => {
 		const command = editor.commands.get( 'indentBlock' );
 
-		if ( command.isEnabled ) {
+		console.log("selection", editor.model.document.selection.getFirstPosition());
+
+		if ( command.isEnabled && !isInTable() ) {
 			command.execute();
 			cancel();
 		}
@@ -14,9 +16,24 @@ export default function indentBlockShortcutPlugin(editor) {
 	editor.keystrokes.set( 'Shift+Tab', ( data, cancel ) => {
 		const command = editor.commands.get( 'outdentBlock' );
 
-		if ( command.isEnabled ) {
+		if ( command.isEnabled && !isInTable() ) {
 			command.execute();
 			cancel();
 		}
 	} );
+
+	// in table TAB should switch cells
+	function isInTable() {
+		let el = editor.model.document.selection.getFirstPosition();
+
+		while (el) {
+			if (el.name === 'tableCell') {
+				return true;
+			}
+
+			el = el.parent;
+		}
+
+		return false;
+	}
 }
