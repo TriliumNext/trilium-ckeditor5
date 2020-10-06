@@ -5,8 +5,6 @@ export default function indentBlockShortcutPlugin(editor) {
 	editor.keystrokes.set( 'Tab', ( data, cancel ) => {
 		const command = editor.commands.get( 'indentBlock' );
 
-		console.log("selection", editor.model.document.selection.getFirstPosition());
-
 		if ( command.isEnabled && !isInTable() ) {
 			command.execute();
 			cancel();
