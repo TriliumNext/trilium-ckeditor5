@@ -26,6 +26,7 @@ import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 import List from '@ckeditor/ckeditor5-list/src/list';
+import ListStyle from '@ckeditor/ckeditor5-list/src/liststyle';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
@@ -88,6 +89,7 @@ BalloonEditor.builtinPlugins = [
 	Link,
 	AutoLink,
 	List,
+	ListStyle,
 	TodoList,
 	Paragraph,
 	PasteFromOffice,
