@@ -26,6 +26,7 @@ import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 import List from '@ckeditor/ckeditor5-list/src/list';
+import ListStyle from '@ckeditor/ckeditor5-list/src/liststyle';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
@@ -61,6 +62,7 @@ import IncludeNote from './includenote';
 import ReferenceLink from './referencelink';
 import indentBlockShortcutPlugin from './indent_block_shortcut.js';
 import removeFormatLinksPlugin from './remove_format_links.js';
+import Mathematics from 'ckeditor5-math/src/math';
 
 export default class BalloonEditor extends BalloonEditorBase {}
 
@@ -87,6 +89,7 @@ BalloonEditor.builtinPlugins = [
 	Link,
 	AutoLink,
 	List,
+	ListStyle,
 	TodoList,
 	Paragraph,
 	PasteFromOffice,
@@ -116,7 +119,8 @@ BalloonEditor.builtinPlugins = [
 	IncludeNote,
 	ReferenceLink,
 	indentBlockShortcutPlugin,
-	removeFormatLinksPlugin
+	removeFormatLinksPlugin,
+	Mathematics
 ];
 
 // Editor configuration.
@@ -190,7 +194,7 @@ BalloonEditor.defaultConfig = {
 		'|',
 		'bulletedList', 'numberedList', 'todoList',
 		'|',
-		'blockQuote', 'codeBlock', 'insertTable', 'includeNote',
+		'blockQuote', 'codeBlock', 'insertTable', 'includeNote', 'math',
 		'|',
 		'outdent', 'indent', 'horizontalLine',
 		'|',
