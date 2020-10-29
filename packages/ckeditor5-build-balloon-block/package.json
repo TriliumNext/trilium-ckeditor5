@@ -25,15 +25,12 @@
     "build"
   ],
   "devDependencies": {
-    "@ckeditor/ckeditor5-adapter-ckfinder": "^23.1.0",
     "@ckeditor/ckeditor5-autoformat": "^23.1.0",
     "@ckeditor/ckeditor5-basic-styles": "^23.1.0",
     "@ckeditor/ckeditor5-block-quote": "^23.1.0",
-    "@ckeditor/ckeditor5-ckfinder": "^23.1.0",
     "@ckeditor/ckeditor5-core": "^23.1.0",
     "@ckeditor/ckeditor5-dev-utils": "^23.6.0",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^23.6.0",
-    "@ckeditor/ckeditor5-easy-image": "^23.1.0",
     "@ckeditor/ckeditor5-editor-balloon": "^23.1.0",
     "@ckeditor/ckeditor5-essentials": "^23.1.0",
     "@ckeditor/ckeditor5-heading": "^23.1.0",
@@ -44,6 +41,7 @@
     "@ckeditor/ckeditor5-media-embed": "^23.1.0",
     "@ckeditor/ckeditor5-paragraph": "^23.1.0",
     "@ckeditor/ckeditor5-paste-from-office": "^23.1.0",
+    "@ckeditor/ckeditor5-remove-format": "^23.1.0",
     "@ckeditor/ckeditor5-table": "^23.1.0",
     "@ckeditor/ckeditor5-typing": "^23.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^23.1.0",
