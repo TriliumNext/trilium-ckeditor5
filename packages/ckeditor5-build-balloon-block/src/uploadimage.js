@@ -65,21 +65,21 @@ class Adapter {
 	 * @private
 	 */
 	_initRequest() {
-		const xhr = this.xhr = new XMLHttpRequest();
+		glob.getHeaders().then(headers => {
+			const xhr = this.xhr = new XMLHttpRequest();
 
-		const {noteId} = glob.getActiveTabNote();
+			const {noteId} = glob.getActiveTabNote();
 
-		// this must be relative path
-		const url = "api/images?noteId=" + noteId;
+			// this must be relative path
+			const url = "api/images?noteId=" + noteId;
 
-		xhr.open('POST', url, true);
-		xhr.responseType = 'json';
+			xhr.open('POST', url, true);
+			xhr.responseType = 'json';
 
-		const headers = glob.getHeaders();
-
-		for (const headerName in headers) {
-			xhr.setRequestHeader(headerName, headers[headerName]);
-		}
+			for (const headerName in headers) {
+				xhr.setRequestHeader(headerName, headers[headerName]);
+			}
+		});
 	}
 
 	/**
