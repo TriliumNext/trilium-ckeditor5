@@ -40,11 +40,13 @@ class Adapter {
 	 * @returns {Promise}
 	 */
 	upload() {
-		return new Promise((resolve, reject) => {
-			this._initRequest();
-			this._initListeners(resolve, reject);
-			this._sendRequest();
-		} );
+		return this.loader.file
+			.then( file => new Promise( ( resolve, reject ) => {
+				this._initRequest().then(() => {
+					this._initListeners( resolve, reject, file );
+					this._sendRequest( file );
+				});
+			} ) );
 	}
 
 	/**
@@ -65,7 +67,7 @@ class Adapter {
 	 * @private
 	 */
 	_initRequest() {
-		glob.getHeaders().then(headers => {
+		return glob.getHeaders().then(headers => {
 			const xhr = this.xhr = new XMLHttpRequest();
 
 			const {noteId} = glob.getActiveTabNote();
