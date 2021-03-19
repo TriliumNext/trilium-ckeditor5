@@ -47,6 +47,7 @@ export default class CutToNotePlugin extends Plugin {
 
 		model.deleteContent(model.document.selection);
 
+		const editorEl = this.editor.editing.view.getDomRoot();
 		const component = glob.getComponentByEl(editorEl);
 
 		await component.triggerCommand('saveNoteDetailNow');
