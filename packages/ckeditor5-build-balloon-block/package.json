@@ -1,6 +1,6 @@
 {
   "name": "@ckeditor/ckeditor5-build-balloon-block",
-  "version": "27.0.0",
+  "version": "27.1.0",
   "description": "The balloon editor build of CKEditor 5 with a block toolbar – the best browser-based rich text editor.",
   "keywords": [
     "wysiwyg",
@@ -25,7 +25,7 @@
     "build"
   ],
   "dependencies": {
-    "@ckeditor/ckeditor5-autoformat": "^27.0.0",
+    "@ckeditor/ckeditor5-autoformat": "^27.1.0",
     "@ckeditor/ckeditor5-basic-styles": "^27.0.0",
     "@ckeditor/ckeditor5-block-quote": "^27.0.0",
     "@ckeditor/ckeditor5-editor-balloon": "^27.0.0",
@@ -42,13 +42,13 @@
     "@ckeditor/ckeditor5-table": "^27.0.0",
     "@ckeditor/ckeditor5-typing": "^27.0.0",
     "@ckeditor/ckeditor5-ui": "^27.0.0",
-    "ckeditor5-math": "^27.0.0"
+    "ckeditor5-math": "^27.1.1"
   },
   "devDependencies": {
-    "@ckeditor/ckeditor5-core": "^27.0.0",
+    "@ckeditor/ckeditor5-core": "^27.1.0",
     "@ckeditor/ckeditor5-dev-utils": "^24.4.2",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^24.4.2",
-    "@ckeditor/ckeditor5-theme-lark": "^27.0.0",
+    "@ckeditor/ckeditor5-theme-lark": "^27.1.0",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^4.0.1",
     "style-loader": "^1.2.1",
