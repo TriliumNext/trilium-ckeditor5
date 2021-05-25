@@ -1,6 +1,5 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import Command from '@ckeditor/ckeditor5-core/src/command';
-import toMap from '@ckeditor/ckeditor5-utils/src/tomap.js';
 
 export default class MentionCustomization extends Plugin {
 	afterInit() {

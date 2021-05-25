@@ -22,10 +22,6 @@ class ReferenceLinkCommand extends Command {
 		// make sure the referenced note is in cache before adding reference element
 		glob.treeCache.getNote(noteId, true).then(() => {
 			editor.model.change(writer => {
-				if (!writer.createElement) {
-					console.log("BBBB");
-				}
-
 				const placeholder = writer.createElement('reference', {notePath: notePath});
 
 				// ... and insert it into the document.
@@ -89,7 +85,11 @@ class ReferenceLinkEditing extends Plugin {
 				classes: [ 'reference-link' ]
 			},
 			model: ( viewElement, { writer: modelWriter } ) => {
-				const notePath = viewElement.getAttribute('data-note-path');
+				let notePath = viewElement.getAttribute('data-note-path');
+
+				if (!notePath) {
+					notePath = viewElement.getAttribute('href');
+				}
 
 				return modelWriter.createElement( 'reference', { notePath: notePath } );
 			}
@@ -98,7 +98,11 @@ class ReferenceLinkEditing extends Plugin {
 		conversion.for( 'editingDowncast' ).elementToElement( {
 			model: 'reference',
 			view: ( modelItem, { writer: viewWriter } ) => {
-				const notePath = modelItem.getAttribute( 'notePath' );
+				let notePath = modelItem.getAttribute( 'notePath' );
+
+				if (!notePath) {
+					notePath = modelItem.getAttribute( 'href' );
+				}
 
 				const referenceLinkView = viewWriter.createContainerElement( 'a', {
 					href: 'javascript:',
@@ -128,12 +132,16 @@ class ReferenceLinkEditing extends Plugin {
 		conversion.for( 'dataDowncast' ).elementToElement( {
 			model: 'reference',
 			view: ( modelItem, { writer: viewWriter } ) => {
-				const notePath = modelItem.getAttribute( 'notePath' );
+				let notePath = modelItem.getAttribute( 'notePath' );
+
+				if (!notePath) {
+					notePath = modelItem.getAttribute( 'href' );
+				}
 
 				const referenceLinkView = viewWriter.createContainerElement( 'a', {
 					href: '#' + notePath,
 					class: 'reference-link',
-					'data-note-path': notePath,
+					'data-note-path': notePath
 				} );
 
 				const noteId = notePath.split('/').pop();
