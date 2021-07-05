@@ -63,6 +63,7 @@ import ReferenceLink from './referencelink';
 import indentBlockShortcutPlugin from './indent_block_shortcut.js';
 import removeFormatLinksPlugin from './remove_format_links.js';
 import Mathematics from 'ckeditor5-math/src/math';
+import AutoformatMath from 'ckeditor5-math/src/autoformatmath';
 
 export default class BalloonEditor extends BalloonEditorBase {}
 
@@ -120,7 +121,8 @@ BalloonEditor.builtinPlugins = [
 	ReferenceLink,
 	indentBlockShortcutPlugin,
 	removeFormatLinksPlugin,
-	Mathematics
+	Mathematics,
+	AutoformatMath
 ];
 
 // Editor configuration.
