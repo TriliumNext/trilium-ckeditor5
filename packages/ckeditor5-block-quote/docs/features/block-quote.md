@@ -12,7 +12,7 @@ The block quote feature provides an attractive way to draw the readers' attentio
 
 ## Demo
 
-Use the editor below to see the block quote plugin in action. You can also precede the quotation with the `>` inline code (followed by a space) to format it on the go thanks to the {@link features/autoformat autoformatting} feature.
+Use the block quote toolbar button {@icon @ckeditor/ckeditor5-core/theme/icons/quote.svg Insert block quote} in the editor below to see the feature in action. You can also precede the quotation with the `>` inline code (followed by a space) to format it on the go thanks to the {@link features/autoformat autoformatting} feature.
 
 {@snippet features/block-quote}
 
@@ -86,14 +86,14 @@ ClassicEditor
 	.create( document.querySelector( '#editor' ), {
 		extraPlugins: [ DisallowNestingBlockQuotes ],
 
-		// The rest of the config.
+		// The rest of the configuration.
 	} )
 	.then( ... )
 	.catch( ... );
 ```
 
 <info-box>
-	Check the {@link framework/guides/creating-simple-plugin plugin development} guide if you need more information about the technical side of this solution.
+	Check the {@link framework/guides/creating-simple-plugin plugin development guide} if you need more information about the technical side of this solution.
 </info-box>
 
 ## Common API

@@ -171,13 +171,19 @@ BalloonEditor.defaultConfig = {
 			}
 		],
 		toolbar: [
+			'imageStyle:inline',
+			'imageStyle:block',
+			'imageStyle:side',
+			'|',
 			'imageStyle:alignLeft',
 			'imageStyle:alignCenter',
 			'imageStyle:alignRight',
 			'|',
 			'imageResize:25',
 			'imageResize:50',
-			'imageResize:original'
+			'imageResize:original',
+			'|',
+			'toggleImageCaption'
 		]
 	},
 	heading: {
