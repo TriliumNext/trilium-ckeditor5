@@ -7,4 +7,4 @@ sed -i -e 's/sourceMappingURL=ckeditor.js.map/sourceMappingURL=libraries\/ckedit
 
 cp build/ckeditor.* ~/trilium/libraries/ckeditor/
 
-cp ../../node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js ~/trilium/libraries/ckeditor/
+cp node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js ~/trilium/libraries/ckeditor/

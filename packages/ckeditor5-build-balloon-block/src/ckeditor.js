@@ -34,6 +34,8 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
 import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
+import TableCaption from '@ckeditor/ckeditor5-table/src/tablecaption';
+import TableSelection from '@ckeditor/ckeditor5-table/src/tableselection';
 import BlockToolbar from '@ckeditor/ckeditor5-ui/src/toolbar/block/blocktoolbar';
 import HeadingButtonsUI from '@ckeditor/ckeditor5-heading/src/headingbuttonsui';
 import ParagraphButtonUI from '@ckeditor/ckeditor5-paragraph/src/paragraphbuttonui';
@@ -98,6 +100,8 @@ BalloonEditor.builtinPlugins = [
 	TableToolbar,
 	TableProperties,
 	TableCellProperties,
+	TableSelection,
+	TableCaption,
 	Indent,
 	IndentBlock,
 	BlockToolbar,
@@ -215,7 +219,8 @@ BalloonEditor.defaultConfig = {
 			'tableRow',
 			'mergeTableCells',
 			'tableProperties',
-			'tableCellProperties'
+			'tableCellProperties',
+			'toggleTableCaption'
 		]
 	},
 	link: {
