@@ -176,9 +176,6 @@ BalloonEditor.defaultConfig = {
 		],
 		toolbar: [
 			'imageStyle:inline',
-			'imageStyle:block',
-			'imageStyle:side',
-			'|',
 			'imageStyle:alignLeft',
 			'imageStyle:alignCenter',
 			'imageStyle:alignRight',
