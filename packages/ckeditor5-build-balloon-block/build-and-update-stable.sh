@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+rm -rf node_modules/@ckeditor/ckeditor5-mention
+# force usage of local modification
+cp -r ../ckeditor5-mention node_modules/@ckeditor/
+
 npm run build
 
 # pointing the source map file to correct location
