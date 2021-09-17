@@ -664,8 +664,6 @@ export function createRegExp( marker, minimumCharacters ) {
 	//               (0:      opening sequence        )(1:  marker   )(2:                typed mention                )$
 	const pattern = `(?:^|[= ${ openAfterCharacters }])([${ marker }])([${ mentionCharacters }]${ numberOfCharacters })$`;
 
-	console.log("pattern", pattern);
-
 	return new RegExp( pattern, 'u' );
 }
 
