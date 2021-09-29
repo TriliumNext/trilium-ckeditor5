@@ -26,6 +26,7 @@
     "ckeditor5-metadata.json"
   ],
   "dependencies": {
+    "@ckeditor/ckeditor5-adapter-ckfinder": "^30.0.0",
     "@ckeditor/ckeditor5-autoformat": "^30.0.0",
     "@ckeditor/ckeditor5-basic-styles": "^30.0.0",
     "@ckeditor/ckeditor5-block-quote": "^30.0.0",
