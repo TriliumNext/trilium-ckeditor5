@@ -40,7 +40,17 @@ describe( 'FindCommand', () => {
 
 		it( 'should be enabled in readonly mode editor', () => {
 			setData( model, '<paragraph>foo[]</paragraph>' );
+
 			editor.isReadOnly = true;
+
+			expect( command.isEnabled ).to.be.true;
+		} );
+
+		it( 'should be enabled after disabling readonly mode', () => {
+			setData( model, '<paragraph>foo[]</paragraph>' );
+
+			editor.isReadOnly = true;
+			editor.isReadOnly = false;
 
 			expect( command.isEnabled ).to.be.true;
 		} );
@@ -48,7 +58,7 @@ describe( 'FindCommand', () => {
 
 	describe( 'state', () => {
 		it( 'is set to plugin\'s state', () => {
-			expect( command.state ).to.equal( editor.plugins.get( 'FindAndReplaceEditing' ).state );
+			expect( command._state ).to.equal( editor.plugins.get( 'FindAndReplaceEditing' ).state );
 		} );
 	} );
 
@@ -63,6 +73,17 @@ describe( 'FindCommand', () => {
 				expect( stringify( model.document.getRoot(), null, markers ) ).to.equal(
 					'<paragraph>Foo <X:start></X:start>bar<X:end></X:end> baz. Bam <X:start></X:start>bar<X:end></X:end> bom.</paragraph>'
 				);
+			} );
+
+			it( 'calls model.change() only once', () => {
+				setData( model, '<paragraph>[]Foo bar baz. Bam bar bar bar bar bom.</paragraph>' );
+				const spy = sinon.spy( model, 'change' );
+
+				command.execute( 'bar' );
+
+				// It's called two additional times
+				// from 'change:highlightedResult' handler in FindAndReplaceEditing.
+				expect( spy.callCount ).to.equal( 3 );
 			} );
 
 			it( 'returns no result if nothing matched', () => {
