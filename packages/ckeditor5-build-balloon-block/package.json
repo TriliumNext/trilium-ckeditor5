@@ -33,6 +33,7 @@
     "@ckeditor/ckeditor5-code-block": "^30.0.0",
     "@ckeditor/ckeditor5-editor-balloon": "^30.0.0",
     "@ckeditor/ckeditor5-essentials": "^30.0.0",
+    "@ckeditor/ckeditor5-find-and-replace": "^30.0.0",
     "@ckeditor/ckeditor5-font": "^30.0.0",
     "@ckeditor/ckeditor5-heading": "^30.0.0",
     "@ckeditor/ckeditor5-horizontal-line": "^30.0.0",

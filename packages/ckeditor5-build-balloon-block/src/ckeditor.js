@@ -6,6 +6,7 @@
 // The editor creator to use.
 import BalloonEditorBase from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 
+import FindAndReplace from '@ckeditor/ckeditor5-find-and-replace/src/findandreplace';
 import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
@@ -119,6 +120,7 @@ BalloonEditor.builtinPlugins = [
 	SelectAll,
 	HorizontalLine,
 	RemoveFormat,
+	FindAndReplace,
 	Mention,
 	MentionCustomization,
 	IncludeNote,
@@ -208,7 +210,8 @@ BalloonEditor.defaultConfig = {
 		'outdent', 'indent', 'horizontalLine',
 		'|',
 		'imageUpload',
-		'markdownImport'
+		'markdownImport',
+		'findAndReplace'
 	],
 	table: {
 		contentToolbar: [
