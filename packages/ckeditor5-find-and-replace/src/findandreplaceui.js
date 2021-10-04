@@ -102,14 +102,16 @@ export default class FindAndReplaceUI extends Plugin {
 		dropdown.buttonView.set( {
 			icon: loupeIcon,
 			label: t( 'Find and replace' ),
-			keystroke: 'CTRL+F',
+			// FIXME: keyboard shortcut doesn't work: https://github.com/ckeditor/ckeditor5/issues/10645
+			// keystroke: 'CTRL+F',
 			tooltip: true
 		} );
 
-		editor.keystrokes.set( 'Ctrl+F', ( data, cancelEvent ) => {
-			dropdown.isOpen = true;
-			cancelEvent();
-		} );
+		// FIXME: keyboard shortcut doesn't work: https://github.com/ckeditor/ckeditor5/issues/10645
+		// editor.keystrokes.set( 'Ctrl+F', ( data, cancelEvent ) => {
+		// 	dropdown.isOpen = true;
+		// 	cancelEvent();
+		// } );
 	}
 
 	/**

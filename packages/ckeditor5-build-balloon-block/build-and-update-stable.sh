@@ -3,6 +3,7 @@
 rm -rf node_modules/@ckeditor/ckeditor5-mention
 # force usage of local modification
 cp -r ../ckeditor5-mention node_modules/@ckeditor/
+cp -r ../ckeditor5-find-and-replace node_modules/@ckeditor/
 
 npm run build
 
