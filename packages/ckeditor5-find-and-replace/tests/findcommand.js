@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -25,6 +25,17 @@ describe( 'FindCommand', () => {
 
 	afterEach( () => {
 		return editor.destroy();
+	} );
+
+	describe( 'constructor()', () => {
+		it( 'sets public properties', () => {
+			expect( command ).to.have.property( 'isEnabled', true );
+			expect( command ).to.have.property( 'affectsData', false );
+		} );
+
+		it( 'sets state property', () => {
+			expect( command ).to.have.property( '_state', editor.plugins.get( 'FindAndReplaceEditing' ).state );
+		} );
 	} );
 
 	describe( 'isEnabled', () => {
@@ -53,12 +64,6 @@ describe( 'FindCommand', () => {
 			editor.isReadOnly = false;
 
 			expect( command.isEnabled ).to.be.true;
-		} );
-	} );
-
-	describe( 'state', () => {
-		it( 'is set to plugin\'s state', () => {
-			expect( command._state ).to.equal( editor.plugins.get( 'FindAndReplaceEditing' ).state );
 		} );
 	} );
 
@@ -292,6 +297,14 @@ describe( 'FindCommand', () => {
 					const { results } = command.execute( 'bar', { wholeWords: true } );
 
 					expect( results.length ).to.equal( 0 );
+				} );
+
+				it( 'set to true matches words separated by a single space', () => {
+					editor.setData( '<p>bar bar</p>' );
+
+					const { results } = command.execute( 'bar', { wholeWords: true } );
+
+					expect( results.length ).to.equal( 2 );
 				} );
 
 				it( 'is disabled by default', () => {

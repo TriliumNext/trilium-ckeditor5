@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -79,6 +79,18 @@ export default class Document {
 		 * @member {Boolean} module:engine/view/document~Document#isFocused
 		 */
 		this.set( 'isFocused', false );
+
+		/**
+		 * `true` while the user is making a selection in the document (e.g. holding the mouse button and moving the cursor).
+		 * When they stop selecting, the property goes back to `false`.
+		 *
+		 * This property is updated by the {@link module:engine/view/observer/selectionobserver~SelectionObserver}.
+		 *
+		 * @readonly
+		 * @observable
+		 * @member {Boolean} module:engine/view/document~Document#isSelecting
+		 */
+		this.set( 'isSelecting', false );
 
 		/**
 		 * True if composition is in progress inside the document.

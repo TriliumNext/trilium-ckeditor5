@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -12,8 +12,10 @@ import { Plugin } from 'ckeditor5/src/core';
 import DataFilter from './datafilter';
 import CodeBlockElementSupport from './integrations/codeblock';
 import DualContentModelElementSupport from './integrations/dualcontent';
+import HeadingElementSupport from './integrations/heading';
 import ImageElementSupport from './integrations/image';
 import MediaEmbedElementSupport from './integrations/mediaembed';
+import ScriptElementSupport from './integrations/script';
 import TableElementSupport from './integrations/table';
 
 /**
@@ -40,8 +42,10 @@ export default class GeneralHtmlSupport extends Plugin {
 			DataFilter,
 			CodeBlockElementSupport,
 			DualContentModelElementSupport,
+			HeadingElementSupport,
 			ImageElementSupport,
 			MediaEmbedElementSupport,
+			ScriptElementSupport,
 			TableElementSupport
 		];
 	}

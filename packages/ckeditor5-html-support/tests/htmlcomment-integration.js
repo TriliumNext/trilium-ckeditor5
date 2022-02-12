@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -30,7 +30,7 @@ import LinkEditing from '@ckeditor/ckeditor5-link/src/linkediting';
 import LinkImageEditing from '@ckeditor/ckeditor5-link/src/linkimageediting';
 
 import ListEditing from '@ckeditor/ckeditor5-list/src/listediting';
-import ListStyleEditing from '@ckeditor/ckeditor5-list/src/liststyleediting';
+import ListPropertiesEditing from '@ckeditor/ckeditor5-list/src/listpropertiesediting';
 import TodoListEditing from '@ckeditor/ckeditor5-list/src/todolistediting';
 
 import MediaEmbedEditing from '@ckeditor/ckeditor5-media-embed/src/mediaembedediting';
@@ -389,13 +389,13 @@ describe( 'HtmlComment integration', () => {
 				'<figure class="image">' +
 					'<img src="/assets/sample.png" alt="Example image">' +
 					'<!-- c3 -->' +
-					'<!-- c6 -->' +
 					'<!-- c2 -->' +
 					'<figcaption>' +
 						'<!-- c4 -->' +
 						'image caption' +
 						'<!-- c5 -->' +
 					'</figcaption>' +
+					'<!-- c6 -->' +
 				'</figure>' +
 				'<!-- c7 -->'
 			);
@@ -611,7 +611,7 @@ describe( 'HtmlComment integration', () => {
 		function createEditor( initialData = '' ) {
 			return ClassicTestEditor
 				.create( initialData, {
-					plugins: [ HtmlComment, Essentials, Paragraph, ListEditing, ListStyleEditing, TodoListEditing ]
+					plugins: [ HtmlComment, Essentials, Paragraph, ListEditing, ListPropertiesEditing, TodoListEditing ]
 				} );
 		}
 

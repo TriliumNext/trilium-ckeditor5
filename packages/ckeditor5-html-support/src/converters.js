@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -72,8 +72,8 @@ export function toObjectWidgetConverter( editor, { view: viewName, isInline } ) 
 * @returns {module:engine/view/element~Element}
 */
 export function createObjectView( viewName, modelElement, writer ) {
-	return writer.createRawElement( viewName, null, function( domElement ) {
-		domElement.innerHTML = modelElement.getAttribute( 'htmlContent' );
+	return writer.createRawElement( viewName, null, ( domElement, domConverter ) => {
+		domConverter.setContentOf( domElement, modelElement.getAttribute( 'htmlContent' ) );
 	} );
 }
 
