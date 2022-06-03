@@ -27,10 +27,8 @@ export default class CutToNotePlugin extends Plugin {
 			return view;
 		} );
 
-		window.cutToNote = {
-			getSelectedHtml: () => this.getSelectedHtml(),
-			removeSelection: () => this.removeSelection()
-		};
+		this.editor.getSelectedHtml = () => this.getSelectedHtml();
+		this.editor.removeSelection = () => this.removeSelection();
 	}
 
 	getSelectedHtml() {
@@ -47,9 +45,14 @@ export default class CutToNotePlugin extends Plugin {
 
 		model.deleteContent(model.document.selection);
 
-		const editorEl = this.editor.editing.view.getDomRoot();
-		const component = glob.getComponentByEl(editorEl);
+		const component = this.getComponent();
 
 		await component.triggerCommand('saveNoteDetailNow');
+	}
+
+	getComponent() {
+		const editorEl = this.editor.editing.view.getDomRoot();
+
+		return glob.getComponentByEl( editorEl );
 	}
 }

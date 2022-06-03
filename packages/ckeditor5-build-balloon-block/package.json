@@ -51,8 +51,7 @@
     "@ckeditor/ckeditor5-typing": "^33.0.0",
     "@ckeditor/ckeditor5-ui": "^33.0.0",
     "ckeditor5-math": "^33.0.0"
-  }
-},
+  },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "^33.0.0",
     "@ckeditor/ckeditor5-dev-utils": "^28.0.1",
