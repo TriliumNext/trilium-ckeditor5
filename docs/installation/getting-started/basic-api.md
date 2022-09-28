@@ -3,7 +3,7 @@
 # * Guide developers through the basic API to achieve their very first results with CKEditor.
 
 category: getting-started
-order: 40
+order: 60
 ---
 
 # Basic API
@@ -27,7 +27,7 @@ Most of the examples in the documentation use the `ClassicEditor` class, but thi
 	A CKEditor 5 build compiles a specific editor class and a set of plugins. Using builds is the simplest way to include the editor in your application, but you can also {@link installation/advanced/integrating-from-source use the editor classes and plugins directly} for greater flexibility.
 </info-box>
 
-## Creating an editor
+## Creating an editor with `create()`
 
 Regardless of the chosen build, creating an editor is done using the static `create()` method.
 
@@ -41,7 +41,7 @@ Add an element that CKEditor should replace to your HTML page:
 </div>
 ```
 
-Then call {@link module:editor-classic/classiceditor~ClassicEditor#create `ClassicEditor.create()`} to **replace** the `<textarea>` element with a {@link installation/advanced/predefined-builds#classic-editor classic editor}:
+Then call {@link module:editor-classic/classiceditor~ClassicEditor#create `ClassicEditor.create()`} to **replace** the `<textarea>` element with a {@link installation/getting-started/predefined-builds#classic-editor classic editor}:
 
 ```js
 ClassicEditor
@@ -66,7 +66,7 @@ Similarly to the previous example, add an element where CKEditor 5 should initia
 </div>
 ```
 
-Then call {@link module:editor-inline/inlineeditor~InlineEditor#create `InlineEditor.create()`} to **attach** {@link installation/advanced/predefined-builds#inline-editor inline editor} to the `<div>` element:
+Then call {@link module:editor-inline/inlineeditor~InlineEditor#create `InlineEditor.create()`} to **attach** {@link installation/getting-started/predefined-builds#inline-editor inline editor} to the `<div>` element:
 
 ```js
 InlineEditor
@@ -91,7 +91,7 @@ Add an element where CKEditor should initialize to your page:
 </div>
 ```
 
-Then call {@link module:editor-balloon/ballooneditor~BalloonEditor#create `BalloonEditor.create()`} to **attach** {@link installation/advanced/predefined-builds#balloon-editor balloon editor} to the `<div>` element:
+Then call {@link module:editor-balloon/ballooneditor~BalloonEditor#create `BalloonEditor.create()`} to **attach** {@link installation/getting-started/predefined-builds#balloon-editor balloon editor} to the `<div>` element:
 
 ```js
 BalloonEditor
@@ -143,7 +143,7 @@ DecoupledEditor
 
 Once the editor is created, it is possible to interact with it through its API. The `editor` variable from the examples above should enable that.
 
-### Setting the editor data
+### Setting the editor data with `setData()`
 
 To replace the editor content with new data, use the `setData()` method:
 
@@ -151,7 +151,7 @@ To replace the editor content with new data, use the `setData()` method:
 editor.setData( '<p>Some text.</p>' );
 ```
 
-### Getting the editor data
+### Getting the editor data with `getData()`
 
 If the editor content needs to be retrieved for any reason, like for sending it to the server through an Ajax call, use the `getData()` method:
 
@@ -159,7 +159,7 @@ If the editor content needs to be retrieved for any reason, like for sending it 
 const data = editor.getData();
 ```
 
-### Destroying the editor
+### Destroying the editor with `destroy()`
 
 In modern applications, it is common to create and remove elements from the page interactively through JavaScript. In such cases CKEditor 5 instances should be destroyed by using the `destroy()` method:
 
@@ -174,7 +174,7 @@ Once destroyed, resources used by the editor instance are released and the origi
 
 ### Listening to changes
 
-The {@link module:engine/model/document~Document#change:data `Document#change:data`} event is fired when the document changes in such a way which is "visible" in the editor data.
+The {@link module:engine/model/document~Document#change:data `Document#change:data`} event is fired when the document changes in such a way that is "visible" in the editor data.
 
 ```js
 editor.model.document.on( 'change:data', () => {
@@ -217,5 +217,5 @@ ClassicEditor.create( ... ); // [Function]
 
 Having read this guide, you know how to communicate with the editor, but remember that CKEditor 5 offers a rich API to interact with it. Check out the {@link api/index API documentation} for more.
 
-You have almost completed the CKEditor 5's quick start path for beginners, well done! It is important to know how you can maintain your editor, so take a look at the {@link installation/getting-started/maintenance last article from this section} to learn more.
+If you would like to integrate your CKEditor 5 installation with the Angular, React and Vue.js JavaScript frameworks, {@link installation/frameworks/overview we have a dedicated guide for that}.
 </info-box>

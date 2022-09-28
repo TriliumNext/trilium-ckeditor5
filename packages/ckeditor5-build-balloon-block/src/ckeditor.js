@@ -31,6 +31,7 @@ import ListStyle from '@ckeditor/ckeditor5-list/src/liststyle';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
+import PictureEditing from '@ckeditor/ckeditor5-image/src/pictureediting';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
@@ -97,6 +98,7 @@ BalloonEditor.builtinPlugins = [
 	TodoList,
 	Paragraph,
 	PasteFromOffice,
+	PictureEditing,
 	Table,
 	TableToolbar,
 	TableProperties,

@@ -5,8 +5,8 @@
 # * List and clarify the things that need attention when migrating.
 
 category: getting-started
-order: 60
-modified_at: 2021-07-16
+order: 80
+modified_at: 2022-04-15
 ---
 
 # Migration from CKEditor 4
@@ -21,7 +21,7 @@ When compared to its predecessor, CKEditor 5 should be considered **a totally ne
 
 There is no "drop in" solution for migrating. In this guide we hope to summarize the most important aspects you need to consider before you proceed with installing CKEditor 5.
 
-Before starting, be sure that migrating is your best choice. Refer to {@link installation/advanced/predefined-builds#when-not-to-use-predefined-builds When NOT to use predefined CKEditor 5 builds?} for more information.
+Before starting, be sure that migrating is your best choice. Refer to the {@link installation/getting-started/predefined-builds#when-not-to-use-predefined-builds When NOT to use predefined CKEditor 5 builds?} guide for more information.
 
 ## Installation and integration
 
@@ -52,6 +52,8 @@ The same may apply for third-party plugins which may not have been ported to CKE
 
 Check the {@link installation/advanced/plugins#creating-plugins Creating plugins} section for more information on the development of plugins.
 
+When it comes to official plugins compatibility between CKEditor 4 and CKEditor 5, please see the {@link installation/getting-started/migration-from-ckeditor-4#plugins-compatibility-table compatibility table} to learn more.
+
 ## Themes (skins)
 
 In CKEditor 5, the previous concept of "skins" was reviewed and is now called "themes".
@@ -69,6 +71,36 @@ An extremely important aspect to be remembered is that &mdash; because of the di
 Extensive analysis, data verification and tests should be performed on existing data. If necessary, you will need to develop conversion procedures to avoid data loss. The {@link features/general-html-support General HTML Support} feature may be used to introduce HTML markup that is present in the legacy content but is not yet fully covered by CKEditor 5 features.
 
 A relatively simple yet efficient strategy of adopting CKEditor 5 into existing systems might be using CKEditor 5 for creating new content and the old editor for editing legacy content.
+
+## Migration from CKEditor 4 - FAQ
+
+### Why does the editor filter out my content (styles, classes, elements)? Where is `config.allowedContent = true`?
+
+Unlike [CKEditor 4](https://ckeditor.com/ckeditor-4/), CKEditor 5 implements a custom {@link framework/guides/architecture/editing-engine data model}. This means that every piece of content that is loaded into the editor needs to be converted to that model and then rendered back to the view.
+
+Each kind of content must be handled by some feature. For instance the [`ckeditor5-basic-styles`](https://www.npmjs.com/package/@ckeditor/ckeditor5-basic-styles) package handles HTML elements such as `<b>`, `<i>`, `<u>`, etc. along with their representation in the model. The feature defines the two–way conversion between the HTML (view) and the editor model.
+
+If you load some content unknown to any editor feature, it will be dropped. If you want all the HTML5 elements to be supported, you need to write plugins to support them. Once you do that, CKEditor 5 will not filter anything out. You may also use the {@link features/general-html-support General HTML support} feature in certain cases.
+
+### What happened to the `contents.css` file? How do I style the content of the editor?
+
+There is no such thing as the `contents.css` file anymore because in CKEditor 5 the features bring their own content styles, which are by default included in the JavaScript build and {@link framework/guides/theme-customization#styles-processing-and-bundling loaded by the style loader}. It optimizes the size of the builds as the styles of unused features are simply excluded.
+
+You can find the full list of editor content styles in a {@link installation/advanced/content-styles dedicated guide}. You can also {@link installation/advanced/integrating-from-source#option-extracting-css extract all CSS} brought by CKEditor 5 (both content and UI) to a separate file when creating a custom editor build.
+
+### Where are the `editor.insertHtml()` and `editor.insertText()` methods? How to insert some content?
+
+The answer is available {@link support/faq#how-to-insert-some-content-into-the-editor in this CKEditor 5 FAQ question}.
+
+### What happened to the global `window.CKEDITOR`? How to list all instances of the editor?
+
+The answer is available {@link support/faq#how-to-list-all-instances-of-the-editor in this CKEditor 5 FAQ question}.
+
+## Plugins compatibility table
+
+The following table presents plugins available in CKEditor 4 and their equivalent in CKEditor 5.
+
+{@snippet installation/plugins-mapping/plugins-mapping}
 
 ## Configuration options compatibility table
 
@@ -100,7 +132,7 @@ Note: The number of options was reduced on purpose. We understood that configuri
 			<td><span id="allowedContent"><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-allowedContent">allowedContent</a></span></td>
 			<td>
 				<p>Extending the list of HTML tags or attributes that CKEditor should support can be achieved via the {@link features/general-html-support General HTML Support feature}. The GHS allows adding HTML markup not covered by official CKEditor 5 features into the editor's content. Such elements can be loaded, pasted, or output. It does not, however, provide a dedicated UI for the extended HTML markup.</p>
-				<p> Having full-fledged HTML support can be achieved by writing a plugin that (ideally) provides also means to control (insert, edit, delete) such markup. For more information on how to create plugins check the {@link framework/guides/creating-simple-plugin Creating a simple plugin} article. Looking at the source code of CKEditor 5 plugins may also give you a lot of inspiration.</p>
+				<p> Having full-fledged HTML support can be achieved by writing a plugin that (ideally) provides also means to control (insert, edit, delete) such markup. For more information on how to create plugins check the {@link framework/guides/creating-simple-plugin-timestamp Creating a simple plugin} article. Looking at the source code of CKEditor 5 plugins may also give you a lot of inspiration.</p>
 				<p>Note that only content that is explicitly converted between the model and the view by the editor plugins will be preserved in CKEditor 5. Check the {@link framework/guides/deep-dive/conversion/intro conversion tutorials} to learn how to extend the conversion rules.</p>
 			</td>
 		</tr>
@@ -112,8 +144,12 @@ Note: The number of options was reduced on purpose. We understood that configuri
 			<td><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-autoGrow_bottomSpace">autoGrow_bottomSpace</a> <br> <a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-autoGrow_maxHeight">autoGrow_maxHeight</a> <br> <a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-autoGrow_minHeight">autoGrow_minHeight</a> <br> <a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-autoGrow_onStartup">autoGrow_onStartup</a></td>
 			<td>
 				<p>These settings are no longer needed as by default, CKEditor 5 automatically grows with content.</p>
-				<p>Classic editor (CKEditor 5) no longer encapsulates the editing area in an <code>&lt;iframe&gt;</code>, which means that the height (and similar options) of the editing area can be easily controlled with CSS. For example, the <code>minHeight</code> and <code>maxHeight</code> settings can be achieved with <code>.ck-editor__editable_inline { min-height:200px; max-height:400px; }</code>.</p>
-				<p> See also <a href="https://stackoverflow.com/questions/46559354/how-to-set-the-height-of-ckeditor-5-classic-editor" target="_blank" rel="noopener">How to set the height of CKEditor 5 (Classic editor)</a>.</p>
+				<p>Classic editor (CKEditor 5) no longer encapsulates the editing area in an <code>&lt;iframe&gt;</code>, which means that the height (and similar options) of the editing area can be easily controlled with CSS. For example, the <code>minHeight</code> and <code>maxHeight</code> settings can be achieved with the following code:</p>
+				<pre><code class="language-css">.ck.ck-content:not(.ck-comment__input *) {
+	/* Note: You can use min-height and max-height instead here. */
+	height: 300px;
+	overflow-y: auto;
+}</code>
 			</td>
 		</tr>
 		<tr>
@@ -179,7 +215,7 @@ Note: The number of options was reduced on purpose. We understood that configuri
 			<td>
 				<p>Refer to the {@link features/code-blocks Code block feature} guide to learn more about support for blocks of pre–formatted code in CKEditor 5.</p>
 				<p>A plugin adding support for the inline <code>&lt;code&gt;</code> element is included in the {@link features/basic-styles Basic styles} package.<br>
-				Note: The {@link module:basic-styles/code~Code Code feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
+				Note: The {@link module:basic-styles/code~Code Code feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start-other#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
 			</td>
 		</tr>
 		<tr>
@@ -225,21 +261,21 @@ Note: The number of options was reduced on purpose. We understood that configuri
 			<td><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-coreStyles_subscript">coreStyles_subscript</a></td>
 			<td>
 				<p>CKEditor 5 uses the <code>&lt;sub&gt;</code> element.
-				<p>Note: The {@link module:basic-styles/subscript~Subscript Subscript feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
+				<p>Note: The {@link module:basic-styles/subscript~Subscript Subscript feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start-other#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
 			</td>
 		</tr>
 		<tr>
 			<td><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-coreStyles_superscript">coreStyles_superscript</a></td>
 			<td>
 				<p>CKEditor 5 uses the <code>&lt;sup&gt;</code> element.
-				<p>Note: The {@link module:basic-styles/superscript~Superscript Superscript feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
+				<p>Note: The {@link module:basic-styles/superscript~Superscript Superscript feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start-other#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
 			</td>
 		</tr>
 		<tr>
 			<td><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-coreStyles_underline">coreStyles_underline</a></td>
 			<td>
 				<p>CKEditor 5 uses the <code>&lt;u&gt;</code> element, see <a href="https://github.com/ckeditor/editor-recommendations/issues/4" target="_blank" rel="noopener">Editor Recommendations - Underline</a>.</p>
-				<p>Note: The {@link module:basic-styles/underline~Underline Underline feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
+				<p>Note: The {@link module:basic-styles/underline~Underline Underline feature} is not available by default in any build, but can be enabled in a {@link installation/getting-started/quick-start-other#building-the-editor-from-source custom build} (see the {@link features/basic-styles Basic styles} feature guide).</p>
 			</td>
 		</tr>
 		<tr>
@@ -536,7 +572,7 @@ Note: The number of options was reduced on purpose. We understood that configuri
 		</tr>
 		<tr>
 			<td><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-plugins">plugins</a></td>
-			<td>See the {@link module:core/editor/editorconfig~EditorConfig#plugins <code>plugins</code>} configuration option. The way how plugins are enabled in CKEditor 5 has changed in general. Check the articles about {@link installation/advanced/plugins plugins} and {@link installation/getting-started/quick-start#building-the-editor-from-source custom builds} for more information.</td>
+			<td>See the {@link module:core/editor/editorconfig~EditorConfig#plugins <code>plugins</code>} configuration option. The way how plugins are enabled in CKEditor 5 has changed in general. Check the articles about {@link installation/advanced/plugins plugins} and {@link installation/getting-started/quick-start-other#building-the-editor-from-source custom builds} for more information.</td>
 		</tr>
 		<tr>
 			<td><a href="/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-protectedSource">protectedSource</a></td>
@@ -702,12 +738,10 @@ Note: The number of options was reduced on purpose. We understood that configuri
 	</tbody>
 </table>
 
-If you are missing any particular features or settings, feel free to {@link support/reporting-issues#reporting-issues-2 report an issue}. Search the [issues section in the repository](https://github.com/ckeditor/ckeditor5/issues) first as the feature you are after may have already been reported &mdash; you can support it by upvoting 👍. Please be as precise as possible, explaining the exact use case, the context where the editor is used, and the expected behavior.
+If you are missing any particular features or settings, feel free to {@link support/reporting-issues#reporting-issues-2 report an issue}. Search the [issues section in the repository](https://github.com/ckeditor/ckeditor5/issues) first, as the feature you are after may have already been reported &mdash; you can support it by upvoting the issue with &nbsp;👍&nbsp;. Please be as precise as possible, explaining the exact use case, the context where the editor is used, and the expected behavior.
 
 <info-box hint>
 **What's next?**
 
-Now you should have a basic knowledge about differences between CKEditor 4 and CKEditor 5. Feel free to explore our Features page to compare the available plugins to your needs.
-
-It's time to move to the last article in the **Getting started** path. {@link installation/getting-started/maintenance See you there}!
+You should now have the basic knowledge about differences between CKEditor 4 and CKEditor 5. Feel free to explore our {@link features/index features page} to compare the available plugins to your needs.
 </info-box>

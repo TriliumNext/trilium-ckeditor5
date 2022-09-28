@@ -4,9 +4,9 @@ category: frameworks
 order: 30
 ---
 
-{@snippet builds/frameworks/framework-integration}
+{@snippet installation/frameworks/framework-integration}
 
-# Rich text editor component for React
+# React rich text editor component
 
 <p>
 	<a href="https://www.npmjs.com/package/@ckeditor/ckeditor5-react" target="_blank" rel="noopener">
@@ -14,13 +14,13 @@ order: 30
 	</a>
 </p>
 
-CKEditor 5 consists of {@link installation/advanced/predefined-builds ready-to-use editor builds} and {@link framework/guides/overview CKEditor 5 Framework} upon which the builds are based.
+CKEditor 5 consists of {@link installation/getting-started/predefined-builds ready-to-use editor builds} and {@link framework/index CKEditor 5 Framework} upon which the builds are based.
 
-The easiest way to use CKEditor 5 in your React application is by choosing one of the {@link installation/advanced/predefined-builds#available-builds rich text editor builds}. Additionally, it is also possible to integrate [CKEditor 5 built from source](#integrating-ckeditor-5-built-from-source) into your application. You can also use a customized editor built by using [CKEditor 5 online builder](https://ckeditor.com/ckeditor-5/online-builder/) in any React application.
+The easiest way to use CKEditor 5 in your React application is by choosing one of the {@link installation/getting-started/predefined-builds#available-builds rich text editor builds}. Additionally, it is also possible to integrate [CKEditor 5 built from source](#integrating-ckeditor-5-built-from-source) into your application. You can also use a customized editor built by using [CKEditor 5 online builder](https://ckeditor.com/ckeditor-5/online-builder/) in any React application.
 
 ## Quick start
 
-Install the [CKEditor 5 WYSIWYG editor component for React](https://www.npmjs.com/package/@ckeditor/ckeditor5-react) and the {@link installation/advanced/predefined-builds#available-builds editor build of your choice}.
+Install the [CKEditor 5 WYSIWYG editor component for React](https://www.npmjs.com/package/@ckeditor/ckeditor5-react) and the {@link installation/getting-started/predefined-builds#available-builds editor build of your choice}.
 
 Assuming that you picked [`@ckeditor/ckeditor5-build-classic`](https://www.npmjs.com/package/@ckeditor/ckeditor5-build-classic):
 
@@ -163,7 +163,7 @@ The `CKEditorContext` component supports the following properties:
 
 ## Customizing the builds
 
-The {@link installation/advanced/predefined-builds CKEditor 5 builds} come ready to use, with a set of built-in plugins and a predefined configuration. While you can change the configuration easily by using the `config` property of the `<CKEditor>` component which allows you to change the {@link features/toolbar toolbar} or {@link installation/getting-started/configuration#removing-features remove some plugins}, in order to add more plugins you need to rebuild the editor.
+The {@link installation/getting-started/predefined-builds CKEditor 5 builds} come ready to use, with a set of built-in plugins and a predefined configuration. While you can change the configuration easily by using the `config` property of the `<CKEditor>` component which allows you to change the {@link features/toolbar toolbar} or {@link installation/getting-started/configuration#removing-features remove some plugins}, in order to add more plugins you need to rebuild the editor.
 
 There are three main ways to do that.
 
@@ -177,7 +177,7 @@ Create your own CKEditor 5 build with customized plugins, toolbar and language i
 
 ### Customizing one of the predefined builds
 
-This option requires making changes to a {@link installation/getting-started/quick-start#building-the-editor-from-source predefined build} of your choice. Much like in [the case of online builder](#integrating-a-build-from-the-online-builder), you then need to place the custom editor's folder next to `src/` directory and add it as a dependency using `yarn add file` command.
+This option requires making changes to a {@link installation/getting-started/quick-start-other#building-the-editor-from-source predefined build} of your choice. Much like in [the case of online builder](#integrating-a-build-from-the-online-builder), you then need to place the custom editor's folder next to `src/` directory and add it as a dependency using `yarn add file` command.
 
 Read more about customising a predefined build in the {@link installation/getting-started/installing-plugins Installing plugins} guide.
 
@@ -362,7 +362,7 @@ NODE_OPTIONS="--max-old-space-size=4096" yarn build
 
 ## Integrating CKEditor 5 built from source
 
-Integrating the rich text editor from source allows you to use the full power of the {@link framework/guides/overview CKEditor 5 Framework}.
+Integrating the rich text editor from source allows you to use the full power of the {@link framework/index CKEditor 5 Framework}.
 
 This guide assumes that you are using the [Create React App CLI](https://github.com/facebook/create-react-app) as your boilerplate and it goes through adjusting it to fit CKEditor 5 needs. If you use your custom webpack setup, please read more about {@link installation/advanced/integrating-from-source including CKEditor 5 built from source}.
 
@@ -564,9 +564,9 @@ You can read more about using CKEditor 5 from source in the {@link installation/
 
 CKEditor 5 supports {@link features/ui-language multiple UI languages}, and so does the official React component. Follow the instructions below to translate CKEditor 5 in your React application.
 
-### Ready-to-use builds
+### Predefined builds
 
-When using one of the {@link installation/advanced/predefined-builds#available-builds official editor builds} or the editor built by the [online builder](https://ckeditor.com/ckeditor-5/online-builder/), you need to import the translations first:
+When using one of the {@link installation/getting-started/predefined-builds#available-builds official editor builds} or the editor built by the [online builder](https://ckeditor.com/ckeditor-5/online-builder/), you need to import the translations first:
 
 **Official editor builds:**
 
