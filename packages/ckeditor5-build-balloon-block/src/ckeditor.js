@@ -207,7 +207,7 @@ BalloonEditor.defaultConfig = {
 		'|',
 		'bulletedList', 'numberedList', 'todoList',
 		'|',
-		'blockQuote', 'codeBlock', 'insertTable', 'includeNote', 'math',
+		'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
 		'|',
 		'outdent', 'indent', 'horizontalLine',
 		'|',
