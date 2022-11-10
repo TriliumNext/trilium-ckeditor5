@@ -225,6 +225,13 @@ BalloonEditor.defaultConfig = {
 			'toggleTableCaption'
 		]
 	},
+	list: {
+		properties: {
+			styles: true,
+			startIndex: true,
+			reversed: true
+		}
+	},
 	link: {
 		defaultProtocol: 'https://'
 	},
