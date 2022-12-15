@@ -2,8 +2,11 @@
 
 rm -rf node_modules/@ckeditor/ckeditor5-mention
 rm -rf node_modules/@ckeditor/ckeditor5-find-and-replace
-## force usage of local modification
+mkdir node_modules
+# force usage of local modification
+# mention contains changes to support the attribute editor
 cp -r ../ckeditor5-mention node_modules/@ckeditor/
+# find and replace disables keyboard shortcut so that it doesn't override trilium find widget
 cp -r ../ckeditor5-find-and-replace node_modules/@ckeditor/
 
 npm run build
@@ -13,4 +16,4 @@ sed -i -e 's/sourceMappingURL=ckeditor.js.map/sourceMappingURL=libraries\/ckedit
 
 cp build/ckeditor.* ~/trilium/libraries/ckeditor/
 
-cp node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js ~/trilium/libraries/ckeditor/
+cp ../../node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js ~/trilium/libraries/ckeditor/
