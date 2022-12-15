@@ -68,6 +68,11 @@ import indentBlockShortcutPlugin from './indent_block_shortcut';
 import removeFormatLinksPlugin from './remove_format_links';
 import Mathematics from 'ckeditor5-math/src/math';
 import AutoformatMath from 'ckeditor5-math/src/autoformatmath';
+import EditorWatchdog from '@ckeditor/ckeditor5-watchdog/src/editorwatchdog';
+
+// expose so that Trilium can use it
+// eslint-disable-next-line no-undef
+window.EditorWatchdog = EditorWatchdog;
 
 export default class BalloonEditor extends BalloonEditorBase {}
 
