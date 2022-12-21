@@ -105,10 +105,13 @@ class ReferenceLinkEditing extends Plugin {
 				}
 
 				const referenceLinkView = viewWriter.createContainerElement( 'a', {
-					href: 'javascript:',
-					class: 'reference-link',
-					'data-note-path': notePath
-				} );
+						href: 'javascript:',
+						class: 'reference-link',
+						'data-note-path': notePath
+					},
+					{
+						renderUnsafeAttributes: [ 'href' ]
+					} );
 
 				const noteTitleView = viewWriter.createUIElement('span', {}, function( domDocument ) {
 					const domElement = this.toDomElement( domDocument );
