@@ -107,8 +107,9 @@ export default class LinkEditing extends Plugin {
 		// Setup highlight over selected link.
 		inlineHighlight( editor, 'linkHref', 'a', HIGHLIGHT_CLASS );
 
+		// hack to fix https://github.com/zadam/trilium/issues/3630
 		// Handle link following by CTRL+click or ALT+ENTER
-		this._enableLinkOpen();
+		// this._enableLinkOpen();
 
 		// Change the attributes of the selection in certain situations after the link was inserted into the document.
 		this._enableInsertContentSelectionAttributesFixer();
