@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -71,177 +71,181 @@ import Mathematics from 'ckeditor5-math/src/math';
 import AutoformatMath from 'ckeditor5-math/src/autoformatmath';
 import EditorWatchdog from '@ckeditor/ckeditor5-watchdog/src/editorwatchdog';
 
+/**
+ * @internal
+ */
+import '../theme/theme.css';
+
 // expose so that Trilium can use it
 // eslint-disable-next-line no-undef
 window.EditorWatchdog = EditorWatchdog;
 
-export default class BalloonEditor extends BalloonEditorBase {}
+export default class BalloonEditor extends BalloonEditorBase {
+	public static override builtinPlugins = [
+		// essentials package expanded to allow selectively disable Enter and ShiftEnter
+		Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo,
+		UploadAdapter,
+		Autoformat,
+		Bold,
+		Italic,
+		Underline,
+		Strikethrough,
+		Code,
+		Superscript,
+		Subscript,
+		BlockQuote,
+		Heading,
+		Image,
+		ImageCaption,
+		ImageStyle,
+		ImageToolbar,
+		ImageUpload,
+		ImageResize,
+		Link,
+		AutoLink,
+		List,
+		ListProperties,
+		TodoList,
+		Paragraph,
+		PasteFromOffice,
+		PictureEditing,
+		Table,
+		TableToolbar,
+		TableProperties,
+		TableCellProperties,
+		TableSelection,
+		TableCaption,
+		TableColumnResize,
+		Indent,
+		IndentBlock,
+		BlockToolbar,
+		ParagraphButtonUI,
+		HeadingButtonsUI,
+		UploadimagePlugin,
+		InternalLinkPlugin,
+		MarkdownImportPlugin,
+		CuttonotePlugin,
+		TextTransformation,
+		Font,
+		FontColor,
+		FontBackgroundColor,
+		CodeBlock,
+		SelectAll,
+		HorizontalLine,
+		RemoveFormat,
+		FindAndReplace,
+		Mention,
+		MentionCustomization,
+		IncludeNote,
+		ReferenceLink,
+		indentBlockShortcutPlugin,
+		removeFormatLinksPlugin,
+		Mathematics,
+		AutoformatMath
+	];
 
-// Plugins to include in the build.
-BalloonEditor.builtinPlugins = [
-	Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo, // essentials package expanded to allow selectively disable Enter and ShiftEnter
-	UploadAdapter,
-	Autoformat,
-	Bold,
-	Italic,
-	Underline,
-	Strikethrough,
-	Code,
-	Superscript,
-	Subscript,
-	BlockQuote,
-	Heading,
-	Image,
-	ImageCaption,
-	ImageStyle,
-	ImageToolbar,
-	ImageUpload,
-	ImageResize,
-	Link,
-	AutoLink,
-	List,
-	ListProperties,
-	TodoList,
-	Paragraph,
-	PasteFromOffice,
-	PictureEditing,
-	Table,
-	TableToolbar,
-	TableProperties,
-	TableCellProperties,
-	TableSelection,
-	TableCaption,
-	TableColumnResize,
-	Indent,
-	IndentBlock,
-	BlockToolbar,
-	ParagraphButtonUI,
-	HeadingButtonsUI,
-	UploadimagePlugin,
-	InternalLinkPlugin,
-	MarkdownImportPlugin,
-	CuttonotePlugin,
-	TextTransformation,
-	Font,
-	FontColor,
-	FontBackgroundColor,
-	CodeBlock,
-	SelectAll,
-	HorizontalLine,
-	RemoveFormat,
-	FindAndReplace,
-	Mention,
-	MentionCustomization,
-	IncludeNote,
-	ReferenceLink,
-	indentBlockShortcutPlugin,
-	removeFormatLinksPlugin,
-	Mathematics,
-	AutoformatMath
-];
-
-// Editor configuration.
-BalloonEditor.defaultConfig = {
-	toolbar: {
-		items: [
-			'fontSize',
-			'bold',
-			'italic',
-			'underline',
-			'strikethrough',
-			'superscript',
-			'subscript',
-			'fontColor',
-			'fontBackgroundColor',
-			'code',
-			'link',
-			'removeFormat',
-			'internallink',
-			'cuttonote'
-		]
-	},
-	image: {
-		styles: [
-			'alignLeft',
-			'alignCenter',
-			'alignRight',
-			'full', // full and side are for BC since the old images have been created with these styles
-			'side'
+	public static override defaultConfig = {
+		toolbar: {
+			items: [
+				'fontSize',
+				'bold',
+				'italic',
+				'underline',
+				'strikethrough',
+				'superscript',
+				'subscript',
+				'fontColor',
+				'fontBackgroundColor',
+				'code',
+				'link',
+				'removeFormat',
+				'internallink',
+				'cuttonote'
+			]
+		},
+		image: {
+			styles: [
+				'alignLeft',
+				'alignCenter',
+				'alignRight',
+				'full', // full and side are for BC since the old images have been created with these styles
+				'side'
+			],
+			resizeOptions: [
+				{
+					name: 'imageResize:original',
+					value: null,
+					icon: 'original'
+				},
+				{
+					name: 'imageResize:25',
+					value: '25',
+					icon: 'small'
+				},
+				{
+					name: 'imageResize:50',
+					value: '50',
+					icon: 'medium'
+				}
+			],
+			toolbar: [
+				'imageStyle:inline',
+				'imageStyle:alignLeft',
+				'imageStyle:alignCenter',
+				'imageStyle:alignRight',
+				'|',
+				'imageResize:25',
+				'imageResize:50',
+				'imageResize:original',
+				'|',
+				'toggleImageCaption'
+			]
+		},
+		heading: {
+			options: [
+				{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+				// heading1 is not used since that should be a note's title
+				{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+				{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+				{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+				{ model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+				{ model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+			]
+		},
+		blockToolbar: [
+			'heading',
+			'|',
+			'bulletedList', 'numberedList', 'todoList',
+			'|',
+			'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
+			'|',
+			'outdent', 'indent', 'horizontalLine',
+			'|',
+			'imageUpload',
+			'markdownImport',
+			'findAndReplace'
 		],
-		resizeOptions: [
-			{
-				name: 'imageResize:original',
-				value: null,
-				icon: 'original'
-			},
-			{
-				name: 'imageResize:25',
-				value: '25',
-				icon: 'small'
-			},
-			{
-				name: 'imageResize:50',
-				value: '50',
-				icon: 'medium'
+		table: {
+			contentToolbar: [
+				'tableColumn',
+				'tableRow',
+				'mergeTableCells',
+				'tableProperties',
+				'tableCellProperties',
+				'toggleTableCaption'
+			]
+		},
+		list: {
+			properties: {
+				styles: true,
+				startIndex: true,
+				reversed: true
 			}
-		],
-		toolbar: [
-			'imageStyle:inline',
-			'imageStyle:alignLeft',
-			'imageStyle:alignCenter',
-			'imageStyle:alignRight',
-			'|',
-			'imageResize:25',
-			'imageResize:50',
-			'imageResize:original',
-			'|',
-			'toggleImageCaption'
-		]
-	},
-	heading: {
-		options: [
-			{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-			// heading1 is not used since that should be a note's title
-			{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-			{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-			{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-			{ model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-			{ model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-		]
-	},
-	blockToolbar: [
-		'heading',
-		'|',
-		'bulletedList', 'numberedList', 'todoList',
-		'|',
-		'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
-		'|',
-		'outdent', 'indent', 'horizontalLine',
-		'|',
-		'imageUpload',
-		'markdownImport',
-		'findAndReplace'
-	],
-	table: {
-		contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells',
-			'tableProperties',
-			'tableCellProperties',
-			'toggleTableCaption'
-		]
-	},
-	list: {
-		properties: {
-			styles: true,
-			startIndex: true,
-			reversed: true
-		}
-	},
-	link: {
-		defaultProtocol: 'https://'
-	},
-	// This value must be kept in sync with the language defined in webpack.config.js.
-	language: 'en'
-};
+		},
+		link: {
+			defaultProtocol: 'https://'
+		},
+		// This value must be kept in sync with the language defined in webpack.config.js.
+		language: 'en'
+	};
+}
