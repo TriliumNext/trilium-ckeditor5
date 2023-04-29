@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -10,13 +10,19 @@ import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud
 ClassicEditor
 	.create( document.querySelector( '#toolbar-nested-tooltip' ), {
 		toolbar: [
+			'undo', 'redo', '|',
 			{
-				label: 'Others',
-				tooltip: 'Additional editing features',
-				items: [ 'bold', 'italic' ]
+				label: 'Formatting',
+				tooltip: 'Basic formatting features',
+				items: [ 'bold', 'italic', 'strikethrough', 'superscript', 'subscript' ]
 			},
 			'|',
-			'undo', 'redo'
+			{
+				label: 'Inserting',
+				icon: 'plus',
+				tooltip: 'Insert media',
+				items: [ 'uploadImage', 'insertTable' ]
+			}
 		],
 		cloudServices: CS_CONFIG,
 		ui: {

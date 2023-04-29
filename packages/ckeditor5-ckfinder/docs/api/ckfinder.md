@@ -10,7 +10,7 @@ This package implements the {@link features/ckfinder CKFinder feature}. This fea
 
 ## Demo
 
-Check out the {@link features/ckfinder#demo demos} in the integration guide.
+Check out the {@link features/ckfinder#demos demos} in the integration guide.
 
 ## Documentation
 
@@ -26,7 +26,7 @@ npm install --save @ckeditor/ckeditor5-ckfinder
 
 ## Contribute
 
-The source code of this package is available on GitHub in https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-ckfinder.
+The source code of this package is available on GitHub in [https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-ckfinder](https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-ckfinder).
 
 ## External links
 

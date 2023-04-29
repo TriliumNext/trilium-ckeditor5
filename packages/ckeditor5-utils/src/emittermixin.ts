@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -11,6 +11,7 @@ import EventInfo from './eventinfo';
 import uid from './uid';
 import priorities, { type PriorityString } from './priorities';
 import insertToPriorityArray from './inserttopriorityarray';
+import type { Constructor, Mixed } from './mix';
 
 // To check if component is loaded more than once.
 import './version';
@@ -36,16 +37,13 @@ const defaultEmitterClass = EmitterMixin( Object );
  * ```
  *
  * Read more about the concept of emitters in the:
- * * {@glink framework/guides/architecture/core-editor-architecture#event-system-and-observables Event system and observables}
- * section of the {@glink framework/guides/architecture/core-editor-architecture Core editor architecture} guide.
- * * {@glink framework/guides/deep-dive/event-system Event system} deep-dive guide.
+ * * {@glink framework/architecture/core-editor-architecture#event-system-and-observables Event system and observables}
+ * section of the {@glink framework/architecture/core-editor-architecture Core editor architecture} guide.
+ * * {@glink framework/deep-dive/event-system Event system} deep-dive guide.
+ *
+ * @label EXTENDS
  */
-export default function EmitterMixin<Base extends abstract new ( ...args: Array<any> ) => object>(
-	base: Base
-): {
-	new ( ...args: ConstructorParameters<Base> ): InstanceType<Base> & Emitter;
-	prototype: InstanceType<Base> & Emitter;
-};
+export default function EmitterMixin<Base extends Constructor>( base: Base ): Mixed<Base, Emitter>;
 
 /**
  * Mixin that injects the {@link ~Emitter events API} into its host.
@@ -59,16 +57,18 @@ export default function EmitterMixin<Base extends abstract new ( ...args: Array<
  * ```
  *
  * Read more about the concept of emitters in the:
- * * {@glink framework/guides/architecture/core-editor-architecture#event-system-and-observables Event system and observables}
- * section of the {@glink framework/guides/architecture/core-editor-architecture Core editor architecture} guide.
- * * {@glink framework/guides/deep-dive/event-system Event system} deep dive guide.
+ * * {@glink framework/architecture/core-editor-architecture#event-system-and-observables Event system and observables}
+ * section of the {@glink framework/architecture/core-editor-architecture Core editor architecture} guide.
+ * * {@glink framework/deep-dive/event-system Event system} deep dive guide.
+ *
+ * @label NO_ARGUMENTS
  */
 export default function EmitterMixin(): {
 	new (): Emitter;
 	prototype: Emitter;
 };
 
-export default function EmitterMixin( base?: abstract new( ...args: Array<any> ) => object ): unknown {
+export default function EmitterMixin( base?: Constructor ): unknown {
 	if ( !base ) {
 		return defaultEmitterClass;
 	}
@@ -274,7 +274,7 @@ export default function EmitterMixin( base?: abstract new( ...args: Array<any> )
 				return eventInfo.return;
 			} catch ( err ) {
 				// @if CK_DEBUG // throw err;
-				/* istanbul ignore next */
+				/* istanbul ignore next -- @preserve */
 				CKEditorError.rethrowUnexpectedError( err as Error, this );
 			}
 		}
@@ -384,7 +384,7 @@ export default function EmitterMixin( base?: abstract new( ...args: Array<any> )
 /**
  * Emitter/listener interface.
  *
- * Can be easily implemented by a class by mixing the {@link module:utils/emittermixin~EmitterMixin} mixin.
+ * Can be easily implemented by a class by mixing the {@link module:utils/emittermixin~Emitter} mixin.
  *
  * ```ts
  * class MyClass extends EmitterMixin() {
@@ -393,9 +393,9 @@ export default function EmitterMixin( base?: abstract new( ...args: Array<any> )
  * ```
  *
  * Read more about the usage of this interface in the:
- * * {@glink framework/guides/architecture/core-editor-architecture#event-system-and-observables Event system and observables}
- * section of the {@glink framework/guides/architecture/core-editor-architecture Core editor architecture} guide.
- * * {@glink framework/guides/deep-dive/event-system Event system} deep-dive guide.
+ * * {@glink framework/architecture/core-editor-architecture#event-system-and-observables Event system and observables}
+ * section of the {@glink framework/architecture/core-editor-architecture Core editor architecture} guide.
+ * * {@glink framework/deep-dive/event-system Event system} deep-dive guide.
  */
 export interface Emitter {
 
@@ -462,7 +462,8 @@ export interface Emitter {
 	 * An event callback can {@link module:utils/eventinfo~EventInfo#stop stop the event} and
 	 * set the {@link module:utils/eventinfo~EventInfo#return return value} of the {@link #fire} method.
 	 *
-	 * @typeParam TEvent The type descibing the event. See {@link module:utils/emittermixin~BaseEvent}.
+	 * @label BASE_EMITTER
+	 * @typeParam TEvent The type describing the event. See {@link module:utils/emittermixin~BaseEvent}.
 	 * @param emitter The object that fires the event.
 	 * @param event The name of the event.
 	 * @param callback The function to be called on event.
@@ -483,6 +484,7 @@ export interface Emitter {
 	 * * To stop listening to all events fired by a specific object.
 	 * * To stop listening to all events fired by all objects.
 	 *
+	 * @label BASE_STOP
 	 * @param emitter The object to stop listening to. If omitted, stops it for all objects.
 	 * @param event (Requires the `emitter`) The name of the event to stop listening to. If omitted, stops it
 	 * for all events from `emitter`.
@@ -497,7 +499,7 @@ export interface Emitter {
 	 * The first parameter passed to callbacks is an {@link module:utils/eventinfo~EventInfo} object,
 	 * followed by the optional `args` provided in the `fire()` method call.
 	 *
-	 * @typeParam TEvent The type descibing the event. See {@link module:utils/emittermixin~BaseEvent}.
+	 * @typeParam TEvent The type describing the event. See {@link module:utils/emittermixin~BaseEvent}.
 	 * @param eventOrInfo The name of the event or `EventInfo` object if event is delegated.
 	 * @param args Additional arguments to be passed to the callbacks.
 	 * @returns By default the method returns `undefined`. However, the return value can be changed by listeners

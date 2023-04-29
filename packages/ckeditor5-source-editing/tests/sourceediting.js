@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -511,6 +511,22 @@ describe( 'SourceEditing', () => {
 				'    Foo\n' +
 				'</p>'
 			);
+		} );
+	} );
+
+	describe( 'updateEditorData', () => {
+		it( 'should update editor model when called', () => {
+			button.fire( 'execute' );
+
+			const domRoot = editor.editing.view.getDomRoot();
+			const textarea = domRoot.nextSibling.children[ 0 ];
+
+			textarea.value = 'bar';
+			textarea.dispatchEvent( new Event( 'input' ) );
+
+			expect( getData( editor.model, { withoutSelection: true } ) ).to.equal( '<paragraph>Foo</paragraph>' );
+			plugin.updateEditorData();
+			expect( getData( editor.model, { withoutSelection: true } ) ).to.equal( '<paragraph>bar</paragraph>' );
 		} );
 	} );
 

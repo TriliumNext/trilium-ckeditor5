@@ -1,18 +1,17 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* globals window */
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/src/ckeditor';
+import { ImageResize, ImageInsert, AutoImage } from '@ckeditor/ckeditor5-image';
+import { LinkImage } from '@ckeditor/ckeditor5-link';
+import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
+import { Alignment } from '@ckeditor/ckeditor5-alignment';
 
-import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
-import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert';
-import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
-import LinkImage from '@ckeditor/ckeditor5-link/src/linkimage';
-import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+// Umberto combines all `packages/*/docs` into the `docs/` directory. The import path must be valid after merging all directories.
+import ClassicEditor from '../build-classic';
 
 ClassicEditor.builtinPlugins.push( ImageResize );
 ClassicEditor.builtinPlugins.push( ImageInsert );

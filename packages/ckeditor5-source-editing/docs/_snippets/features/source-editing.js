@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -11,35 +11,13 @@ ClassicEditor
 	.create( document.querySelector( '#editor' ), {
 		toolbar: {
 			items: [
-				'heading',
-				'|',
-				'alignment',
-				'outdent',
-				'indent',
-				'|',
-				'bold',
-				'italic',
-				'underline',
-				'strikethrough',
-				'subscript',
-				'superscript',
-				'code',
-				'-',
-				'codeBlock',
-				'blockQuote',
-				'link',
-				'uploadImage',
-				'insertTable',
-				'mediaEmbed',
-				'|',
-				'bulletedList',
-				'numberedList',
-				'todoList',
-				'|',
-				'undo',
-				'redo',
-				'|',
-				'sourceEditing'
+				'undo', 'redo',
+				'|', 'sourceEditing',
+				'|', 'heading',
+				'|', 'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', 'code',
+				'-', 'link', 'uploadImage', 'insertTable', 'blockQuote', 'mediaEmbed', 'codeBlock',
+				'|', 'alignment',
+				'|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
 			],
 			shouldNotGroupWhenFull: true
 		},
@@ -93,7 +71,10 @@ ClassicEditor
 			target: window.findToolbarItem( editor.ui.view.toolbar,
 				item => item.label && item.label === 'Source' ),
 			text: 'Switch to the source mode to edit the HTML source.',
-			editor
+			editor,
+			tippyOptions: {
+				placement: 'bottom-start'
+			}
 		} );
 	} )
 	.catch( err => {

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -10,7 +10,7 @@ import CKEditorError from '../../src/ckeditorerror';
 import areConnectedThroughProperties from '../../src/areconnectedthroughproperties';
 
 /**
- * Creates an instance inheriting from {@link module:utils/emittermixin~EmitterMixin} with one additional method `observe()`.
+ * Creates an instance inheriting from {@link module:utils/emittermixin~Emitter} with one additional method `observe()`.
  * It allows observing changes to attributes in objects being {@link module:utils/observablemixin~Observable observable}.
  *
  * The `observe()` method accepts:

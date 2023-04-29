@@ -1,13 +1,13 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* globals console, window, document */
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/src/ckeditor';
 import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
 import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud-services-config';
+import ClassicEditor from '../../build-classic';
 
 ClassicEditor
 	.create( document.querySelector( '#snippet-classic-editor' ), {

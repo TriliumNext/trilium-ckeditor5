@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -7,7 +7,7 @@
  * @module essentials/essentials
  */
 
-import { Plugin, type PluginDependencies } from 'ckeditor5/src/core';
+import { Plugin } from 'ckeditor5/src/core';
 
 import { Clipboard } from 'ckeditor5/src/clipboard';
 import { Enter, ShiftEnter } from 'ckeditor5/src/enter';
@@ -35,8 +35,8 @@ export default class Essentials extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
-	public static get requires(): PluginDependencies {
-		return [ Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo ];
+	public static get requires() {
+		return [ Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo ] as const;
 	}
 
 	/**
@@ -46,10 +46,3 @@ export default class Essentials extends Plugin {
 		return 'Essentials';
 	}
 }
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ Essentials.pluginName ]: Essentials;
-	}
-}
-

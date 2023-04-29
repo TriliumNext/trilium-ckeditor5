@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -11,7 +11,7 @@
 
 const path = require( 'path' );
 const fs = require( 'fs' );
-const devEnv = require( '@ckeditor/ckeditor5-dev-env' );
+const { generateChangelogForMonoRepository } = require( '@ckeditor/ckeditor5-dev-release-tools' );
 
 const CKEDITOR5_INTERNAL_PATH = path.resolve( __dirname, '..', '..', 'external', 'ckeditor5-internal' );
 const COLLABORATION_FEATURES_PATH = path.resolve( __dirname, '..', '..', 'external', 'collaboration-features' );
@@ -25,7 +25,7 @@ if ( !fs.existsSync( COLLABORATION_FEATURES_PATH ) ) {
 }
 
 Promise.resolve()
-	.then( () => devEnv.generateChangelogForMonoRepository( {
+	.then( () => generateChangelogForMonoRepository( {
 		cwd: process.cwd(),
 		packages: 'packages',
 		releaseBranch: 'release',
@@ -37,6 +37,10 @@ Promise.resolve()
 
 			if ( name === 'build-*' ) {
 				return 'https://www.npmjs.com/search?q=keywords%3Ackeditor5-build%20maintainer%3Ackeditor';
+			}
+
+			if ( name === 'editor-*' ) {
+				return 'https://www.npmjs.com/search?q=keywords%3Ackeditor5-editor%20maintainer%3Ackeditor';
 			}
 
 			if ( name === 'letters' ) {

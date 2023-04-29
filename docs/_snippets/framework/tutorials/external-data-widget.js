@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -197,7 +197,7 @@ class ExternalDataWidgetEditing extends Plugin {
 ClassicEditor
 	.create( document.querySelector( '#snippet-external-data-widget' ), {
 		plugins: [ Essentials, Paragraph, Heading, List, Bold, Italic, ExternalDataWidget ],
-		toolbar: [ 'external', '|', 'heading', 'bold', 'italic', 'numberedList', 'bulletedList', '|', 'undo', 'redo' ]
+		toolbar: [ 'undo', 'redo', '|', 'external', '|', 'heading', '|', 'bold', 'italic', '|', 'numberedList', 'bulletedList' ]
 	} )
 	.then( editor => {
 		console.log( 'Editor was initialized', editor );

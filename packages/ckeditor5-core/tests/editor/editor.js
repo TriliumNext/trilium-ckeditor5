@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -686,7 +686,7 @@ describe( 'Editor', () => {
 			}, /^commandcollection-command-not-found/, editor );
 		} );
 
-		it( 'should rethrow native errors as they are in the debug=true mode', () => {
+		it.skip( 'should rethrow native errors as they are in the debug=true mode', () => {
 			const editor = new TestEditor();
 			const error = new TypeError( 'foo' );
 

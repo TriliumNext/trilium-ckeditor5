@@ -1,15 +1,16 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* globals console, window, document, setTimeout */
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/src/ckeditor';
-import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
-import Mention from '@ckeditor/ckeditor5-mention/src/mention';
+import { Underline, Strikethrough } from '@ckeditor/ckeditor5-basic-styles';
+import { Mention } from '@ckeditor/ckeditor5-mention';
 import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud-services-config';
+
+// Umberto combines all `packages/*/docs` into the `docs/` directory. The import path must be valid after merging all directories.
+import ClassicEditor from '../build-classic';
 
 ClassicEditor
 	.create( document.querySelector( '.chat__editor' ), {
@@ -17,7 +18,10 @@ ClassicEditor
 		extraPlugins: [ Mention, MentionLinks, Underline, Strikethrough ],
 		toolbar: {
 			items: [
-				'bold', 'italic', 'underline', 'strikethrough', '|', 'link', '|', 'undo', 'redo'
+				'undo', 'redo', '|', 'heading',
+				'|', 'bold', 'italic', 'underline', 'strikethrough',
+				'|', 'link', 'uploadImage', 'insertTable', 'mediaEmbed',
+				'|', 'bulletedList', 'numberedList', 'outdent', 'indent'
 			]
 		},
 		ui: {

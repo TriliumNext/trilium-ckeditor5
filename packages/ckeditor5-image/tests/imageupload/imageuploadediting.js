@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -27,6 +27,7 @@ import { getData as getViewData, stringify as stringifyView } from '@ckeditor/ck
 
 import Notification from '@ckeditor/ckeditor5-ui/src/notification/notification';
 import { downcastImageAttribute } from '../../src/image/converters';
+import { assertCKEditorError } from '@ckeditor/ckeditor5-utils/tests/_utils/utils';
 
 describe( 'ImageUploadEditing', () => {
 	// eslint-disable-next-line max-len
@@ -579,8 +580,7 @@ describe( 'ImageUploadEditing', () => {
 				sinon.assert.calledOnce( catchSpy );
 				const error = catchSpy.getCall( 0 ).args[ 0 ];
 
-				expect( error ).to.be.instanceOf( Error );
-				expect( error ).to.haveOwnProperty( 'message', 'Foo bar baz' );
+				assertCKEditorError( error, /^Foo bar baz/ );
 
 				done();
 			}, 0 );

@@ -1,5 +1,6 @@
 ---
-category: features
+category: features-html
+order: 20
 modified_at: 2021-10-25
 ---
 
@@ -7,9 +8,23 @@ modified_at: 2021-10-25
 
 {@snippet features/general-html-support-source}
 
-The General HTML Support ("GHS") feature allows developers to easily enable HTML features that are not explicitly supported by any other dedicated CKEditor 5 plugins. GHS allows for adding markup like elements, attributes, classes and styles to the source and prevents it from being filtered from the editor window and the output.
+With the General HTML Support ("GHS") feature, developers can easily enable HTML features that are not supported by any other dedicated CKEditor 5 plugins. GHS lets you add elements, attributes, classes, and styles to the source and ensures this markup stays in the editor window and in the output.
 
-Some examples of HTML features that can be easily enabled using General HTML Support include:
+## Demo
+
+Use the {@link features/source-editing source editing feature} toolbar button {@icon @ckeditor/ckeditor5-source-editing/theme/icons/source-editing.svg Source editing} to view and edit the HTML source of the document. You can find the configuration of this snippet below the demo.
+
+The General HTML Support feature is configured using the `config.htmlSupport` property. With this property, you need to list the HTML features that should be handled by GHS.
+
+{@snippet features/general-html-support}
+
+<info-box info>
+	This demo only presents a limited set of features. Visit the {@link examples/builds/full-featured-editor full-featured editor example} to see more in action.
+</info-box>
+
+## Additional feature information
+
+Here are some examples of HTML features that can be easily enabled using General HTML Support:
 
 * The `<section>`, `<article>`, and `<div>` elements.
 * The `<audio>`, `<video>`, and `<iframe>` elements.
@@ -20,33 +35,13 @@ Some examples of HTML features that can be easily enabled using General HTML Sup
 
 The enabled HTML features can be loaded (e.g. via `editor.setData()`), pasted, output (e.g. via `editor.getData()`), and are visible in the editing area. Such content can also be edited in the editor, although, to a limited extent. Read more about it in the [Level of support](#level-of-support) section.
 
-<info-box info>
-	The GHS feature is enabled by default in the {@link installation/getting-started/predefined-builds#superbuild superbuild} only. See the [installation](#installation) section to learn how to enable it in your editor.
-</info-box>
-
-## Demo
-
-Use the {@link features/source-editing source editing feature} toolbar button {@icon @ckeditor/ckeditor5-source-editing/theme/icons/source-editing.svg Source editing} to view and edit the HTML source of the document in the demo below. The configuration of this snippet can be found below the demo editor window.
-
-The General HTML Support feature is configured via the `config.htmlSupport` property. In it, you need to list the HTML features that should be handled by GHS.
-
-{@snippet features/general-html-support}
-
-<info-box info>
-	This demo only presents a limited set of features. Visit the {@link examples/builds/full-featured-editor full-featured editor example} to see more in action.
-</info-box>
-
-## Related features
-
-There is a closely related {@link features/source-editing source editing feature} which allows access and edition of the HTML source code of the document. When paired, these two plugins let the user gain powerful control over the content editing.
-
 ## Level of support
 
 The difference between specific CKEditor 5 features such as {@link features/basic-styles basic styles} or {@link features/headings headings} and the HTML features enabled by GHS is that a plugin that supports a specific HTML feature provides a complete user experience for that feature, whereas GHS ensures only that such a content is accepted by the editor.
 
 For instance, the dedicated {@link features/basic-styles#available-text-styles bold} feature offers a toolbar button used to make the selected text bold. Together with the {@link features/autoformat autoformatting feature}, it also allows for applying bold style to content by typing a Markdown shortcode (`**foo**`) in the editor. The {@link features/headings headings} feature offers a dropdown from which the user can choose a heading level and ensures that pressing <kbd>Enter</kbd> at the end of a heading creates a new paragraph (and not another heading).
 
-The General HTML Support does not offer any UI for the enabled features and takes only the basic semantics of a given feature into account. If you enable support for `<div>`s via GHS, the user will not be able to create `<div>`s from the editor UI. The GHS will know that a `<div>` is a container element, so it can wrap other blocks (like paragraphs) but cannot be used inline (next to e.g. a `<strong>` element). It is, in this respect, similar to the content filtering (ACF) feature from CKEditor 4 as it allows creating a set or a list of markup tags that will not be stripped.
+The General HTML Support does not offer any UI for the enabled features and takes only the basic semantics of a given feature into account. If you enable support for `<div>`s via GHS, the user will not be able to create `<div>`s from the editor UI. The GHS will know that a `<div>` is a container element, so it can wrap other blocks (like paragraphs) but cannot be used inline (next to e.g. a `<strong>` element). It is, in this respect, similar to the content filtering (ACF) feature from CKEditor 4 as it lets you create a set or a list of markup tags that will not be stripped.
 
 Therefore, GHS's main use cases would be:
 
@@ -54,10 +49,14 @@ Therefore, GHS's main use cases would be:
 * Introducing basic support for missing HTML features at a low cost.
 
 <info-box>
-	Taken the nature of GHS, you may consider installing the {@link features/source-editing source editing} feature alongside with it.
+	Taken the nature of GHS, you may consider installing the {@link features/source-editing source editing} feature alongside it.
 </info-box>
 
 ## Installation
+
+<info-box info>
+	This feature is enabled by default in the {@link installation/getting-started/predefined-builds#superbuild superbuild} only.
+</info-box>
 
 To add this feature to your rich-text editor, install the [`@ckeditor/ckeditor5-html-support`](https://www.npmjs.com/package/@ckeditor/ckeditor5-html-support) package:
 
@@ -72,14 +71,14 @@ import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtml
 
 ClassicEditor
 	.create( document.querySelector( '#editor' ), {
-		plugins: [ GeneralHtmlSupport, ... ],
+		plugins: [ GeneralHtmlSupport, /* ... */ ],
 	} )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 <info-box info>
-	Read more about {@link installation/getting-started/installing-plugins installing plugins}.
+	Read more about {@link installation/plugins/installing-plugins installing plugins}.
 </info-box>
 
 ## Configuration
@@ -175,7 +174,7 @@ The General HTML Support feature distinguishes several content types, each treat
 * Inline elements (e.g. `<span>`, `<a>`).
 * Object elements (e.g. `<iframe>`, `<video>`).
 
-The enabled elements will not just be available "anywhere" in the content, as they still need to adhere to certain rules derived from the HTML schema and from common sense. Also, the behavior of specific types of elements in the editing area will be different. For instance, the object elements will only be selectable as a whole, and the inline elements will work the same as other formatting features supported by CKEditor 5 (e.g. bold, italic) do.
+The enabled elements will not just be available "anywhere" in the content, as they still need to adhere to certain rules derived from the HTML schema as well as common sense. Also, the behavior of specific types of elements in the editing area will be different. For instance, the object elements will only be selectable as a whole, and the inline elements will work the same as other formatting features supported by CKEditor 5 (e.g. bold, italic) do.
 
 ### Enabling all HTML features
 
@@ -202,7 +201,7 @@ The above configuration will work similarly to [`allowedContent: true`](/docs/ck
 
 ### Security
 
-When you set up the GHS to allow elements like `<script>` or attributes like `onclick`, you expose the users of your application to a possibly malicious markup &mdash; whether it is a code mistakenly copied from a risky website or purposely provided by a bad actor. An example of that could be: `<div onclick="leakUserData()">`.
+When you set up the GHS to allow elements like `<script>` or attributes like `onclick`, you expose the users of your application to a possibly malicious markup &mdash; whether it is code mistakenly copied from a risky website or purposely provided by a bad actor. An example of that could be: `<div onclick="leakUserData()">`.
 
 The content inside the editor (what you see in the editing area) is filtered by default from typical content that could break the editor. However, the editor does not feature a full XSS filter. Thus, we recommend configuring GHS to enable specific HTML markup, instead of enabling all markup at once.
 
@@ -318,66 +317,17 @@ dataFilter.allowElement( 'object-block' );
 
 ## Known issues
 
-It is possible to add support for arbitrary styles, classes and other attributes to existing CKEditor 5 features (such as paragraphs, headings, list items, etc.). Most of the existing CKEditor 5 features can already be extended this way, however, some cannot yet. This includes e.g.: the `<ul>` and `<ol>` elements of the list feature (see: [#9917](https://github.com/ckeditor/ckeditor5/issues/9917)).
-
-We are open for feedback, so if you find any issue, feel free to report it in the [main CKEditor 5 repository](https://github.com/ckeditor/ckeditor5/issues/). You can also track other [GHS-related issues](https://github.com/ckeditor/ckeditor5/issues/9856) on GitHub.
-
-## HTML comments
-
-By default, all HTML comments are filtered out during the editor initialization. The HTML Comments feature allows developers to keep them in the document content and retrieve them back, e.g. while {@link installation/advanced/saving-data saving the editor data}. The comments are transparent from the users point of view and they are not displayed in the editable content.
-
-<info-box>
-	The HTML comment feature is **experimental and not yet production-ready**.
-
-	The support for HTML comments is at the basic level so far - see the [known issues](#known-issues-2) section below.
-</info-box>
-
-### Demo
-
-The CKEditor 5 instance below is configured to keep the HTML comments in the document content. You can view the source of the document using {@link features/source-editing source editing} feature. Toggle the source editing mode {@icon @ckeditor/ckeditor5-source-editing/theme/icons/source-editing.svg Source editing} to see that the HTML comment is present in the document source. You can uncomment the paragraph below the picture and upon leaving the source editing mode, you will see this paragraph in the editable area.
-
-{@snippet features/html-comment}
-
-### Installation
-
-To add this feature to your rich-text editor, install the [`@ckeditor/ckeditor5-html-support`](https://www.npmjs.com/package/@ckeditor/ckeditor5-html-support) package:
-
-```plaintext
-npm install --save @ckeditor/ckeditor5-html-support
-```
-
-Then add it to the editor configuration:
-
-```js
-import HtmlComment from '@ckeditor/ckeditor5-html-support/src/htmlcomment';
-
-ClassicEditor
-	.create( document.querySelector( '#editor' ), {
-		plugins: [ HtmlComment, ... ],
-	} )
-	.then( ... )
-	.catch( ... );
-```
+It is possible to add support for arbitrary styles, classes, and other attributes to existing CKEditor 5 features (such as paragraphs, headings, list items, etc.). Most of the existing CKEditor 5 features can already be extended this way, however, some cannot yet. This includes e.g.: the `<ul>` and `<ol>` elements of the list feature (see: [#9917](https://github.com/ckeditor/ckeditor5/issues/9917)).
 
 <info-box info>
-	Read more about {@link installation/getting-started/installing-plugins installing plugins}.
+	While the GHS feature is stable, some problems with complex documents may occur if it is used together with {@link features/real-time-collaboration real-time collaboration}.
 </info-box>
 
-HTML comment feature does not require any configuration.
-
-### Known issues
-
-The main issue with the HTML comments feature is that comments can be easily repositioned or lost in various cases [#10118](https://github.com/ckeditor/ckeditor5/issues/10118), [#10119](https://github.com/ckeditor/ckeditor5/issues/10119). Also copying and pasting (or dragging and dropping) elements containing HTML comments within the editor does not work as expected [#10127](https://github.com/ckeditor/ckeditor5/issues/10127).
-
-We are open for feedback, so if you find any issue, feel free to report it in the [main CKEditor 5 repository](https://github.com/ckeditor/ckeditor5/issues/).
+We are open to feedback, so if you find any issue, feel free to report it in the [main CKEditor 5 repository](https://github.com/ckeditor/ckeditor5/issues/). You can also track other [GHS-related issues](https://github.com/ckeditor/ckeditor5/issues/9856) on GitHub <!-- To be removed at some point, as the main issue is closed already -->.
 
 ## Related features
 
-There are other HTML editing related CKEditor 5 features you may want to check:
+CKEditor 5 has other features related to HTML editing that you may want to check:
 
-* {@link features/source-editing Source editing} &ndash; Provides the ability for viewing and editing the source of the document. When paired, these two plugins let the user gain powerful control over the content editing.
+* {@link features/source-editing Source editing} &ndash; Provides the ability for viewing and editing the source of the document. When paired, these two plugins let the user gain powerful control over content editing.
 * {@link features/html-embed HTML embed} &ndash; Allows embedding an arbitrary HTML snippet in the editor. It is a more constrained and controllable approach to arbitrary HTML than GHS.
-
-## Contribute
-
-The source code of the feature is available on GitHub in https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-html-support.

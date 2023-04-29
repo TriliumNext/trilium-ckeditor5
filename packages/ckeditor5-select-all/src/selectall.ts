@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -7,7 +7,7 @@
  * @module select-all/selectall
  */
 
-import { Plugin, type PluginDependencies } from '@ckeditor/ckeditor5-core';
+import { Plugin } from '@ckeditor/ckeditor5-core';
 import SelectAllEditing from './selectallediting';
 import SelectAllUI from './selectallui';
 
@@ -18,15 +18,13 @@ import SelectAllUI from './selectallui';
  * and the {@link module:select-all/selectallui~SelectAllUI select all UI feature}.
  *
  * Please refer to the documentation of individual features to learn more.
- *
- * @extends module:core/plugin~Plugin
  */
 export default class SelectAll extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
-	public static get requires(): PluginDependencies {
-		return [ SelectAllEditing, SelectAllUI ];
+	public static get requires() {
+		return [ SelectAllEditing, SelectAllUI ] as const;
 	}
 
 	/**
@@ -34,11 +32,5 @@ export default class SelectAll extends Plugin {
 	 */
 	public static get pluginName(): 'SelectAll' {
 		return 'SelectAll';
-	}
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ SelectAll.pluginName ]: SelectAll;
 	}
 }

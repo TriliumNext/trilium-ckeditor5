@@ -6,14 +6,12 @@ order: 60
 
 # Simple upload adapter
 
-The simple upload adapter allows uploading images to your server using the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) API with a minimal [editor configuration](#configuration).
-
-See the [Server–side configuration](#server-side-configuration) section to learn about the requirements your server–side application must meet to support this upload adapter.
+The simple upload adapter lets you upload images to your server using the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) API with a minimal [editor configuration](#configuration). See the [Server-side configuration](#server-side-configuration) section to learn about the requirements for your server-side application.
 
 ## Installation
 
 <info-box info>
-	The {@link module:upload/adapters/simpleuploadadapter~SimpleUploadAdapter simple upload adapter} plugin is not available out–of–the–box in any of {@link installation/getting-started/predefined-builds#available-builds official editor builds}. Check out the {@link installation/getting-started/installing-plugins "Installing plugins" guide} to learn more.
+	This feature is not available in any of the {@link installation/getting-started/predefined-builds predefined builds}. See the [installation](#installation) section to learn how to enable it in your editor.
 </info-box>
 
 First, install the [`@ckeditor/ckeditor5-upload`](https://www.npmjs.com/package/@ckeditor/ckeditor5-upload) package:
@@ -29,31 +27,31 @@ import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleu
 
 ClassicEditor
 	.create( document.querySelector( '#editor' ), {
-		plugins: [ SimpleUploadAdapter, ... ],
-		toolbar: [ ... ],
+		plugins: [ SimpleUploadAdapter, /* ... */ ],
+		toolbar: [ /* ... */ ],
 		simpleUpload: {
 			// Feature configuration.
 		}
 	} )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 <info-box info>
-	Read more about {@link installation/getting-started/installing-plugins installing plugins}.
+	Read more about {@link installation/plugins/installing-plugins installing plugins}.
 </info-box>
 
 ## Configuration
 
-The client side of this feature is configurable using the {@link module:upload/adapters/simpleuploadadapter~SimpleUploadConfig `config.simpleUpload`} object.
+The client side of this feature is configurable using the {@link module:upload/uploadconfig~SimpleUploadConfig `config.simpleUpload`} object.
 
 ```js
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 ClassicEditor
 	.create( document.querySelector( '#editor' ), {
-		plugins: [ SimpleUploadAdapter, ... ],
-		toolbar: [ ... ],
+		plugins: [ SimpleUploadAdapter, /* ... */ ],
+		toolbar: [ /* ... */ ],
 		simpleUpload: {
 			// The URL that the images are uploaded to.
 			uploadUrl: 'http://example.com',
@@ -68,8 +66,8 @@ ClassicEditor
 			}
 		}
 	} )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 ### Configuring allowed file types
@@ -81,9 +79,9 @@ The allowed file types that can be uploaded should actually be configured in two
 
 #### Client-side configuration
 
-Use the {@link module:image/imageupload~ImageUploadConfig#types `image.upload.types`} configuration option to define the allowed image MIME types that can be uploaded to CKEditor 5.
+Use the {@link module:image/imageconfig~ImageUploadConfig#types `image.upload.types`} configuration option to define the allowed image MIME types that can be uploaded to CKEditor 5.
 
-By default, users are allowed to upload `jpeg`, `png`, `gif`, `bmp`, `webp` and `tiff` files, but you can customize this behavior to accept, for example, SVG files.
+By default, users are allowed to upload `jpeg`, `png`, `gif`, `bmp`, `webp`, and `tiff` files, but you can customize this behavior to accept, for example, SVG files.
 
 #### Server-side configuration
 
@@ -91,15 +89,15 @@ It is up to you to implement any filtering mechanisms on your server in order to
 
 ## Server-side configuration
 
-To use this upload adapter, you must provide a server–side application that will handle the uploads and communicate with the editor, as described in the following sections.
+To use this upload adapter, you must provide a server-side application that will handle the uploads and communicate with the editor, as described in the following sections.
 
 ### Communication protocol
 
-When the image upload process is initiated, the adapter sends a [`POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request under {@link module:upload/adapters/simpleuploadadapter~SimpleUploadConfig#uploadUrl `config.simpleUpload.uploadUrl`}.
+When the image upload process is initiated, the adapter sends a [`POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request under {@link module:upload/uploadconfig~SimpleUploadConfig#uploadUrl `config.simpleUpload.uploadUrl`}.
 
-You can send additional [headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) along with the `XMLHttpRequest` to the upload server, e.g. to authenticate the user, using the {@link module:upload/adapters/simpleuploadadapter~SimpleUploadConfig#uploadUrl `config.simpleUpload.headers`} object.
+You can send additional [headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) along with the `XMLHttpRequest` to the upload server, e.g. to authenticate the user, using the {@link module:upload/uploadconfig~SimpleUploadConfig#uploadUrl `config.simpleUpload.headers`} object.
 
-If you use the {@link module:upload/adapters/simpleuploadadapter~SimpleUploadConfig#withCredentials `config.simpleUpload.withCredentials`} configuration, you may need some [extra HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) for the cross–site request to work properly.
+If you use the {@link module:upload/uploadconfig~SimpleUploadConfig#withCredentials `config.simpleUpload.withCredentials`} configuration, you may need some [extra HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) for the cross-site request to work properly.
 
 The [`responseType`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) of the request is always `json`. See the [Successful upload](#successful-upload) and [Error handling](#error-handling) sections to learn more.
 
@@ -133,7 +131,7 @@ If the upload is successful, the server should return:
 The URL(s) in the server response are used:
 
 * To display the image during the editing (as seen by the user in the editor).
-* In the editor content {@link installation/advanced/saving-data saved to the database}.
+* In the editor content {@link installation/getting-started/getting-and-setting-data saved to the database}.
 
 ### Error handling
 
@@ -163,4 +161,4 @@ See the {@link features/images-overview Image feature guide} to find out more ab
 
 ## Contribute
 
-The source code of the feature is available on GitHub in https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-upload.
+The source code of the feature is available on GitHub at [https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-upload](https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-upload).

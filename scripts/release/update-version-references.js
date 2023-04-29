@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -13,7 +13,7 @@ const fs = require( 'fs' );
 const path = require( 'path' );
 const chalk = require( 'chalk' );
 const { tools } = require( '@ckeditor/ckeditor5-dev-utils' );
-const versionUtils = require( '@ckeditor/ckeditor5-dev-env/lib/release-tools/utils/versions' );
+const { getLastFromChangelog } = require( '@ckeditor/ckeditor5-dev-release-tools' );
 
 // This script updates the version of CKEditor 5 in several places.
 //
@@ -32,7 +32,7 @@ const ENTRIES_TO_UPDATE = [
 	}
 ];
 
-const cke5version = versionUtils.getLastFromChangelog();
+const cke5version = getLastFromChangelog();
 let shouldCommit = false;
 
 console.log( chalk.blue( 'Updating CKEditor 5 version references.\n' ) );

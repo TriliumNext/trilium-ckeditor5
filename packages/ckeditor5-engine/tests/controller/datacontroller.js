@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -22,6 +22,8 @@ import UpcastHelpers from '../../src/conversion/upcasthelpers';
 import DowncastHelpers from '../../src/conversion/downcasthelpers';
 import { expectToThrowCKEditorError } from '@ckeditor/ckeditor5-utils/tests/_utils/utils';
 import { StylesProcessor } from '../../src/view/stylesmap';
+
+/* global console */
 
 describe( 'DataController', () => {
 	let model, modelDocument, data, schema, upcastHelpers, downcastHelpers, viewDocument;
@@ -139,6 +141,16 @@ describe( 'DataController', () => {
 			schema.register( 'paragraph', { inheritAllFrom: '$block' } );
 
 			upcastHelpers.elementToElement( { view: 'p', model: 'paragraph' } );
+		} );
+
+		it( 'should be decorated', () => {
+			const viewElement = parseView( '<p>foo</p>' );
+			const spy = sinon.spy();
+
+			data.on( 'toModel', spy );
+			data.toModel( viewElement );
+
+			sinon.assert.calledWithExactly( spy, sinon.match.any, [ viewElement ] );
 		} );
 
 		it( 'should convert content of an element #1', () => {
@@ -561,6 +573,23 @@ describe( 'DataController', () => {
 			setData( model, '<paragraph>foo</paragraph>' );
 			data.get();
 		} );
+
+		it( 'should return empty string and log a warning when asked for data from a detached root', () => {
+			setData( model, '<paragraph>foo</paragraph>' );
+
+			model.change( writer => {
+				writer.detachRoot( 'main' );
+			} );
+
+			const stub = sinon.stub( console, 'warn' );
+
+			const result = data.get( { rootName: 'main' } );
+
+			expect( result ).to.equal( '' );
+			sinon.assert.calledWithMatch( stub, 'datacontroller-get-detached-root' );
+
+			console.warn.restore();
+		} );
 	} );
 
 	describe( 'stringify()', () => {
@@ -620,6 +649,16 @@ describe( 'DataController', () => {
 
 			downcastHelpers.elementToElement( { model: 'paragraph', view: 'p' } );
 			downcastHelpers.elementToElement( { model: 'div', view: 'div' } );
+		} );
+
+		it( 'should be decorated', () => {
+			const modelElement = parseModel( '<div><paragraph>foo</paragraph></div>', schema );
+			const spy = sinon.spy();
+
+			data.on( 'toView', spy );
+			data.toView( modelElement );
+
+			sinon.assert.calledWithExactly( spy, sinon.match.any, [ modelElement ] );
 		} );
 
 		it( 'should use #viewDocument as a parent for returned document fragments', () => {

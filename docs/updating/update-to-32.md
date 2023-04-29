@@ -13,7 +13,7 @@ modified_at: 2021-12-10
 
 # Update to CKEditor 5 v32.0.0
 
-For the entire list of changes introduced in version 32.0.0, see the [changelog for CKEditor 5 v32.0.0](https://github.com/ckeditor/ckeditor5/blob/master/CHANGELOG.md#3200-2022-01-26).
+For the entire list of changes introduced in version 32.0.0, see the [release notes for CKEditor 5 v32.0.0](https://github.com/ckeditor/ckeditor5/releases/tag/v32.0.0).
 
 Listed below are the most important changes that require your attention when upgrading to CKEditor 5 v32.0.0.
 
@@ -99,7 +99,7 @@ class RevisionHistoryIntegration extends Plugin {
 
 Keep in mind that you can still pass the revisions data (`revisionsData`) straight in the web page source instead of making an asynchronous call.
 
-The adapter methods `#addRevision()` and `#updateRevision()` were removed in favor of {@link module:revision-history/revisionhistory~RevisionHistoryAdapter#updateRevisions `#updateRevisions()`} which needs to be implemented. The new method updates and/or saves one or multiple revisions in a single request. The input parameter is an array of objects containing revisions data. These may be either new revisions or existing revisions. Every object contains a revision ID, which should be checked to verify if a given revision already exists in your database. For new revisions, the data object contains all revision data. For existing revisions, only updated properties are passed:
+The adapter methods `#addRevision()` and `#updateRevision()` were removed in favor of {@link module:revision-history/revisionhistoryadapter~RevisionHistoryAdapter#updateRevisions `#updateRevisions()`} which needs to be implemented. The new method updates and/or saves one or multiple revisions in a single request. The input parameter is an array of objects containing revisions data. These may be either new revisions or existing revisions. Every object contains a revision ID, which should be checked to verify if a given revision already exists in your database. For new revisions, the data object contains all revision data. For existing revisions, only updated properties are passed:
 
 ```js
 /* Before v32.0.0 */

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -10,6 +10,10 @@
 import View from '../view';
 import FocusCycler from '../focuscycler';
 
+import type ListItemView from './listitemview';
+import type DropdownPanelFocusable from '../dropdown/dropdownpanelfocusable';
+import type ViewCollection from '../viewcollection';
+
 import {
 	FocusTracker,
 	KeystrokeHandler,
@@ -18,23 +22,37 @@ import {
 	type Locale
 } from '@ckeditor/ckeditor5-utils';
 
-import type ListItemView from './listitemview';
-import type DropdownPanelFocusable from '../dropdown/dropdownpanelfocusable';
-import type ViewCollection from '../viewcollection';
-
 import '../../theme/components/list/list.css';
 
 /**
  * The list view class.
- *
- * @extends module:ui/view~View
- * @implements module:ui/dropdown/dropdownpanelfocusable~DropdownPanelFocusable
  */
-export default class ListView extends View implements DropdownPanelFocusable {
+export default class ListView extends View<HTMLUListElement> implements DropdownPanelFocusable {
+	/**
+	 * Collection of the child list views.
+	 */
 	public readonly items: ViewCollection;
+
+	/**
+	 * Tracks information about DOM focus in the list.
+	 */
 	public readonly focusTracker: FocusTracker;
+
+	/**
+	 * Instance of the {@link module:utils/keystrokehandler~KeystrokeHandler}.
+	 */
 	public readonly keystrokes: KeystrokeHandler;
 
+	/**
+	 * Label used by assistive technologies to describe this list element.
+	 *
+	 * @observable
+	 */
+	declare public ariaLabel: string | undefined;
+
+	/**
+	 * Helps cycling over focusable {@link #items} in the list.
+	 */
 	private readonly _focusCycler: FocusCycler;
 
 	/**
@@ -43,37 +61,12 @@ export default class ListView extends View implements DropdownPanelFocusable {
 	constructor( locale?: Locale ) {
 		super( locale );
 
-		/**
-		 * Collection of the child list views.
-		 *
-		 * @readonly
-		 * @member {module:ui/viewcollection~ViewCollection}
-		 */
+		const bind = this.bindTemplate;
+
 		this.items = this.createCollection();
-
-		/**
-		 * Tracks information about DOM focus in the list.
-		 *
-		 * @readonly
-		 * @member {module:utils/focustracker~FocusTracker}
-		 */
 		this.focusTracker = new FocusTracker();
-
-		/**
-		 * Instance of the {@link module:utils/keystrokehandler~KeystrokeHandler}.
-		 *
-		 * @readonly
-		 * @member {module:utils/keystrokehandler~KeystrokeHandler}
-		 */
 		this.keystrokes = new KeystrokeHandler();
 
-		/**
-		 * Helps cycling over focusable {@link #items} in the list.
-		 *
-		 * @readonly
-		 * @protected
-		 * @member {module:ui/focuscycler~FocusCycler}
-		 */
 		this._focusCycler = new FocusCycler( {
 			focusables: this.items,
 			focusTracker: this.focusTracker,
@@ -87,6 +80,8 @@ export default class ListView extends View implements DropdownPanelFocusable {
 			}
 		} );
 
+		this.set( 'ariaLabel', undefined );
+
 		this.setTemplate( {
 			tag: 'ul',
 
@@ -95,7 +90,8 @@ export default class ListView extends View implements DropdownPanelFocusable {
 					'ck',
 					'ck-reset',
 					'ck-list'
-				]
+				],
+				'aria-label': bind.to( 'ariaLabel' )
 			},
 
 			children: this.items

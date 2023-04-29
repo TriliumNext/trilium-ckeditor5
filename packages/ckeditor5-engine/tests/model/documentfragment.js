@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -104,6 +104,14 @@ describe( 'DocumentFragment', () => {
 			const frag = new DocumentFragment( new Text( 'a' ) );
 
 			expect( frag.isEmpty ).to.be.false;
+		} );
+	} );
+
+	describe( 'isAttached()', () => {
+		it( 'returns false', () => {
+			const frag = new DocumentFragment();
+
+			expect( frag.isAttached() ).to.be.false;
 		} );
 	} );
 

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -8,13 +8,17 @@
  */
 
 import {
-	EditorUI,
-	type EditorUIReadyEvent,
 	type ElementApi,
-	type Editor,
-	type EditorUIUpdateEvent
+	type Editor
 } from 'ckeditor5/src/core';
-import { normalizeToolbarConfig } from 'ckeditor5/src/ui';
+
+import {
+	EditorUI,
+	normalizeToolbarConfig,
+	type EditorUIReadyEvent,
+	type EditorUIUpdateEvent
+} from 'ckeditor5/src/ui';
+
 import { enablePlaceholder } from 'ckeditor5/src/engine';
 
 import type InlineEditorUIView from './inlineeditoruiview';
@@ -22,7 +26,7 @@ import type InlineEditorUIView from './inlineeditoruiview';
 /**
  * The inline editor UI class.
  *
- * @extends module:core/editor/editorui~EditorUI
+ * @extends module:ui/editorui/editorui~EditorUI
  */
 export default class InlineEditorUI extends EditorUI {
 	/**
@@ -151,17 +155,20 @@ export default class InlineEditorUI extends EditorUI {
 		const editingRoot = editingView.document.getRoot()!;
 		const sourceElement = ( editor as Editor & ElementApi ).sourceElement;
 
-		const placeholderText = editor.config.get( 'placeholder' ) ||
-			sourceElement && sourceElement.tagName.toLowerCase() === 'textarea' && sourceElement.getAttribute( 'placeholder' );
+		const placeholder = editor.config.get( 'placeholder' );
 
-		if ( placeholderText ) {
-			enablePlaceholder( {
-				view: editingView,
-				element: editingRoot,
-				text: placeholderText,
-				isDirectHost: false,
-				keepOnFocus: true
-			} );
+		if ( placeholder ) {
+			const placeholderText = typeof placeholder === 'string' ? placeholder : placeholder[ editingRoot.rootName ];
+
+			if ( placeholderText ) {
+				enablePlaceholder( {
+					view: editingView,
+					element: editingRoot,
+					text: placeholderText,
+					isDirectHost: false,
+					keepOnFocus: true
+				} );
+			}
 		}
 	}
 }

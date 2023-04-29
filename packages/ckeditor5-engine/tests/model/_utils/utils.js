@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -76,6 +76,28 @@ export function getText( element ) {
 	}
 
 	return text;
+}
+
+/**
+ * Maps all elements to names. If element contains child text node it will be appended to name with '#'.
+ *
+ * @param {Array.<engine.model.Element>} element Array of Element from which text will be returned.
+ * @returns {String} Text contents of the element.
+ */
+export function stringifyBlocks( elements ) {
+	return Array.from( elements ).map( el => {
+		const name = el.name;
+
+		let innerText = '';
+
+		for ( const child of el.getChildren() ) {
+			if ( child.is( '$text' ) ) {
+				innerText += child.data;
+			}
+		}
+
+		return innerText.length ? `${ name }#${ innerText }` : name;
+	} );
 }
 
 /**

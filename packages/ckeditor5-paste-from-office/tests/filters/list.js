@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -80,6 +80,28 @@ describe( 'PasteFromOffice - filters', () => {
 
 				expect( view.childCount ).to.equal( 0 );
 				expect( stringify( view ) ).to.equal( '' );
+			} );
+
+			it( 'handles RTL lists with bold item - #13711', () => {
+				const html = '<p dir=RTL style="mso-list:l0 level1 lfo1">' +
+					'<span dir=RTL></span>' +
+					'<b><span dir=LTR>Foo<o:p></o:p></span></b>' +
+				'</p>';
+
+				const view = htmlDataProcessor.toView( html );
+
+				transformListItemLikeElementsIntoLists( view, '@list l0:level1 { mso-level-number-format: bullet; }' );
+
+				expect( view.childCount ).to.equal( 1 );
+				expect( view.getChild( 0 ).name ).to.equal( 'ul' );
+				expect( stringify( view ) ).to.equal(
+					'<ul>' +
+						'<li dir="RTL" style="mso-list:l0 level1 lfo1">' +
+							'<span dir="RTL"></span>' +
+							'<b><span dir="LTR">Foo<o:p></o:p></span></b>' +
+						'</li>' +
+					'</ul>'
+				);
 			} );
 
 			describe( 'nesting', () => {

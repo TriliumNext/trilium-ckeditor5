@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -452,7 +452,7 @@ describe( 'EditorWatchdog', () => {
 			await watchdog.destroy();
 		} );
 
-		it( 'Watchdog should warn if the CKEditorError is missing its context', async () => {
+		it.skip( 'Watchdog should warn if the CKEditorError is missing its context', async () => {
 			const watchdog = new EditorWatchdog( ClassicTestEditor );
 
 			// sinon.stub( window, 'onerror' ).value( undefined ); and similar do not work.

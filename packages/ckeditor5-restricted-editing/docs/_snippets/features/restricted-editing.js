@@ -1,19 +1,18 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* globals window, document */
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/src/ckeditor';
-import RestrictedEditingMode from '@ckeditor/ckeditor5-restricted-editing/src/restrictededitingmode';
-import StandardEditingMode from '@ckeditor/ckeditor5-restricted-editing/src/standardeditingmode';
-
+import { StandardEditingMode, RestrictedEditingMode } from '@ckeditor/ckeditor5-restricted-editing';
 import ArticlePluginSet from '@ckeditor/ckeditor5-core/tests/_utils/articlepluginset';
-import Table from '@ckeditor/ckeditor5-table/src/table';
+import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud-services-config';
 
-ClassicEditor.builtinPlugins.push(
-	RestrictedEditingMode, StandardEditingMode, ArticlePluginSet, Table );
+// Umberto combines all `packages/*/docs` into the `docs/` directory. The import path must be valid after merging all directories.
+import ClassicEditor from '../build-classic';
+
+ClassicEditor.builtinPlugins.push( RestrictedEditingMode, StandardEditingMode, ArticlePluginSet );
 
 const restrictedModeButton = document.getElementById( 'mode-restricted' );
 const standardModeButton = document.getElementById( 'mode-standard' );
@@ -38,11 +37,15 @@ async function startMode( selectedMode ) {
 async function startStandardEditingMode() {
 	await reloadEditor( {
 		removePlugins: [ 'RestrictedEditingMode' ],
-		toolbar: [
-			'restrictedEditingException', '|', 'heading', '|', 'bold', 'italic', 'link', '|',
-			'bulletedList', 'numberedList', 'blockQuote', 'insertTable', '|',
-			'undo', 'redo'
-		],
+		cloudServices: CS_CONFIG,
+		toolbar: {
+			items: [
+				'undo', 'redo', '|', 'heading',
+				'|', 'bold', 'italic',
+				'|', 'link', 'uploadImage', 'insertTable', 'restrictedEditingException', 'mediaEmbed',
+				'|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+			]
+		},
 		table: {
 			contentToolbar: [
 				'tableColumn',

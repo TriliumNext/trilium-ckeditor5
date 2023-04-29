@@ -14,7 +14,7 @@ The editor below contains a widget that fetches data from an external source and
 
 ## Detailed guide
 
-If you would like to create such a widget on your own, take a look at the {@link framework/guides/tutorials/data-from-external-source dedicated tutorial} which shows how to achieve this step by step with the source code provided. 
+If you would like to create such a widget on your own, take a look at the {@link framework/tutorials/data-from-external-source dedicated tutorial} which shows how to achieve this step by step with the source code provided. 
 
 ## Editor example configuration
 
@@ -214,7 +214,7 @@ class ExternalDataWidgetEditing extends Plugin {
 ClassicEditor
 	.create( document.querySelector( '#editor' ), {
 		plugins: [ Essentials, Paragraph, Heading, List, Bold, Italic, ExternalDataWidget ],
-		toolbar: [ 'external', '|', 'heading', 'bold', 'italic', 'numberedList', 'bulletedList', '|', 'undo', 'redo' ]
+		toolbar: [ 'undo', 'redo', '|', 'external', '|', 'heading', '|', 'bold', 'italic', '|', 'numberedList', 'bulletedList' ]
 	} )
 	.then( editor => {
 		console.log( 'Editor was initialized', editor );

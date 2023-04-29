@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -14,15 +14,10 @@ import DeleteObserver, { type ViewDocumentDeleteEvent } from './deleteobserver';
 /**
  * The delete and backspace feature. Handles keys such as <kbd>Delete</kbd> and <kbd>Backspace</kbd>, other
  * keystrokes and user actions that result in deleting content in the editor.
- *
- * @extends module:core/plugin~Plugin
  */
 export default class Delete extends Plugin {
 	/**
 	 * Whether pressing backspace should trigger undo action
-	 *
-	 * @private
-	 * @member {Boolean} #_undoOnBackspace
 	 */
 	private _undoOnBackspace!: boolean;
 
@@ -107,17 +102,5 @@ export default class Delete extends Plugin {
 		if ( this.editor.plugins.has( 'UndoEditing' ) ) {
 			this._undoOnBackspace = true;
 		}
-	}
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface CommandsMap {
-		deleteForward: DeleteCommand;
-		forwardDelete: DeleteCommand;
-		delete: DeleteCommand;
-	}
-
-	interface PluginsMap {
-		[ Delete.pluginName ]: Delete;
 	}
 }

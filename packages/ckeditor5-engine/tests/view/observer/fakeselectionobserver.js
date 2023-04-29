@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -146,6 +146,12 @@ describe( 'FakeSelectionObserver', () => {
 
 		// Check that event won't be called.
 		sinon.assert.notCalled( spy );
+	} );
+
+	it( 'should implement empty #stopObserving() method', () => {
+		expect( () => {
+			observer.stopObserving();
+		} ).to.not.throw();
 	} );
 
 	// Checks if preventDefault method was called by FakeSelectionObserver for specified key code.

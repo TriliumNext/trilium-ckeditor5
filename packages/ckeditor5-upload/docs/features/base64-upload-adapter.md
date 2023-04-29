@@ -6,9 +6,7 @@ order: 50
 
 # Base64 image upload adapter
 
-The Base64 image upload adapter converts images inserted into the rich-text editor into [Base64-encoded strings](https://en.wikipedia.org/wiki/Base64) in the {@link installation/advanced/saving-data editor output}.
-
-This kind of image upload does not require any server-side processing &mdash; images are stored with the rest of the text and displayed by the web browser without additional requests. On the downside, this approach can bloat your database with very long data strings which has a negative impact on the performance.
+The Base64 image upload adapter converts inserted images into [Base64-encoded strings](https://en.wikipedia.org/wiki/Base64) in the {@link installation/getting-started/getting-and-setting-data editor output}. The images are stored with other content in the database without any server-side processing.
 
 <info-box warning>
     Please remember that while `Base64` upload is a very easy solution, it is also highly inefficient. The image file itself is kept as data in the database, generating a much heavier data load and higher transfer. `Base64` images are never cached by the browser so loading and saving such data will always be slower.
@@ -20,11 +18,19 @@ Therefore using the `Base64` feature is a less efficient option to use than some
 
 ## Demo
 
-Use the editor below to see the adapter in action. Open the web browser console and click the button below to see the base64–encoded image in the editor output data.
+Use the editor below to see the adapter in action. Open the web browser console and click the button below the editor to see the base64–encoded image in the editor output data.
 
 {@snippet features/base64-upload}
 
+<info-box info>
+	This demo only presents a limited set of features. Visit the {@link examples/builds/full-featured-editor full-featured editor example} to see more in action.
+</info-box>
+
 ## Installation
+
+<info-box info>
+	This feature is enabled by default in the {@link installation/getting-started/predefined-builds#superbuild superbuild} only.
+</info-box>
 
 First, install the [`@ckeditor/ckeditor5-upload`](https://www.npmjs.com/package/@ckeditor/ckeditor5-upload) package:
 
@@ -39,17 +45,17 @@ import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64u
 
 ClassicEditor
 	.create( document.querySelector( '#editor' ), {
-		plugins: [ Base64UploadAdapter, ... ],
-		toolbar: [ ... ]
+		plugins: [ Base64UploadAdapter, /* ... */ ],
+		toolbar: [ /* ... */ ]
 	} )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 Once enabled in the plugin list, the Base64 image upload adapter works out–of–the–box without any additional configuration.
 
 <info-box info>
-	Read more about {@link installation/getting-started/installing-plugins installing plugins}.
+	Read more about {@link installation/plugins/installing-plugins installing plugins}.
 </info-box>
 
 ## Configuration
@@ -63,7 +69,7 @@ The allowed file types that can be uploaded should actually be configured in two
 
 #### Client-side configuration
 
-Use the {@link module:image/imageupload~ImageUploadConfig#types `image.upload.types`} configuration option to define the allowed image MIME types that can be uploaded to CKEditor 5.
+Use the {@link module:image/imageconfig~ImageUploadConfig#types `image.upload.types`} configuration option to define the allowed image MIME types that can be uploaded to CKEditor 5.
 
 By default, users are allowed to upload `jpeg`, `png`, `gif`, `bmp`, `webp` and `tiff` files. You can customize this behavior to accept, for example, SVG files (in this case use `svg+xml` type).
 
@@ -79,4 +85,4 @@ See the {@link features/images-overview Image feature guide} to find out more ab
 
 ## Contribute
 
-The source code of the feature is available on GitHub in https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-upload.
+The source code of the feature is available on GitHub at [https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-upload](https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-upload).

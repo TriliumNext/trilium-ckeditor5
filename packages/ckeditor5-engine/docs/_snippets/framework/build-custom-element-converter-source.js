@@ -1,13 +1,14 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* globals window */
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/src/ckeditor';
+import { toWidget, toWidgetEditable } from '@ckeditor/ckeditor5-widget';
 
-import { toWidget, toWidgetEditable } from '@ckeditor/ckeditor5-widget/src/utils';
+// Umberto combines all `packages/*/docs` into the `docs/` directory. The import path must be valid after merging all directories.
+import ClassicEditor from '../build-classic';
 
 window.ClassicEditor = ClassicEditor;
 window.toWidget = toWidget;

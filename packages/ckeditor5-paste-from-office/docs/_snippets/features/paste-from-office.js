@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -12,35 +12,13 @@ ClassicEditor
 		extraPlugins: [ ListProperties ],
 		toolbar: {
 			items: [
-				'heading',
-				'|',
-				'fontSize',
-				'fontFamily',
-				'fontColor',
-				'fontBackgroundColor',
-				'|',
-				'bold',
-				'italic',
-				'underline',
-				'strikethrough',
-				'-',
-				'alignment',
-				'|',
-				'numberedList',
-				'bulletedList',
-				'|',
-				'outdent',
-				'indent',
-				'|',
-				'link',
-				'uploadImage',
-				'insertTable',
-				'horizontalLine',
-				'|',
-				'undo',
-				'redo'
-			],
-			shouldNotGroupWhenFull: true
+				'undo', 'redo', '|', 'heading',
+				'|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+				'|', 'bold', 'italic', 'underline', 'strikethrough',
+				'|', 'link', 'uploadImage', 'insertTable', 'mediaEmbed',
+				'|', 'alignment',
+				'|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+			]
 		},
 		ui: {
 			viewportOffset: {

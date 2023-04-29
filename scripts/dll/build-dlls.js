@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -9,6 +9,7 @@
 
 const chalk = require( 'chalk' );
 const childProcess = require( 'child_process' );
+const fs = require( 'fs' );
 const minimist = require( 'minimist' );
 const path = require( 'path' );
 
@@ -90,6 +91,11 @@ function isNotBaseDll( name ) {
  */
 function hasDLLBuildScript( name ) {
 	const packageJsonPath = path.join( ROOT_DIRECTORY, 'packages', name, 'package.json' );
+
+	if ( !fs.existsSync( packageJsonPath ) ) {
+		return false;
+	}
+
 	const scripts = require( packageJsonPath ).scripts;
 
 	return Boolean( scripts && scripts[ 'dll:build' ] );

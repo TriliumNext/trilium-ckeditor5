@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -11,17 +11,14 @@ ClassicEditor
 	.create( document.querySelector( '#toolbar-breakpoint' ), {
 		toolbar: {
 			items: [
-				'heading', '|',
-				'alignment', '|',
-				'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-				'link', '|',
-				'bulletedList', 'numberedList', 'todoList', '-',
-				'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor', '|',
-				'code', 'codeBlock', '|',
-				'insertTable', '|',
-				'outdent', 'indent', '|',
-				'uploadImage', 'blockQuote', '|',
-				'undo', 'redo'
+				'undo', 'redo',
+				'|', 'heading',
+				'|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+				'|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+				'-', // break point
+				'link', 'uploadImage', 'blockQuote', 'codeBlock',
+				'|', 'alignment',
+				'|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
 			],
 			shouldNotGroupWhenFull: true
 		},

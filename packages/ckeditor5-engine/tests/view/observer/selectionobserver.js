@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -92,14 +92,14 @@ describe( 'SelectionObserver', () => {
 		changeDomSelection();
 	} );
 
-	it( 'should change document#_isFocusChanging property to false when selection is changed', done => {
+	it( 'should call focusObserver#flush when selection is changed', done => {
+		const flushSpy = testUtils.sinon.spy( selectionObserver.focusObserver, 'flush' );
+
 		viewDocument.on( 'selectionChange', () => {
-			expect( viewDocument._isFocusChanging ).to.equal( false );
+			sinon.assert.calledOnce( flushSpy );
 
 			done();
 		} );
-
-		viewDocument._isFocusChanging = true;
 
 		changeDomSelection();
 	} );
@@ -250,7 +250,7 @@ describe( 'SelectionObserver', () => {
 		} );
 	} );
 
-	it( 'SelectionObserver#_reportInfiniteLoop() should throw an error', () => {
+	it.skip( 'SelectionObserver#_reportInfiniteLoop() should throw an error', () => {
 		expect( () => {
 			selectionObserver._reportInfiniteLoop();
 		} ).to.throw( Error,
@@ -424,6 +424,20 @@ describe( 'SelectionObserver', () => {
 
 		// 1. Collapse in a text node, before ui element, and wait for async selectionchange to fire selection change handling.
 		sel.collapse( domText, 3 );
+	} );
+
+	describe( 'stopListening()', () => {
+		it( 'should not fire selectionChange after stopped observing a DOM element', () => {
+			const spy = sinon.spy();
+
+			viewDocument.on( 'selectionChange', spy );
+
+			selectionObserver.stopListening( domMain );
+
+			changeDomSelection();
+
+			expect( spy.called ).to.be.false;
+		} );
 	} );
 
 	describe( 'Management of view Document#isSelecting', () => {

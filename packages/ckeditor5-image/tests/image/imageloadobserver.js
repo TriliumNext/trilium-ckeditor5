@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -67,7 +67,7 @@ describe( 'ImageLoadObserver', () => {
 		view.document.on( 'layoutChanged', layoutChangedSpy );
 		view.document.on( 'imageLoaded', imageLoadedSpy );
 
-		observer.isEnabled = false;
+		observer._isEnabled = false;
 
 		observer._fireEvents( {} );
 
@@ -170,6 +170,20 @@ describe( 'ImageLoadObserver', () => {
 			view._renderer.render();
 			sinon.assert.calledWith( mapSpy, viewDiv );
 		} ).to.not.throw();
+	} );
+
+	it( 'should stop listening to events on given DOM element', () => {
+		const spy = sinon.spy();
+
+		viewDocument.on( 'imageLoaded', spy );
+
+		setData( view, '<img src="/assets/sample.png" />' );
+
+		observer.stopObserving( domRoot );
+
+		domRoot.querySelector( 'img' ).dispatchEvent( new Event( 'load' ) );
+
+		sinon.assert.notCalled( spy );
 	} );
 
 	it( 'should stop observing images on destroy', () => {
