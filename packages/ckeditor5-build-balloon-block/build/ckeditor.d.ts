@@ -10,7 +10,6 @@ export default class BalloonEditor extends BalloonEditorBase {
             items: string[];
         };
         image: {
-            styles: string[];
             resizeOptions: ({
                 name: string;
                 value: null;
@@ -21,19 +20,6 @@ export default class BalloonEditor extends BalloonEditorBase {
                 icon: string;
             })[];
             toolbar: string[];
-        };
-        heading: {
-            options: ({
-                model: string;
-                title: string;
-                class: string;
-                view?: undefined;
-            } | {
-                model: string;
-                view: string;
-                title: string;
-                class: string;
-            })[];
         };
         blockToolbar: string[];
         table: {

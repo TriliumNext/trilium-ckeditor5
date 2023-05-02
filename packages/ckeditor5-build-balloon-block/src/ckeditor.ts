@@ -6,58 +6,63 @@
 // The editor creator to use.
 import BalloonEditorBase from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 
-import FindAndReplace from '@ckeditor/ckeditor5-find-and-replace/src/findandreplace';
-import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
-import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
-import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
-import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
-import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
-import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
-import List from '@ckeditor/ckeditor5-list/src/list';
-import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties';
-import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import PictureEditing from '@ckeditor/ckeditor5-image/src/pictureediting';
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
-import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
-import TableCaption from '@ckeditor/ckeditor5-table/src/tablecaption';
-import TableSelection from '@ckeditor/ckeditor5-table/src/tableselection';
-import TableColumnResize from '@ckeditor/ckeditor5-table/src/tablecolumnresize';
-import BlockToolbar from '@ckeditor/ckeditor5-ui/src/toolbar/block/blocktoolbar';
-import HeadingButtonsUI from '@ckeditor/ckeditor5-heading/src/headingbuttonsui';
-import ParagraphButtonUI from '@ckeditor/ckeditor5-paragraph/src/paragraphbuttonui';
-import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
-import Font from '@ckeditor/ckeditor5-font/src/font';
-import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
-import FontBackgroundColor from '@ckeditor/ckeditor5-font/src/fontbackgroundcolor';
-import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
-import Mention from '@ckeditor/ckeditor5-mention/src/mention';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
-import SelectAll from '@ckeditor/ckeditor5-select-all/src/selectall';
-import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
-import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard';
-import Enter from '@ckeditor/ckeditor5-enter/src/enter';
-import ShiftEnter from '@ckeditor/ckeditor5-enter/src/shiftenter';
-import Typing from '@ckeditor/ckeditor5-typing/src/typing';
-import Undo from '@ckeditor/ckeditor5-undo/src/undo';
-import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
+import { FindAndReplace } from '@ckeditor/ckeditor5-find-and-replace';
+import { UploadAdapter } from '@ckeditor/ckeditor5-adapter-ckfinder';
+import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
+import { Bold } from '@ckeditor/ckeditor5-basic-styles';
+import { Italic } from '@ckeditor/ckeditor5-basic-styles';
+import { Superscript } from '@ckeditor/ckeditor5-basic-styles';
+import { Subscript } from '@ckeditor/ckeditor5-basic-styles';
+import { Underline } from '@ckeditor/ckeditor5-basic-styles';
+import { Strikethrough } from '@ckeditor/ckeditor5-basic-styles';
+import { Code } from '@ckeditor/ckeditor5-basic-styles';
+import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
+import { Heading } from '@ckeditor/ckeditor5-heading';
+import { Image } from '@ckeditor/ckeditor5-image';
+import { ImageCaption } from '@ckeditor/ckeditor5-image';
+import { ImageStyle } from '@ckeditor/ckeditor5-image';
+import { ImageToolbar } from '@ckeditor/ckeditor5-image';
+import { ImageUpload } from '@ckeditor/ckeditor5-image';
+import { ImageResize } from '@ckeditor/ckeditor5-image';
+import { Link } from '@ckeditor/ckeditor5-link';
+import { AutoLink } from '@ckeditor/ckeditor5-link';
+import { List } from '@ckeditor/ckeditor5-list';
+import { ListProperties } from '@ckeditor/ckeditor5-list';
+import { TodoList } from '@ckeditor/ckeditor5-list';
+import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
+import { PasteFromOffice } from '@ckeditor/ckeditor5-paste-from-office';
+import { PictureEditing } from '@ckeditor/ckeditor5-image';
+import { Table } from '@ckeditor/ckeditor5-table';
+import { TableToolbar } from '@ckeditor/ckeditor5-table';
+import { TableProperties } from '@ckeditor/ckeditor5-table';
+import { TableCellProperties } from '@ckeditor/ckeditor5-table';
+import { TableCaption } from '@ckeditor/ckeditor5-table';
+import { TableSelection } from '@ckeditor/ckeditor5-table';
+import { TableColumnResize } from '@ckeditor/ckeditor5-table';
+import { BlockToolbar } from '@ckeditor/ckeditor5-ui';
+import { HeadingButtonsUI } from '@ckeditor/ckeditor5-heading';
+import { ParagraphButtonUI } from '@ckeditor/ckeditor5-paragraph';
+import { TextTransformation } from '@ckeditor/ckeditor5-typing';
+import { Font } from '@ckeditor/ckeditor5-font';
+import { FontColor } from '@ckeditor/ckeditor5-font';
+import { FontBackgroundColor } from '@ckeditor/ckeditor5-font';
+import { CodeBlock } from '@ckeditor/ckeditor5-code-block';
+import { Mention } from '@ckeditor/ckeditor5-mention';
+import { Indent } from '@ckeditor/ckeditor5-indent';
+import { IndentBlock } from '@ckeditor/ckeditor5-indent';
+import { SelectAll } from '@ckeditor/ckeditor5-select-all';
+import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
+import { Clipboard } from '@ckeditor/ckeditor5-clipboard';
+import { Enter } from '@ckeditor/ckeditor5-enter';
+import { ShiftEnter } from '@ckeditor/ckeditor5-enter';
+import { Typing } from '@ckeditor/ckeditor5-typing';
+import { Undo } from '@ckeditor/ckeditor5-undo';
+import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
+import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
+
+import Math from '@isaul32/ckeditor5-math/src/math';
+import AutoformatMath from '@isaul32/ckeditor5-math/src/autoformatmath';
+
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
 import InternalLinkPlugin from './internallink';
@@ -67,9 +72,7 @@ import IncludeNote from './includenote';
 import ReferenceLink from './referencelink';
 import indentBlockShortcutPlugin from './indent_block_shortcut';
 import removeFormatLinksPlugin from './remove_format_links';
-import Mathematics from 'ckeditor5-math/src/math';
-import AutoformatMath from 'ckeditor5-math/src/autoformatmath';
-import EditorWatchdog from '@ckeditor/ckeditor5-watchdog/src/editorwatchdog';
+
 
 /**
  * @internal
@@ -78,7 +81,7 @@ import '../theme/theme.css';
 
 // expose so that Trilium can use it
 // eslint-disable-next-line no-undef
-window.EditorWatchdog = EditorWatchdog;
+(window as any).EditorWatchdog = EditorWatchdog;
 
 export default class BalloonEditor extends BalloonEditorBase {
 	public static override builtinPlugins = [
@@ -122,9 +125,6 @@ export default class BalloonEditor extends BalloonEditorBase {
 		ParagraphButtonUI,
 		HeadingButtonsUI,
 		UploadimagePlugin,
-		InternalLinkPlugin,
-		MarkdownImportPlugin,
-		CuttonotePlugin,
 		TextTransformation,
 		Font,
 		FontColor,
@@ -135,12 +135,15 @@ export default class BalloonEditor extends BalloonEditorBase {
 		RemoveFormat,
 		FindAndReplace,
 		Mention,
+		InternalLinkPlugin,
+		MarkdownImportPlugin,
+		CuttonotePlugin,
 		MentionCustomization,
 		IncludeNote,
 		ReferenceLink,
 		indentBlockShortcutPlugin,
 		removeFormatLinksPlugin,
-		Mathematics,
+		Math,
 		AutoformatMath
 	];
 
@@ -164,13 +167,13 @@ export default class BalloonEditor extends BalloonEditorBase {
 			]
 		},
 		image: {
-			styles: [
-				'alignLeft',
-				'alignCenter',
-				'alignRight',
-				'full', // full and side are for BC since the old images have been created with these styles
-				'side'
-			],
+			// styles: [
+			// 	'alignLeft',
+			// 	'alignCenter',
+			// 	'alignRight',
+			// 	'full', // full and side are for BC since the old images have been created with these styles
+			// 	'side'
+			// ],
 			resizeOptions: [
 				{
 					name: 'imageResize:original',
@@ -185,6 +188,11 @@ export default class BalloonEditor extends BalloonEditorBase {
 				{
 					name: 'imageResize:50',
 					value: '50',
+					icon: 'medium'
+				},
+				{
+					name: 'imageResize:75',
+					value: '75',
 					icon: 'medium'
 				}
 			],
@@ -201,17 +209,20 @@ export default class BalloonEditor extends BalloonEditorBase {
 				'toggleImageCaption'
 			]
 		},
-		heading: {
-			options: [
-				{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-				// heading1 is not used since that should be a note's title
-				{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-				{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-				{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-				{ model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-				{ model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-			]
-		},
+		// heading: {
+		// 	options: [
+		// 		{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+		// 		{ model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+		// 		{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+		// 		//{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+		// 		// heading1 is not used since that should be a note's title
+		// 		// { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+		// 		// { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+		// 		// { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+		// 		// { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+		// 		// { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+		// 	]
+		// },
 		blockToolbar: [
 			'heading',
 			'|',
