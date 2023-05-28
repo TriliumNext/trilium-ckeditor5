@@ -62,12 +62,32 @@ export default class BalloonEditor extends BalloonEditorBase {
         };
         heading: {
             options: ({
-                model: string;
+                model: "paragraph";
                 title: string;
                 class: string;
                 view?: undefined;
             } | {
-                model: string;
+                model: "heading2";
+                view: string;
+                title: string;
+                class: string;
+            } | {
+                model: "heading3";
+                view: string;
+                title: string;
+                class: string;
+            } | {
+                model: "heading4";
+                view: string;
+                title: string;
+                class: string;
+            } | {
+                model: "heading5";
+                view: string;
+                title: string;
+                class: string;
+            } | {
+                model: "heading6";
                 view: string;
                 title: string;
                 class: string;

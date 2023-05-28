@@ -78,6 +78,7 @@ import removeFormatLinksPlugin from './remove_format_links';
  * @internal
  */
 import '../theme/theme.css';
+import {HeadingElementOption} from "@ckeditor/ckeditor5-heading/src/headingconfig";
 
 // expose so that Trilium can use it
 // eslint-disable-next-line no-undef
@@ -167,13 +168,13 @@ export default class BalloonEditor extends BalloonEditorBase {
 			]
 		},
 		image: {
-			styles: [
-				'alignLeft',
-				'alignCenter',
-				'alignRight',
-				'full', // full and side are for BC since the old images have been created with these styles
-				'side'
-			],
+			// styles: [
+			// 	'alignLeft',
+			// 	'alignCenter',
+			// 	'alignRight',
+			// 	'full', // full and side are for BC since the old images have been created with these styles
+			// 	'side'
+			// ],
 			resizeOptions: [
 				{
 					name: 'imageResize:original',
@@ -211,13 +212,13 @@ export default class BalloonEditor extends BalloonEditorBase {
 		},
 		heading: {
 			options: [
-				{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-				// heading1 is not used since that should be a note's title
-				{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-				{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-				{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-				{ model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-				{ model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+				{ model: 'paragraph' as const, title: 'Paragraph', class: 'ck-heading_paragraph' },
+				// // heading1 is not used since that should be a note's title
+				{ model: 'heading2' as const, view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+				{ model: 'heading3' as const, view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+				{ model: 'heading4' as const, view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+				{ model: 'heading5' as const, view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+				{ model: 'heading6' as const, view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
 			]
 		},
 		blockToolbar: [

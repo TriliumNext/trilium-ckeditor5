@@ -10,19 +10,22 @@ export default class ReferenceLink extends Plugin {
 }
 
 class ReferenceLinkCommand extends Command {
-	execute( { notePath } ) {
-		if (!notePath || !notePath.trim()) {
+	execute( { href } ) {
+		if (!href?.trim()) {
 			return;
 		}
 
 		const editor = this.editor;
 
-		const noteId = notePath.split('/').pop();
-
 		// make sure the referenced note is in cache before adding reference element
-		glob.treeCache.getNote(noteId, true).then(() => {
+
+		const editorEl = editor.editing.view.getDomRoot();
+		const component = glob.getComponentByEl(editorEl);
+
+		// render
+		component.getReferenceLinkTitle(href).then(() => {
 			editor.model.change(writer => {
-				const placeholder = writer.createElement('reference', {notePath: notePath});
+				const placeholder = writer.createElement('reference', {href});
 
 				// ... and insert it into the document.
 				editor.model.insertContent(placeholder);
@@ -85,29 +88,20 @@ class ReferenceLinkEditing extends Plugin {
 				classes: [ 'reference-link' ]
 			},
 			model: ( viewElement, { writer: modelWriter } ) => {
-				let notePath = viewElement.getAttribute('data-note-path');
+				const href = viewElement.getAttribute('href');
 
-				if (!notePath) {
-					notePath = viewElement.getAttribute('href');
-				}
-
-				return modelWriter.createElement( 'reference', { notePath: notePath } );
+				return modelWriter.createElement( 'reference', { href } );
 			}
 		} );
 
 		conversion.for( 'editingDowncast' ).elementToElement( {
 			model: 'reference',
 			view: ( modelItem, { writer: viewWriter } ) => {
-				let notePath = modelItem.getAttribute( 'notePath' );
-
-				if (!notePath) {
-					notePath = modelItem.getAttribute( 'href' );
-				}
+				const href = modelItem.getAttribute( 'href' );
 
 				const referenceLinkView = viewWriter.createContainerElement( 'a', {
-						href: 'javascript:',
-						class: 'reference-link',
-						'data-note-path': notePath
+						href,
+						class: 'reference-link'
 					},
 					{
 						renderUnsafeAttributes: [ 'href' ]
@@ -115,12 +109,11 @@ class ReferenceLinkEditing extends Plugin {
 
 				const noteTitleView = viewWriter.createUIElement('span', {}, function( domDocument ) {
 					const domElement = this.toDomElement( domDocument );
-					const noteId = notePath.split('/').pop();
 
 					const editorEl = editor.editing.view.getDomRoot();
 					const component = glob.getComponentByEl(editorEl);
 
-					component.loadReferenceLinkTitle(noteId, $(domElement));
+					component.loadReferenceLinkTitle($(domElement));
 
 					return domElement;
 				});
@@ -135,26 +128,20 @@ class ReferenceLinkEditing extends Plugin {
 		conversion.for( 'dataDowncast' ).elementToElement( {
 			model: 'reference',
 			view: ( modelItem, { writer: viewWriter } ) => {
-				let notePath = modelItem.getAttribute( 'notePath' );
-
-				if (!notePath) {
-					notePath = modelItem.getAttribute( 'href' );
-				}
+				const href = modelItem.getAttribute( 'href' );
 
 				const referenceLinkView = viewWriter.createContainerElement( 'a', {
-					href: '#' + notePath,
-					class: 'reference-link',
-					'data-note-path': notePath
+					href: href,
+					class: 'reference-link'
 				} );
 
-				const noteId = notePath.split('/').pop();
-				// needs to be sync
-				const note = glob.treeCache.getNoteFromCache(noteId);
+				const editorEl = editor.editing.view.getDomRoot();
+				const component = glob.getComponentByEl(editorEl);
 
-				if (note) {
-					const innerText = viewWriter.createText(note.title);
-					viewWriter.insert(viewWriter.createPositionAt(referenceLinkView, 0), innerText);
-				}
+				const title = component.getReferenceLinkTitleSync(href);
+
+				const innerText = viewWriter.createText(title);
+				viewWriter.insert(viewWriter.createPositionAt(referenceLinkView, 0), innerText);
 
 				return referenceLinkView;
 			}
