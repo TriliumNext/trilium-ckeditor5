@@ -60,8 +60,8 @@ import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
 
-import Math from '@isaul32/ckeditor5-math/src/math';
-import AutoformatMath from '@isaul32/ckeditor5-math/src/autoformatmath';
+// import Math from '@isaul32/ckeditor5-math/src/math';
+// import AutoformatMath from '@isaul32/ckeditor5-math/src/autoformatmath';
 
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
@@ -143,8 +143,8 @@ export default class BalloonEditor extends BalloonEditorBase {
 		ReferenceLink,
 		indentBlockShortcutPlugin,
 		removeFormatLinksPlugin,
-		Math,
-		AutoformatMath
+		//Math,
+		//AutoformatMath
 	];
 
 	public static override defaultConfig = {
@@ -167,13 +167,13 @@ export default class BalloonEditor extends BalloonEditorBase {
 			]
 		},
 		image: {
-			// styles: [
-			// 	'alignLeft',
-			// 	'alignCenter',
-			// 	'alignRight',
-			// 	'full', // full and side are for BC since the old images have been created with these styles
-			// 	'side'
-			// ],
+			styles: [
+				'alignLeft',
+				'alignCenter',
+				'alignRight',
+				'full', // full and side are for BC since the old images have been created with these styles
+				'side'
+			],
 			resizeOptions: [
 				{
 					name: 'imageResize:original',
@@ -209,20 +209,17 @@ export default class BalloonEditor extends BalloonEditorBase {
 				'toggleImageCaption'
 			]
 		},
-		// heading: {
-		// 	options: [
-		// 		{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-		// 		{ model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-		// 		{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
-		// 		//{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-		// 		// heading1 is not used since that should be a note's title
-		// 		// { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-		// 		// { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-		// 		// { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-		// 		// { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-		// 		// { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-		// 	]
-		// },
+		heading: {
+			options: [
+				{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+				// heading1 is not used since that should be a note's title
+				{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+				{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+				{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+				{ model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+				{ model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+			]
+		},
 		blockToolbar: [
 			'heading',
 			'|',
