@@ -71,10 +71,10 @@ class ReferenceLinkEditing extends Plugin {
 
 			isInline: true,
 
-			// The inline widget is self-contained so it cannot be split by the caret and it can be selected:
+			// The inline widget is self-contained, so it cannot be split by the caret, and it can be selected:
 			isObject: true,
 
-			allowAttributes: [ 'notePath' ]
+			allowAttributes: [ 'href' ]
 		} );
 	}
 
@@ -113,7 +113,7 @@ class ReferenceLinkEditing extends Plugin {
 					const editorEl = editor.editing.view.getDomRoot();
 					const component = glob.getComponentByEl(editorEl);
 
-					component.loadReferenceLinkTitle($(domElement));
+					component.loadReferenceLinkTitle($(domElement), href);
 
 					return domElement;
 				});
