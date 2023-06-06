@@ -1,0 +1,18 @@
+{
+  "name": "@ckeditor/ckeditor5-file-upload",
+  "version": "1.0.0",
+  "description": "File Upload for CKEditor5",
+  "main": "src/fileupload.js",
+  "keywords": [ "ckeditor5" ],
+  "dependencies": {
+    "@ckeditor/ckeditor5-core": "^38.0.1",
+    "@ckeditor/ckeditor5-upload": "^38.0.1",
+    "@ckeditor/ckeditor5-ui": "^38.0.1",
+    "@ckeditor/ckeditor5-clipboard": "^38.0.1",
+    "@ckeditor/ckeditor5-engine": "^38.0.1",
+    "@ckeditor/ckeditor5-utils": "^38.0.1",
+    "@ckeditor/ckeditor5-widget": "^38.0.1"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {}
+}

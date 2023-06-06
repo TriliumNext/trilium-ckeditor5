@@ -70,7 +70,7 @@ class Adapter {
 		return glob.getHeaders().then(headers => {
 			const xhr = this.xhr = new XMLHttpRequest();
 
-			const {noteId} = glob.getActiveTabNote();
+			const {noteId} = glob.getActiveContextNote();
 
 			// this must be relative path
 			const url = "api/images?noteId=" + noteId;

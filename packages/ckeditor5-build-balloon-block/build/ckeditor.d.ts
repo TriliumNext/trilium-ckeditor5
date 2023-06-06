@@ -59,6 +59,9 @@ export default class BalloonEditor extends BalloonEditorBase {
                 icon: string;
             })[];
             toolbar: string[];
+            upload: {
+                types: never[];
+            };
         };
         heading: {
             options: ({

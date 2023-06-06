@@ -59,6 +59,8 @@ import { Typing } from '@ckeditor/ckeditor5-typing';
 import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
+import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
+import SimpleFileUploadAdapter from "../../ckeditor5-file-upload/src/simplefileuploadadapter";
 
 // import Math from '@isaul32/ckeditor5-math/src/math';
 // import AutoformatMath from '@isaul32/ckeditor5-math/src/autoformatmath';
@@ -73,12 +75,7 @@ import ReferenceLink from './referencelink';
 import indentBlockShortcutPlugin from './indent_block_shortcut';
 import removeFormatLinksPlugin from './remove_format_links';
 
-
-/**
- * @internal
- */
 import '../theme/theme.css';
-import {HeadingElementOption} from "@ckeditor/ckeditor5-heading/src/headingconfig";
 
 // expose so that Trilium can use it
 // eslint-disable-next-line no-undef
@@ -125,7 +122,9 @@ export default class BalloonEditor extends BalloonEditorBase {
 		BlockToolbar,
 		ParagraphButtonUI,
 		HeadingButtonsUI,
+		Uploadfileplugin,
 		UploadimagePlugin,
+		SimpleFileUploadAdapter,
 		TextTransformation,
 		Font,
 		FontColor,
