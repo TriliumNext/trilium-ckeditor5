@@ -18,17 +18,8 @@ export default class FileUploadEditing extends Plugin {
 	init() {
 		const editor = this.editor;
 		const doc = editor.model.document;
-		const schema = editor.model.schema;
 		const conversion = editor.conversion;
 		const fileRepository = editor.plugins.get( FileRepository );
-
-		// Setup schema to allow uploadId and uploadStatus for files.
-		schema.extend( '$text', {
-			allowAttributes: [
-				'uploadId',
-				'uploadStatus'
-			]
-		} );
 
 		// Register fileUpload command.
 		editor.commands.add( 'fileUpload', new FileUploadCommand( editor ) );
@@ -159,7 +150,7 @@ export default class FileUploadEditing extends Plugin {
 			} )
 			.then( data => {
 				model.enqueueChange( 'transparent', writer => {
-					writer.setAttributes( { uploadStatus: 'complete', linkHref: data.default, classes: 'reference-link' }, fileElement );
+					writer.setAttributes( { uploadStatus: 'complete', href: data.default }, fileElement );
 				} );
 
 				clean();
@@ -200,13 +191,13 @@ export default class FileUploadEditing extends Plugin {
 
 function fetchLocalFile( link ) {
 	return new Promise( ( resolve, reject ) => {
-		const linkHref = link.getAttribute( 'href' );
+		const href = link.getAttribute( 'href' );
 
-		// Fetch works asynchronously and so does not block browser UI when processing data.
-		fetch( linkHref )
+		// Fetch works asynchronously and so does not block the browser UI when processing data.
+		fetch( href )
 			.then( resource => resource.blob() )
 			.then( blob => {
-				const mimeType = getFileMimeType( blob, linkHref );
+				const mimeType = getFileMimeType( blob, href );
 				const ext = mimeType.replace( 'file/', '' );
 				const filename = `file.${ ext }`;
 				const file = createFileFromBlob( blob, filename, mimeType );
@@ -257,6 +248,6 @@ export function isHtmlIncluded( dataTransfer ) {
 
 function getFileLinksFromChangeItem( editor, item ) {
 	return Array.from( editor.model.createRangeOn( item ) )
-		.filter( value => value.item.hasAttribute( 'linkHref' ) )
+		.filter( value => value.item.hasAttribute( 'href' ) )
 		.map( value => value.item );
 }

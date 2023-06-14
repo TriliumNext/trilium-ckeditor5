@@ -44,17 +44,17 @@ function uploadFile( writer, model, fileRepository, file ) {
 		return;
 	}
 
-	insertFileLink( writer, model, { linkHref: '', uploadId: loader.id }, file );
+	insertFileLink( writer, model, { href: '', uploadId: loader.id }, file );
 }
 
 function insertFileLink( writer, model, attributes = {}, file ) {
 	const selection = model.document.selection;
 	const insertAtSelection = findOptimalInsertionRange( selection, model );
 
-	const linkedText = writer.createText( file.name, attributes );
-	model.insertContent( linkedText, insertAtSelection );
+	const placeholder = writer.createElement( 'reference', attributes );
+	model.insertContent( placeholder, insertAtSelection );
 
-	if ( linkedText.parent ) {
-		writer.setSelection( linkedText, 'on' );
+	if ( placeholder.parent ) {
+		writer.setSelection( placeholder, 'on' );
 	}
 }

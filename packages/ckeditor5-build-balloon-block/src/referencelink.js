@@ -17,7 +17,7 @@ class ReferenceLinkCommand extends Command {
 
 		const editor = this.editor;
 
-		// make sure the referenced note is in cache before adding reference element
+		// make sure the referenced note is in cache before adding the reference element
 
 		const editorEl = editor.editing.view.getDomRoot();
 		const component = glob.getComponentByEl(editorEl);
@@ -66,7 +66,7 @@ class ReferenceLinkEditing extends Plugin {
 		const schema = this.editor.model.schema;
 
 		schema.register( 'reference', {
-			// Allow wherever text is allowed:
+			// Allow wherever a text is allowed:
 			allowWhere: '$text',
 
 			isInline: true,
@@ -74,7 +74,7 @@ class ReferenceLinkEditing extends Plugin {
 			// The inline widget is self-contained, so it cannot be split by the caret, and it can be selected:
 			isObject: true,
 
-			allowAttributes: [ 'href' ]
+			allowAttributes: [ 'href', 'uploadId', 'uploadStatus' ]
 		} );
 	}
 
