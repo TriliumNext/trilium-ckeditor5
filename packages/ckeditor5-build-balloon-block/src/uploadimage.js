@@ -72,8 +72,8 @@ class Adapter {
 
 			const {noteId} = glob.getActiveContextNote();
 
-			// this must be relative path
-			const url = "api/images?noteId=" + noteId;
+			// this must be a relative path
+			const url = `api/notes/${noteId}/attachments/upload`;
 
 			xhr.open('POST', url, true);
 			xhr.responseType = 'json';

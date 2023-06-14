@@ -60,7 +60,6 @@ import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
-import SimpleFileUploadAdapter from "../../ckeditor5-file-upload/src/simplefileuploadadapter";
 
 // import Math from '@isaul32/ckeditor5-math/src/math';
 // import AutoformatMath from '@isaul32/ckeditor5-math/src/autoformatmath';
@@ -124,7 +123,6 @@ export default class BalloonEditor extends BalloonEditorBase {
 		HeadingButtonsUI,
 		Uploadfileplugin,
 		UploadimagePlugin,
-		SimpleFileUploadAdapter,
 		TextTransformation,
 		Font,
 		FontColor,

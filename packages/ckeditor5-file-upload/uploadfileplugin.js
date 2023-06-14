@@ -1,16 +1,12 @@
-import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import FileUploadEditing from "./src/fileuploadediting";
-import FileUploadUI from "./src/fileuploadui";
+import { Plugin } from 'ckeditor5/src/core';
+import FileUploadEditing from './src/fileuploadediting';
 
 export default class Uploadfileplugin extends Plugin {
-    static get requires() {
-        return [ FileUploadEditing, FileUploadUI ];
-    }
+	static get requires() {
+		return [ FileUploadEditing ];
+	}
 
-    /**
-     * @inheritDoc
-     */
-    static get pluginName() {
-        return 'fileUploadPlugin';
-    }
+	static get pluginName() {
+		return 'fileUploadPlugin';
+	}
 }
