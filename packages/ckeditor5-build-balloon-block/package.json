@@ -57,7 +57,8 @@
     "@ckeditor/ckeditor5-undo": "^38.0.1",
     "@ckeditor/ckeditor5-upload": "^38.0.1",
     "@ckeditor/ckeditor5-watchdog": "^38.0.1",
-    "@ckeditor/ckeditor5-widget": "^38.0.1"
+    "@ckeditor/ckeditor5-widget": "^38.0.1",
+    "@isaul32/ckeditor5-math": "^38.0.1"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "^38.0.1",
