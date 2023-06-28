@@ -154,7 +154,15 @@ export default class FileUploadEditing extends Plugin {
 				} );
 
 				clean();
+
+				// wait a bit so that froca has time to load the changes
+				return new Promise(res => setTimeout(res, 100));
 			} )
+			.then(() => {
+				// we're correctly updating the model, but the view remains broken,
+				// hack around it is to force CKEditor to reload the now updated HTML
+				editor.setData(editor.getData());
+			})
 			.catch( error => {
 				// If status is not 'error' nor 'aborted' - throw error, because it means that something else went wrong,
 				// it might be a generic error, and it would be real pain to find what is going on.

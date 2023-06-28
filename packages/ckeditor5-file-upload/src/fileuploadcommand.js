@@ -48,11 +48,8 @@ function uploadFile( writer, model, fileRepository, file ) {
 }
 
 function insertFileLink( writer, model, attributes = {}, file ) {
-	const selection = model.document.selection;
-	const insertAtSelection = findOptimalInsertionRange( selection, model );
-
 	const placeholder = writer.createElement( 'reference', attributes );
-	model.insertContent( placeholder, insertAtSelection );
+	model.insertContent( placeholder, model.document.selection );
 
 	if ( placeholder.parent ) {
 		writer.setSelection( placeholder, 'on' );
