@@ -39,22 +39,24 @@ export default class FileUploadCommand extends Command {
 function uploadFile( writer, model, fileRepository, file ) {
 	const loader = fileRepository.createLoader( file );
 
+	console.log("Uploading file", file, loader);
+
 	// Do not throw when upload adapter is not set. FileRepository will log an error anyway.
 	if ( !loader ) {
 		return;
 	}
 
-	insertFileLink( writer, model, { href: '', uploadId: loader.id }, file );
+	insertFileLink( writer, model, { linkHref: '', uploadId: loader.id }, file );
 }
 
 function insertFileLink( writer, model, attributes = {}, file ) {
 	const selection = model.document.selection;
 	const insertAtSelection = findOptimalInsertionRange( selection, model );
 
-	const placeholder = writer.createElement( 'reference', attributes );
-	model.insertContent( placeholder, insertAtSelection );
+	const linkedText = writer.createText( file.name, attributes );
+	model.insertContent( linkedText, insertAtSelection );
 
-	if ( placeholder.parent ) {
-		writer.setSelection( placeholder, 'on' );
+	if ( linkedText.parent ) {
+		writer.setSelection( linkedText, 'on' );
 	}
 }

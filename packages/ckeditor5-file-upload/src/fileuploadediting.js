@@ -1,14 +1,14 @@
 import { Plugin } from 'ckeditor5/src/core';
 import { FileRepository } from 'ckeditor5/src/upload';
 import { Notification } from 'ckeditor5/src/ui';
-import { Clipboard } from 'ckeditor5/src/clipboard';
 import { UpcastWriter } from 'ckeditor5/src/engine';
 
 import FileUploadCommand from './fileuploadcommand';
+import { ClipboardPipeline } from '@ckeditor/ckeditor5-clipboard';
 
 export default class FileUploadEditing extends Plugin {
 	static get requires() {
-		return [ FileRepository, Notification, Clipboard ];
+		return [ FileRepository, Notification, ClipboardPipeline ];
 	}
 
 	static get pluginName() {
@@ -18,8 +18,17 @@ export default class FileUploadEditing extends Plugin {
 	init() {
 		const editor = this.editor;
 		const doc = editor.model.document;
+		const schema = editor.model.schema;
 		const conversion = editor.conversion;
 		const fileRepository = editor.plugins.get( FileRepository );
+
+		// Setup schema to allow uploadId and uploadStatus for files.
+		schema.extend( '$text', {
+			allowAttributes: [
+				'uploadId',
+				'uploadStatus'
+			]
+		} );
 
 		// Register fileUpload command.
 		editor.commands.add( 'fileUpload', new FileUploadCommand( editor ) );
@@ -60,12 +69,16 @@ export default class FileUploadEditing extends Plugin {
 			} );
 		} );
 
-		this.listenTo( editor.plugins.get( Clipboard ), 'inputTransformation', ( evt, data ) => {
+		console.log("this.listenTo( editor.plugins.get( ClipboardPipeline )");
+
+		this.listenTo( editor.plugins.get( ClipboardPipeline ), 'inputTransformation', ( evt, data ) => {
 			const fetchableFiles = Array.from( editor.editing.view.createRangeIn( data.content ) )
 				.filter( value => isLocalFile( value.item ) && !value.item.getAttribute( 'uploadProcessed' ) )
 				.map( value => {
 					return { promise: fetchLocalFile( value.item ), fileElement: value.item };
 				} );
+
+			console.log("fetchableFiles", fetchableFiles);
 
 			if ( !fetchableFiles.length ) {
 				return;
@@ -100,6 +113,8 @@ export default class FileUploadEditing extends Plugin {
 					if ( item ) {
 						const isInGraveyard = entry.position.root.rootName == '$graveyard';
 						for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
+							console.log("FILE", file);
+
 							// Check if the file element still has upload id.
 							const uploadId = file.getAttribute( 'uploadId' );
 							if ( !uploadId ) {
@@ -138,6 +153,8 @@ export default class FileUploadEditing extends Plugin {
 			writer.setAttribute( 'uploadStatus', 'reading', fileElement );
 		} );
 
+		console.log("fileElement", fileElement);
+
 		return loader.read()
 			.then( () => {
 				const promise = loader.upload();
@@ -149,8 +166,16 @@ export default class FileUploadEditing extends Plugin {
 				return promise;
 			} )
 			.then( data => {
+				console.log("ZZZZZ", data);
+
 				model.enqueueChange( 'transparent', writer => {
-					writer.setAttributes( { uploadStatus: 'complete', href: data.default }, fileElement );
+					console.log("creating reference", data);
+
+					const referenceElement = writer.createElement('reference', {href: data.default});
+
+					model.insertContent(referenceElement);
+
+					writer.remove(fileElement);
 				} );
 
 				clean();
