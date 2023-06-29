@@ -1,6 +1,5 @@
 import { FileRepository } from 'ckeditor5/src/upload';
 import { Command } from 'ckeditor5/src/core';
-import { findOptimalInsertionRange } from 'ckeditor5/src/widget';
 
 export default class FileUploadCommand extends Command {
 	refresh() {

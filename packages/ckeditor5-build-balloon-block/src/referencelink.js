@@ -18,12 +18,7 @@ class ReferenceLinkCommand extends Command {
 		const editor = this.editor;
 
 		// make sure the referenced note is in cache before adding the reference element
-
-		const editorEl = editor.editing.view.getDomRoot();
-		const component = glob.getComponentByEl(editorEl);
-
-		// render
-		component.getReferenceLinkTitle(href).then(() => {
+		glob.getReferenceLinkTitle(href).then(() => {
 			editor.model.change(writer => {
 				const placeholder = writer.createElement('reference', {href});
 
@@ -135,10 +130,7 @@ class ReferenceLinkEditing extends Plugin {
 					class: 'reference-link'
 				} );
 
-				const editorEl = editor.editing.view.getDomRoot();
-				const component = glob.getComponentByEl(editorEl);
-
-				const title = component.getReferenceLinkTitleSync(href);
+				const title = glob.getReferenceLinkTitleSync(href);
 
 				const innerText = viewWriter.createText(title);
 				viewWriter.insert(viewWriter.createPositionAt(referenceLinkView, 0), innerText);
