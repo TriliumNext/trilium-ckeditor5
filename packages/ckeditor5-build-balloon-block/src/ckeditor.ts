@@ -165,13 +165,15 @@ export default class BalloonEditor extends BalloonEditorBase {
 			]
 		},
 		image: {
-			// styles: [
-			// 	'alignLeft',
-			// 	'alignCenter',
-			// 	'alignRight',
-			// 	'full', // full and side are for BC since the old images have been created with these styles
-			// 	'side'
-			// ],
+			styles: {
+				options: [
+					'alignLeft',
+					'alignCenter',
+					'alignRight',
+					'full', // full and side are for BC since the old images have been created with these styles
+					'side'
+				]
+			},
 			resizeOptions: [
 				{
 					name: 'imageResize:original',
