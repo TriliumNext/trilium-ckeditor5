@@ -49,8 +49,5 @@ function uploadFile( writer, model, fileRepository, file ) {
 function insertFileLink( writer, model, attributes = {}, file ) {
 	const placeholder = writer.createElement( 'reference', attributes );
 	model.insertContent( placeholder, model.document.selection );
-
-	if ( placeholder.parent ) {
-		writer.setSelection( placeholder, 'on' );
-	}
+	writer.insertText( ' ', placeholder, 'after' );
 }
