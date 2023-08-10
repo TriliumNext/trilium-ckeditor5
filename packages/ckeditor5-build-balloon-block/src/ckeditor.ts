@@ -104,7 +104,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 		Link,
 		AutoLink,
 		List,
-		ListProperties,
+		// ListProperties, deactivated because it crashes the editor. Can be reproduced with ListProperties-repro-crash.html
 		TodoList,
 		Paragraph,
 		PasteFromOffice,
