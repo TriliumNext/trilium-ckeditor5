@@ -43,11 +43,11 @@ export default class FileUploadEditing extends Plugin {
 
 			const files = Array.from( data.dataTransfer.files );
 
-			const ranges = data.targetRanges.map( viewRange => editor.editing.mapper.toModelRange( viewRange ) );
-
 			editor.model.change( writer => {
 				// Set selection to paste target.
-				writer.setSelection( ranges );
+				if ( data.targetRanges ) {
+					writer.setSelection( data.targetRanges.map( viewRange => editor.editing.mapper.toModelRange( viewRange ) ) );
+				}
 
 				if ( files.length ) {
 					evt.stop();
