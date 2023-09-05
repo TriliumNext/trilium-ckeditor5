@@ -167,8 +167,10 @@ export default class BalloonEditor extends BalloonEditorBase {
 		image: {
 			styles: {
 				options: [
-					'alignLeft',
+					'alignBlockLeft',
 					'alignCenter',
+					'alignBlockRight',
+					'alignLeft',
 					'alignRight',
 					'full', // full and side are for BC since the old images have been created with these styles
 					'side'
@@ -197,9 +199,10 @@ export default class BalloonEditor extends BalloonEditorBase {
 				}
 			],
 			toolbar: [
-				'imageStyle:inline',
-				'imageStyle:alignLeft',
+				'imageStyle:alignBlockLeft',
 				'imageStyle:alignCenter',
+				'imageStyle:alignBlockRight',
+				'imageStyle:alignLeft',
 				'imageStyle:alignRight',
 				'|',
 				'imageResize:25',
