@@ -72,6 +72,14 @@ export default class BalloonEditor extends BalloonEditorBase {
         link: {
             defaultProtocol: string;
         };
+        htmlSupport: {
+            allow: {
+                name: RegExp;
+                attributes: true;
+                classes: true;
+                styles: true;
+            }[];
+        };
         language: string;
     };
 }

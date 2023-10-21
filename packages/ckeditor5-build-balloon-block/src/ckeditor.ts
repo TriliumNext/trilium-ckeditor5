@@ -59,6 +59,7 @@ import { Typing } from '@ckeditor/ckeditor5-typing';
 import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
+import { GeneralHtmlSupport } from '@ckeditor/ckeditor5-html-support';
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 
 import Math from '@isaul32/ckeditor5-math/src/math';
@@ -133,6 +134,8 @@ export default class BalloonEditor extends BalloonEditorBase {
 		RemoveFormat,
 		FindAndReplace,
 		Mention,
+		GeneralHtmlSupport,
+		// custom Trilium plugins
 		InternalLinkPlugin,
 		MarkdownImportPlugin,
 		CuttonotePlugin,
@@ -255,6 +258,16 @@ export default class BalloonEditor extends BalloonEditorBase {
 		},
 		link: {
 			defaultProtocol: 'https://'
+		},
+		htmlSupport: {
+			allow: [
+				{
+					name: /.*/,
+					attributes: true as const,
+					classes: true as const,
+					styles: true as const
+				}
+			]
 		},
 		// This value must be kept in sync with the language defined in webpack.config.js.
 		language: 'en'
