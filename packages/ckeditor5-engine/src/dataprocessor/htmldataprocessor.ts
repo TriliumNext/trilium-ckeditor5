@@ -53,13 +53,13 @@ export default class HtmlDataProcessor implements DataProcessor {
 
 	/**
 	 * Converts a provided {@link module:engine/view/documentfragment~DocumentFragment document fragment}
-	 * to data format &mdash; in this case to an HTML string.
+	 * to data format &ndash; in this case to an HTML string.
 	 *
 	 * @returns HTML string.
 	 */
 	public toData( viewFragment: ViewDocumentFragment ): string {
 		// Convert view DocumentFragment to DOM DocumentFragment.
-		const domFragment = this.domConverter.viewToDom( viewFragment ) as DocumentFragment;
+		const domFragment = this.domConverter.viewToDom( viewFragment );
 
 		// Convert DOM DocumentFragment to HTML output.
 		return this.htmlWriter.getHtml( domFragment );
