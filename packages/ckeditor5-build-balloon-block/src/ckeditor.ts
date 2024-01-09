@@ -210,7 +210,10 @@ export default class BalloonEditor extends BalloonEditorBase {
 				'imageResize:original',
 				'|',
 				'toggleImageCaption'
-			]
+			],
+			upload: {
+				types: [ 'jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff', 'svg', 'svg+xml', 'avif' ]
+			}
 		},
 		heading: {
 			options: [
