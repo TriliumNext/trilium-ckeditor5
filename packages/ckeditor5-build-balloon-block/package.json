@@ -50,6 +50,7 @@
     "@ckeditor/ckeditor5-paste-from-office": "40.1.0",
     "@ckeditor/ckeditor5-remove-format": "40.1.0",
     "@ckeditor/ckeditor5-select-all": "40.1.0",
+    "@ckeditor/ckeditor5-special-characters": "40.1.0",
     "@ckeditor/ckeditor5-table": "40.1.0",
     "@ckeditor/ckeditor5-typing": "40.1.0",
     "@ckeditor/ckeditor5-ui": "40.1.0",

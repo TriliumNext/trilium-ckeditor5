@@ -59,6 +59,7 @@ import { Typing } from '@ckeditor/ckeditor5-typing';
 import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
+import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckeditor5-special-characters';
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 
 import Math from '@isaul32/ckeditor5-math/src/math';
@@ -131,6 +132,8 @@ export default class BalloonEditor extends BalloonEditorBase {
 		SelectAll,
 		HorizontalLine,
 		RemoveFormat,
+		SpecialCharacters,
+		SpecialCharactersEssentials,
 		FindAndReplace,
 		Mention,
 		InternalLinkPlugin,
@@ -237,7 +240,8 @@ export default class BalloonEditor extends BalloonEditorBase {
 			'|',
 			'imageUpload',
 			'markdownImport',
-			'findAndReplace'
+			'findAndReplace',
+			'specialCharacters'
 		],
 		table: {
 			contentToolbar: [
