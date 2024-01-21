@@ -76,6 +76,7 @@ import indentBlockShortcutPlugin from './indent_block_shortcut';
 import removeFormatLinksPlugin from './remove_format_links';
 
 import '../theme/theme.css';
+import {SpecialCharactersEmoji} from "./special_characters_emoji";
 
 // expose so that Trilium can use it
 // eslint-disable-next-line no-undef
@@ -134,6 +135,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 		RemoveFormat,
 		SpecialCharacters,
 		SpecialCharactersEssentials,
+		SpecialCharactersEmoji,
 		FindAndReplace,
 		Mention,
 		InternalLinkPlugin,
