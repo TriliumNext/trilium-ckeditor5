@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -7,7 +7,7 @@
 import { BalloonEditor as BalloonEditorBase } from '@ckeditor/ckeditor5-editor-balloon';
 
 import { FindAndReplace } from '@ckeditor/ckeditor5-find-and-replace';
-import { UploadAdapter } from '@ckeditor/ckeditor5-adapter-ckfinder';
+import { CKFinderUploadAdapter } from '@ckeditor/ckeditor5-adapter-ckfinder';
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
 import { Bold } from '@ckeditor/ckeditor5-basic-styles';
 import { Italic } from '@ckeditor/ckeditor5-basic-styles';
@@ -86,7 +86,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 	public static override builtinPlugins = [
 		// essentials package expanded to allow selectively disable Enter and ShiftEnter
 		Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo,
-		UploadAdapter,
+		CKFinderUploadAdapter,
 		Autoformat,
 		Bold,
 		Italic,

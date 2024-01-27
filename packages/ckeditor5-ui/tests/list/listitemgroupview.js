@@ -1,13 +1,14 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-import ListItemView from '../../src/list/listitemview';
-import ListItemGroupView from '../../src/list/listitemgroupview';
-import ViewCollection from '../../src/viewcollection';
-import { LabelView, View } from '../../src';
+import ListItemView from '../../src/list/listitemview.js';
+import ListItemGroupView from '../../src/list/listitemgroupview.js';
+import ViewCollection from '../../src/viewcollection.js';
+import { LabelView, View } from '../../src/index.js';
 import { Locale } from '@ckeditor/ckeditor5-utils';
+import ListSeparatorView from '../../src/list/listseparatorview.js';
 
 describe( 'ListItemGroupView', () => {
 	let view, locale;
@@ -159,6 +160,28 @@ describe( 'ListItemGroupView', () => {
 
 			view.focus();
 			sinon.assert.calledOnce( spy );
+		} );
+
+		it( 'focuses the first view in #items which is not a separator', () => {
+			const childListSeparatorView = new ListSeparatorView();
+			view.items.add( childListSeparatorView );
+
+			const childListItemView = new ListItemView();
+			view.items.add( childListItemView );
+
+			const spyItem = sinon.spy( childListItemView, 'focus' );
+
+			view.focus();
+			sinon.assert.calledOnce( spyItem );
+		} );
+
+		it( 'does not throw if #items include only a separator', () => {
+			expect( () => {
+				const childListSeparatorView = new ListSeparatorView();
+				view.items.add( childListSeparatorView );
+
+				view.focus();
+			} ).to.not.throw();
 		} );
 
 		it( 'does not throw if #items are empty', () => {

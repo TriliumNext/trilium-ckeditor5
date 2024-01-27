@@ -1,25 +1,25 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* global document, console */
 
-import ClassicTestEditor from '@ckeditor/ckeditor5-core/tests/_utils/classictesteditor';
-import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import LinkEditing from '@ckeditor/ckeditor5-link/src/linkediting';
-import FontColorEditing from '@ckeditor/ckeditor5-font/src/fontcolor/fontcolorediting';
-import DataFilter from '../src/datafilter';
-import testUtils from '@ckeditor/ckeditor5-core/tests/_utils/utils';
-import { expectToThrowCKEditorError } from '@ckeditor/ckeditor5-utils/tests/_utils/utils';
-import { getData as getModelData, setData as setModelData } from '@ckeditor/ckeditor5-engine/src/dev-utils/model';
-import { getData as getViewData } from '@ckeditor/ckeditor5-engine/src/dev-utils/view';
-import { getModelDataWithAttributes } from './_utils/utils';
-import { addBackgroundRules } from '@ckeditor/ckeditor5-engine/src/view/styles/background';
-import { getLabel } from '@ckeditor/ckeditor5-widget/src/utils';
+import ClassicTestEditor from '@ckeditor/ckeditor5-core/tests/_utils/classictesteditor.js';
+import Plugin from '@ckeditor/ckeditor5-core/src/plugin.js';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
+import LinkEditing from '@ckeditor/ckeditor5-link/src/linkediting.js';
+import FontColorEditing from '@ckeditor/ckeditor5-font/src/fontcolor/fontcolorediting.js';
+import DataFilter from '../src/datafilter.js';
+import testUtils from '@ckeditor/ckeditor5-core/tests/_utils/utils.js';
+import { expectToThrowCKEditorError } from '@ckeditor/ckeditor5-utils/tests/_utils/utils.js';
+import { getData as getModelData, setData as setModelData } from '@ckeditor/ckeditor5-engine/src/dev-utils/model.js';
+import { getData as getViewData } from '@ckeditor/ckeditor5-engine/src/dev-utils/view.js';
+import { getModelDataWithAttributes } from './_utils/utils.js';
+import { addBackgroundRules } from '@ckeditor/ckeditor5-engine/src/view/styles/background.js';
+import { getLabel } from '@ckeditor/ckeditor5-widget/src/utils.js';
 
-import GeneralHtmlSupport from '../src/generalhtmlsupport';
+import GeneralHtmlSupport from '../src/generalhtmlsupport.js';
 
 describe( 'DataFilter', () => {
 	let editor, model, editorElement, dataFilter, dataSchema, htmlSupport;
@@ -4042,6 +4042,110 @@ describe( 'DataFilter', () => {
 				'<p>' +
 					'<span style="text-transform:uppercase;"><strong>foo</strong></span>' +
 					'<span style="color:red;"><span style="text-transform:uppercase;"><strong>bar</strong></span></span>' +
+				'</p>'
+			);
+		} );
+
+		it( 'should remove GHS selection attribute for the same range as a coupled feature attribute was removed', () => {
+			dataFilter.loadAllowedConfig( [ {
+				name: /^.*$/,
+				styles: true,
+				attributes: true,
+				classes: true
+			} ] );
+
+			editor.setData( '<p><a href="foo" class="bar">foobar</a></p>' );
+
+			expect( getModelDataWithAttributes( model ) ).to.deep.equal( {
+				data: '<paragraph><$text htmlA="(1)" linkHref="foo">[]foobar</$text></paragraph>',
+				attributes: {
+					1: {
+						classes: [ 'bar' ]
+					}
+				}
+			} );
+
+			expect( model.document.selection.getAttribute( 'linkHref' ) ).to.deep.equal( 'foo' );
+			expect( model.document.selection.getAttribute( 'htmlA' ) ).to.deep.equal( { classes: [ 'bar' ] } );
+
+			expect( editor.getData() ).to.equal( '<p><a class="bar" href="foo">foobar</a></p>' );
+
+			model.change( writer => {
+				writer.removeSelectionAttribute( 'linkHref' );
+			} );
+
+			expect( getModelDataWithAttributes( model ) ).to.deep.equal( {
+				data: '<paragraph>[]<$text htmlA="(1)" linkHref="foo">foobar</$text></paragraph>',
+				attributes: {
+					1: {
+						classes: [ 'bar' ]
+					}
+				}
+			} );
+
+			expect( model.document.selection.getAttribute( 'linkHref' ) ).to.be.undefined;
+			expect( model.document.selection.getAttribute( 'htmlA' ) ).to.be.undefined;
+
+			expect( editor.getData() ).to.equal( '<p><a class="bar" href="foo">foobar</a></p>' );
+		} );
+
+		it( 'should not remove other GHS selection attribute when other coupled one is removed', () => {
+			dataFilter.loadAllowedConfig( [ {
+				name: /^.*$/,
+				styles: true,
+				attributes: true,
+				classes: true
+			} ] );
+
+			editor.setData( '<p><span style="color:red;text-transform:uppercase;"><strong>foobar</strong></span></p>' );
+
+			expect( getModelDataWithAttributes( model ) ).to.deep.equal( {
+				data: '<paragraph><$text fontColor="red" htmlSpan="(1)" htmlStrong="(2)">[]foobar</$text></paragraph>',
+				attributes: {
+					1: {
+						styles: {
+							'text-transform': 'uppercase'
+						}
+					},
+					2: {}
+				}
+			} );
+
+			expect( model.document.selection.getAttribute( 'fontColor' ) ).to.deep.equal( 'red' );
+			expect( model.document.selection.getAttribute( 'htmlSpan' ) ).to.deep.equal( { styles: { 'text-transform': 'uppercase' } } );
+			expect( model.document.selection.getAttribute( 'htmlStrong' ) ).to.deep.equal( {} );
+
+			expect( editor.getData() ).to.equal(
+				'<p><span style="color:red;"><span style="text-transform:uppercase;"><strong>foobar</strong></span></span></p>'
+			);
+
+			model.change( writer => {
+				writer.removeSelectionAttribute( 'fontColor' );
+			} );
+
+			expect( getModelDataWithAttributes( model ) ).to.deep.equal( {
+				data:
+					'<paragraph>' +
+						'<$text htmlSpan="(1)" htmlStrong="(2)">[]</$text>' +
+						'<$text fontColor="red" htmlSpan="(3)" htmlStrong="(4)">foobar</$text>' +
+					'</paragraph>',
+				attributes: {
+					1: {
+						styles: {
+							'text-transform': 'uppercase'
+						}
+					},
+					2: {}
+				}
+			} );
+
+			expect( model.document.selection.getAttribute( 'fontColor' ) ).to.be.undefined;
+			expect( model.document.selection.getAttribute( 'htmlSpan' ) ).to.deep.equal( { styles: { 'text-transform': 'uppercase' } } );
+			expect( model.document.selection.getAttribute( 'htmlStrong' ) ).to.deep.equal( {} );
+
+			expect( editor.getData() ).to.equal(
+				'<p>' +
+					'<span style="color:red;"><span style="text-transform:uppercase;"><strong>foobar</strong></span></span>' +
 				'</p>'
 			);
 		} );

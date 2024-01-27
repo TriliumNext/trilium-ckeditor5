@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -49,8 +49,7 @@ const { execSync } = require( 'child_process' );
 // because, for instance, CSS animations may depend on it.
 const EXCLUDED_ICONS = [
 	'return-arrow.svg',
-	'project-logo.svg',
-	'text-alternative.svg'
+	'project-logo.svg'
 ];
 
 // A pattern to match all the icons.

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -9,9 +9,9 @@
  * @module ckbox/ckboxcommand
  */
 
-import type { Writer } from 'ckeditor5/src/engine';
-import { Command, type Editor } from 'ckeditor5/src/core';
-import { createElement, toMap } from 'ckeditor5/src/utils';
+import type { Writer } from 'ckeditor5/src/engine.js';
+import { Command, type Editor } from 'ckeditor5/src/core.js';
+import { createElement, toMap } from 'ckeditor5/src/utils.js';
 
 import type {
 	CKBoxAssetDefinition,
@@ -20,16 +20,9 @@ import type {
 	CKBoxAssetLinkAttributesDefinition,
 	CKBoxAssetLinkDefinition,
 	CKBoxRawAssetDefinition
-} from './ckboxconfig';
+} from './ckboxconfig.js';
 
-import { blurHashToDataUrl, getImageUrls } from './utils';
-
-declare global {
-	// eslint-disable-next-line no-var
-	var CKBox: {
-		mount( wrapper: Element, options: Record<string, unknown> ): void;
-	};
-}
+import { blurHashToDataUrl, getImageUrls } from './utils.js';
 
 // Defines the waiting time (in milliseconds) for inserting the chosen asset into the model. The chosen asset is temporarily stored in the
 // `CKBoxCommand#_chosenAssets` and it is removed from there automatically after this time. See `CKBoxCommand#_chosenAssets` for more
@@ -133,6 +126,7 @@ export default class CKBoxCommand extends Command {
 	 * - language The language for CKBox dialog.
 	 * - tokenUrl The token endpoint URL.
 	 * - serviceOrigin The base URL of the API service.
+	 * - forceDemoLabel Whether to force "Powered by CKBox" link.
 	 * - dialog.onClose The callback function invoked after closing the CKBox dialog.
 	 * - assets.onChoose The callback function invoked after choosing the assets.
 	 */
@@ -145,6 +139,7 @@ export default class CKBoxCommand extends Command {
 			language: ckboxConfig.language,
 			tokenUrl: ckboxConfig.tokenUrl,
 			serviceOrigin: ckboxConfig.serviceOrigin,
+			forceDemoLabel: ckboxConfig.forceDemoLabel,
 			dialog: {
 				onClose: () => this.fire<CKBoxEvent<'close'>>( 'ckbox:close' )
 			},
@@ -375,8 +370,10 @@ function prepareAssets(
 
 /**
  * Parses the assets attributes into the internal data format.
+ *
+ * @internal
  */
-function prepareImageAssetAttributes( asset: CKBoxRawAssetDefinition ): CKBoxAssetImageAttributesDefinition {
+export function prepareImageAssetAttributes( asset: CKBoxRawAssetDefinition ): CKBoxAssetImageAttributesDefinition {
 	const { imageFallbackUrl, imageSources } = getImageUrls( asset.data.imageUrls! );
 	const { description, width, height, blurHash } = asset.data.metadata!;
 	const imagePlaceholder = blurHashToDataUrl( blurHash );

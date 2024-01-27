@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -7,7 +7,7 @@
  * @module html-support/datafilter
  */
 
-import { Plugin, type Editor } from 'ckeditor5/src/core';
+import { Plugin, type Editor } from 'ckeditor5/src/core.js';
 
 import {
 	Matcher,
@@ -16,16 +16,17 @@ import {
 	type ViewElement,
 	type MatchResult,
 	type ViewConsumable,
-	type MatcherObjectPattern
-} from 'ckeditor5/src/engine';
+	type MatcherObjectPattern,
+	type DocumentSelectionChangeAttributeEvent
+} from 'ckeditor5/src/engine.js';
 
 import {
 	CKEditorError,
 	priorities,
 	isValidAttributeName
-} from 'ckeditor5/src/utils';
+} from 'ckeditor5/src/utils.js';
 
-import { Widget } from 'ckeditor5/src/widget';
+import { Widget } from 'ckeditor5/src/widget.js';
 
 import {
 	viewToModelObjectConverter,
@@ -38,19 +39,19 @@ import {
 
 	viewToModelBlockAttributeConverter,
 	modelToViewBlockAttributeConverter
-} from './converters';
+} from './converters.js';
 
 import {
 	default as DataSchema,
 	type DataSchemaBlockElementDefinition,
 	type DataSchemaDefinition,
 	type DataSchemaInlineElementDefinition
-} from './dataschema';
+} from './dataschema.js';
 
 import {
 	getHtmlAttributeName,
 	type GHSViewAttributes
-} from './utils';
+} from './utils.js';
 
 import { isPlainObject, pull as removeItemFromArray } from 'lodash-es';
 
@@ -438,6 +439,7 @@ export default class DataFilter extends Plugin {
 	 */
 	private _registerCoupledAttributesPostFixer() {
 		const model = this.editor.model;
+		const selection = model.document.selection;
 
 		model.document.registerPostFixer( writer => {
 			const changes = model.document.differ.getChanges();
@@ -459,7 +461,7 @@ export default class DataFilter extends Plugin {
 				}
 
 				// Remove the coupled GHS attributes on the same range as the feature attribute was removed.
-				for ( const { item } of change.range.getWalker( { shallow: true } ) ) {
+				for ( const { item } of change.range.getWalker() ) {
 					for ( const attributeKey of attributeKeys ) {
 						if ( item.hasAttribute( attributeKey ) ) {
 							writer.removeAttribute( attributeKey, item );
@@ -470,6 +472,41 @@ export default class DataFilter extends Plugin {
 			}
 
 			return changed;
+		} );
+
+		this.listenTo<DocumentSelectionChangeAttributeEvent>( selection, 'change:attribute', ( evt, { attributeKeys } ) => {
+			const removeAttributes = new Set<string>();
+			const coupledAttributes = this._getCoupledAttributesMap();
+
+			for ( const attributeKey of attributeKeys ) {
+				// Handle only attribute removals.
+				if ( selection.hasAttribute( attributeKey ) ) {
+					continue;
+				}
+
+				// Find a list of coupled GHS attributes.
+				const coupledAttributeKeys = coupledAttributes.get( attributeKey );
+
+				if ( !coupledAttributeKeys ) {
+					continue;
+				}
+
+				for ( const coupledAttributeKey of coupledAttributeKeys ) {
+					if ( selection.hasAttribute( coupledAttributeKey ) ) {
+						removeAttributes.add( coupledAttributeKey );
+					}
+				}
+			}
+
+			if ( removeAttributes.size == 0 ) {
+				return;
+			}
+
+			model.change( writer => {
+				for ( const attributeKey of removeAttributes ) {
+					writer.removeSelectionAttribute( attributeKey );
+				}
+			} );
 		} );
 	}
 

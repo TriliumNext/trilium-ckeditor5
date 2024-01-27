@@ -1,10 +1,11 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* eslint-env node */
 
+const { format } = require( 'date-fns' );
 const { PACKAGES_DIRECTORY, CKEDITOR5_ROOT_PATH, CKEDITOR5_COMMERCIAL_PATH } = require( './utils/constants' );
 
 module.exports = function getChangelogOptions( cliArguments ) {
@@ -12,6 +13,9 @@ module.exports = function getChangelogOptions( cliArguments ) {
 		cwd: CKEDITOR5_ROOT_PATH,
 		packages: PACKAGES_DIRECTORY,
 		releaseBranch: cliArguments.branch,
+		formatDate: now => {
+			return format( now, 'LLLL d, yyyy' );
+		},
 		transformScope: name => {
 			if ( name === 'ckeditor5' ) {
 				return 'https://www.npmjs.com/package/ckeditor5';

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -7,11 +7,12 @@
  * @module ckbox/ckboxui
  */
 
-import { Plugin } from 'ckeditor5/src/core';
-import { ButtonView } from 'ckeditor5/src/ui';
+import { icons, Plugin } from 'ckeditor5/src/core.js';
+import { ButtonView } from 'ckeditor5/src/ui.js';
 
-import browseFilesIcon from '../theme/icons/browse-files.svg';
-import type CKBoxCommand from './ckboxcommand';
+import type { ImageInsertUI } from '@ckeditor/ckeditor5-image';
+
+import type CKBoxCommand from './ckboxcommand.js';
 
 /**
  * The CKBoxUI plugin. It introduces the `'ckbox'` toolbar button.
@@ -45,7 +46,7 @@ export default class CKBoxUI extends Plugin {
 
 			button.set( {
 				label: t( 'Open file manager' ),
-				icon: browseFilesIcon,
+				icon: icons.browseFiles,
 				tooltip: true
 			} );
 
@@ -57,5 +58,43 @@ export default class CKBoxUI extends Plugin {
 
 			return button;
 		} );
+
+		if ( editor.plugins.has( 'ImageInsertUI' ) ) {
+			const imageInsertUI: ImageInsertUI = editor.plugins.get( 'ImageInsertUI' );
+
+			imageInsertUI.registerIntegration( {
+				name: 'assetManager',
+				observable: command,
+
+				buttonViewCreator: () => {
+					const button = this.editor.ui.componentFactory.create( 'ckbox' ) as ButtonView;
+
+					button.icon = icons.imageAssetManager;
+					button.bind( 'label' ).to( imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
+						t( 'Replace image with file manager' ) :
+						t( 'Insert image with file manager' )
+					);
+
+					return button;
+				},
+
+				formViewCreator: () => {
+					const button = this.editor.ui.componentFactory.create( 'ckbox' ) as ButtonView;
+
+					button.icon = icons.imageAssetManager;
+					button.withText = true;
+					button.bind( 'label' ).to( imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
+						t( 'Replace with file manager' ) :
+						t( 'Insert with file manager' )
+					);
+
+					button.on( 'execute', () => {
+						imageInsertUI.dropdownView!.isOpen = false;
+					} );
+
+					return button;
+				}
+			} );
+		}
 	}
 }

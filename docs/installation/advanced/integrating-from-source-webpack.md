@@ -15,10 +15,10 @@ order: 10
 This scenario allows you to fully control the building process of CKEditor&nbsp;5. This means that you will not actually use the builds anymore, but instead build CKEditor&nbsp;5 from the source directly into your project. This integration method gives you full control over which features will be included and how webpack will be configured.
 
 <info-box>
-	Similar results to what this method allows can be achieved by {@link installation/getting-started/quick-start-other#building-the-editor-from-source customizing an existing build} and integrating your custom build. This will give faster build times (since CKEditor&nbsp;5 will be built once and committed), however, it requires maintaining a separate repository and installing the code from that repository into your project (e.g. by publishing a new npm package or using tools like [Lerna](https://github.com/lerna/lerna)). This makes it less convenient than the method described in this scenario.
+	You can achieve similar results to what this method allows by {@link installation/getting-started/quick-start-other#building-the-editor-from-source customizing an existing build} and integrating your custom build. This will give faster build times (since CKEditor&nbsp;5 will be built once and committed), however, it requires maintaining a separate repository and installing the code from that repository into your project (for example, by publishing a new npm package or using tools like [Lerna](https://github.com/lerna/lerna)). This makes it less convenient than the method described in this scenario.
 </info-box>
 
-First of all, you need to install the source packages that you will use in your existing project. If you base your integration on one of the existing builds, you can take them from that build's `package.json` file (see e.g. [classic build's `package.json`](https://github.com/ckeditor/ckeditor5/blob/master/packages/ckeditor5-build-classic/package.json)). At this moment you can choose the editor type and the features you want. Keep in mind, however, that all packages (excluding `@ckeditor/ckeditor5-dev-*`) {@link installation/plugins/installing-plugins#requirements must have the same version as the base editor package}.
+First of all, you need to install the source packages that you will use in your existing project. If you base your integration on one of the existing builds, you can take them from that build's `package.json` file (see, for example, [classic build's `package.json`](https://github.com/ckeditor/ckeditor5/blob/master/packages/ckeditor5-build-classic/package.json)). At this moment you can choose the editor type and the features you want. Keep in mind, however, that all packages (excluding `@ckeditor/ckeditor5-dev-*`) {@link installation/plugins/installing-plugins#requirements must have the same version as the base editor package}.
 
 Copy these dependencies to your `package.json` and call `npm install` to install them. You can also install them individually. An example list of plugins may look like this:
 
@@ -157,7 +157,10 @@ module.exports = {
 		} )
 	],
 	resolve: {
-		extensions: [ '.js', '.ts' ]
+		extensions: [ '.ts', '.js', '.json' ],
+		extensionAlias: {
+			'.js': [ '.js', '.ts' ]
+		}
 	},
 	module: {
 		rules: [
@@ -350,7 +353,7 @@ ClassicEditor
 
 ### TypeScript
 
-If you want to use TypeScript, the `ckeditor` file looks very similar. However, do not forget about the `.ts` extension.
+If you want to use TypeScript, the `ckeditor` file looks similar. However, do not forget about the `.ts` extension.
 
 ```ts
 // ckeditor.ts
@@ -616,7 +619,7 @@ CKEditor&nbsp;5 is written in ECMAScript 2015 (also called ES6). All browsers in
 
 However, it may happen that your environment requires ES5. For instance, if you use tools like the original [UglifyJS](https://github.com/mishoo/UglifyJS) which do not support ES6+ yet, you may need to transpile CKEditor&nbsp;5 source to ES5. This will create ~80% bigger builds but will ensure that your environment can process CKEditor&nbsp;5 code.
 
-In order to create an ES5 build of CKEditor&nbsp;5 you can use [Babel](https://babeljs.io/):
+To create an ES5 build of CKEditor&nbsp;5, you can use [Babel](https://babeljs.io/):
 
 ```bash
 npm install --save babel-loader @babel/core @babel/preset-env regenerator-runtime

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -7,26 +7,26 @@
  * @module ui/dropdown/utils
  */
 
-import DropdownPanelView from './dropdownpanelview';
-import DropdownView from './dropdownview';
-import DropdownButtonView from './button/dropdownbuttonview';
-import ToolbarView from '../toolbar/toolbarview';
-import ListView from '../list/listview';
-import ListItemView from '../list/listitemview';
-import ListSeparatorView from '../list/listseparatorview';
-import ButtonView from '../button/buttonview';
-import SplitButtonView from './button/splitbuttonview';
-import SwitchButtonView from '../button/switchbuttonview';
-import ViewCollection from '../viewcollection';
+import DropdownPanelView from './dropdownpanelview.js';
+import DropdownView from './dropdownview.js';
+import DropdownButtonView from './button/dropdownbuttonview.js';
+import ToolbarView from '../toolbar/toolbarview.js';
+import ListView from '../list/listview.js';
+import ListItemView from '../list/listitemview.js';
+import ListSeparatorView from '../list/listseparatorview.js';
+import ButtonView from '../button/buttonview.js';
+import SplitButtonView from './button/splitbuttonview.js';
+import SwitchButtonView from '../button/switchbuttonview.js';
+import ViewCollection from '../viewcollection.js';
 
-import clickOutsideHandler from '../bindings/clickoutsidehandler';
+import clickOutsideHandler from '../bindings/clickoutsidehandler.js';
 
-import type { default as View, UIViewRenderEvent } from '../view';
-import type { ButtonExecuteEvent } from '../button/button';
-import type Model from '../model';
-import type DropdownButton from './button/dropdownbutton';
-import type { FocusableView } from '../focuscycler';
-import type { FalsyValue } from '../template';
+import type { default as View, UIViewRenderEvent } from '../view.js';
+import type { ButtonExecuteEvent } from '../button/button.js';
+import type Model from '../model.js';
+import type DropdownButton from './button/dropdownbutton.js';
+import type { FocusableView } from '../focuscycler.js';
+import type { FalsyValue } from '../template.js';
 
 import {
 	global,
@@ -39,7 +39,7 @@ import {
 
 import '../../theme/components/dropdown/toolbardropdown.css';
 import '../../theme/components/dropdown/listdropdown.css';
-import ListItemGroupView from '../list/listitemgroupview';
+import ListItemGroupView from '../list/listitemgroupview.js';
 
 /**
  * A helper for creating dropdowns. It creates an instance of a {@link module:ui/dropdown/dropdownview~DropdownView dropdown},
@@ -105,15 +105,16 @@ import ListItemGroupView from '../list/listitemgroupview';
  * {@link module:ui/dropdown/utils~addToolbarToDropdown} utils.
  *
  * @param locale The locale instance.
- * @param ButtonClass The dropdown button view class. Needs to implement the
+ * @param ButtonClassOrInstance The dropdown button view class. Needs to implement the
  * {@link module:ui/dropdown/button/dropdownbutton~DropdownButton} interface.
  * @returns The dropdown view instance.
  */
 export function createDropdown(
 	locale: Locale | undefined,
-	ButtonClass: new ( locale?: Locale ) => DropdownButton & FocusableView = DropdownButtonView
+	ButtonClassOrInstance:
+		( new ( locale?: Locale ) => DropdownButton & FocusableView ) | DropdownButton & FocusableView = DropdownButtonView
 ): DropdownView {
-	const buttonView = new ButtonClass( locale );
+	const buttonView = typeof ButtonClassOrInstance == 'function' ? new ButtonClassOrInstance( locale ) : ButtonClassOrInstance;
 
 	const panelView = new DropdownPanelView( locale );
 	const dropdownView = new DropdownView( locale, buttonView, panelView );
@@ -261,7 +262,7 @@ function addToolbarToOpenDropdown(
  * Adds an instance of {@link module:ui/list/listview~ListView} to a dropdown.
  *
  * ```ts
- * const items = new Collection();
+ * const items = new Collection<ListDropdownItemDefinition>();
  *
  * items.add( {
  * 	type: 'button',
