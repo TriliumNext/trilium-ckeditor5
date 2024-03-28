@@ -157,6 +157,16 @@ export default class MentionUI extends Plugin {
 
 				if ( data.keyCode == keyCodes.esc ) {
 					this._hideUIAndRemoveMarker();
+
+					editor.model.change(writer => {
+						// insert a zero-width space as a special marker that we don't want a mention active anymore
+						// see e.g. https://github.com/zadam/trilium/issues/4692
+						const insertPosition = editor.model.document.selection.getLastPosition();
+
+						if (insertPosition !== null) {
+							writer.insertText('\u200B', insertPosition);
+						}
+					});
 				}
 			}
 		}, { priority: 'highest' } ); // Required to override the Enter key.
@@ -712,7 +722,8 @@ function getLastValidMarkerInText(
 export function createRegExp( marker: string, minimumCharacters: number ): RegExp {
 	const numberOfCharacters = minimumCharacters == 0 ? '*' : `{${ minimumCharacters },}`;
 	const openAfterCharacters = env.features.isRegExpUnicodePropertySupported ? '\\p{Ps}\\p{Pi}"\'' : '\\(\\[{"\'';
-	const mentionCharacters = '^='
+	// \u200B is a "0 width space" which we use as a marker that the autocomplete is not desired
+	const mentionCharacters = '^=\u200B';
 
 	// I wanted to make an util out of it, but since this regexp uses "u" flag, it became difficult.
 	// When "u" flag is used, the regexp has "strict" escaping rules, i.e. if you try to escape a character that does not need
@@ -726,7 +737,7 @@ export function createRegExp( marker: string, minimumCharacters: number ): RegEx
 	// - 2: Mention input (taking the minimal length into consideration to trigger the UI),
 	//
 	// The pattern matches up to the caret (end of string switch - $).
-	//               (0:      opening sequence        )(1:  marker   )(2:                typed mention                )$
+	//                      (0:      opening sequence        )(1:   marker   )(2:                typed mention               )$
 	const pattern = `(?:^|[= ${ openAfterCharacters }])([${ marker }])([${ mentionCharacters }]${ numberOfCharacters })$`;
 
 	return new RegExp( pattern, 'u' );
