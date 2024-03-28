@@ -164,7 +164,7 @@ export default class MentionUI extends Plugin {
 						const insertPosition = editor.model.document.selection.getLastPosition();
 
 						if (insertPosition !== null) {
-							writer.insertText('\u200B', insertPosition);
+							writer.insertText('\u2002', insertPosition);
 						}
 					});
 				}
@@ -722,8 +722,8 @@ function getLastValidMarkerInText(
 export function createRegExp( marker: string, minimumCharacters: number ): RegExp {
 	const numberOfCharacters = minimumCharacters == 0 ? '*' : `{${ minimumCharacters },}`;
 	const openAfterCharacters = env.features.isRegExpUnicodePropertySupported ? '\\p{Ps}\\p{Pi}"\'' : '\\(\\[{"\'';
-	// \u200B is a "0 width space" which we use as a marker that the autocomplete is not desired
-	const mentionCharacters = '^=\u200B';
+	// \u2009 is an "n space" which we use as a marker that the autocomplete is not desired
+	const mentionCharacters = '^=\u2002';
 
 	// I wanted to make an util out of it, but since this regexp uses "u" flag, it became difficult.
 	// When "u" flag is used, the regexp has "strict" escaping rules, i.e. if you try to escape a character that does not need
