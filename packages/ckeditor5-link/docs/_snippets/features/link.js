@@ -5,6 +5,8 @@
 
 /* globals console, window, document, ClassicEditor, CKEditorPlugins, CS_CONFIG */
 
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
+
 ClassicEditor
 	.create( document.querySelector( '#snippet-link' ), {
 		extraPlugins: [ ...Object.values( CKEditorPlugins ) ],
@@ -19,7 +21,7 @@ ClassicEditor
 		},
 		image: {
 			toolbar: [
-				'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+				'imageStyle:inline', 'imageStyle:block', 'imageStyle:wrapText', '|',
 				'toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit'
 			]
 		},
@@ -29,7 +31,8 @@ ClassicEditor
 			}
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
 			forceDemoLabel: true
 		}
 	} )

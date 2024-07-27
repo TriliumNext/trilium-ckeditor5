@@ -6,6 +6,7 @@
 /* global document, window, console, ClassicEditor */
 
 import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud-services-config.js';
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
 
 ClassicEditor
 	.create( document.querySelector( '#demo-editor' ), {
@@ -25,14 +26,15 @@ ClassicEditor
 			}
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
 			forceDemoLabel: true
 		},
 		image: {
 			toolbar: [
 				'imageStyle:inline',
 				'imageStyle:block',
-				'imageStyle:side',
+				'imageStyle:wrapText',
 				'|',
 				'toggleImageCaption',
 				'imageTextAlternative',

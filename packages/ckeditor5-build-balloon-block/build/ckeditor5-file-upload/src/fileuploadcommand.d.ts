@@ -10,4 +10,4 @@ export default class FileUploadCommand extends Command {
         file: File | Array<File>;
     }): void;
 }
-import { Command } from "@ckeditor/ckeditor5-core";
+import { Command } from 'ckeditor5/src/core';

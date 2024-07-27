@@ -5,6 +5,8 @@
 
 /* globals console, window, document, ClassicEditor, Markdown */
 
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
+
 ClassicEditor
 	.create( document.querySelector( '#editor-markdown' ), {
 		extraPlugins: [ Markdown ],
@@ -26,7 +28,7 @@ ClassicEditor
 				'linkImage',
 				'|',
 				'imageStyle:block',
-				'imageStyle:side',
+				'imageStyle:wrapText',
 				'|',
 				'imageTextAlternative',
 				'|',
@@ -59,7 +61,8 @@ ClassicEditor
 			}
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
 			forceDemoLabel: true
 		}
 	} )

@@ -35,7 +35,7 @@ ClassicEditor
 			toolbar: [
 				'imageStyle:inline',
 				'imageStyle:block',
-				'imageStyle:side',
+				'imageStyle:wrapText',
 				'|',
 				'toggleImageCaption',
 				'imageTextAlternative',
@@ -44,9 +44,9 @@ ClassicEditor
 			]
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
-			forceDemoLabel: true,
-			tokenUrl: TOKEN_URL
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
+			forceDemoLabel: true
 		},
 		table: {
 			contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]

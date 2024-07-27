@@ -11,7 +11,6 @@ import {
 	Editor,
 	Context,
 	ElementApiMixin,
-	DataApiMixin,
 	secureSourceElement,
 	type EditorConfig,
 	type EditorReadyEvent
@@ -42,7 +41,8 @@ import { isElement as _isElement } from 'lodash-es';
  * In order to create a decoupled editor instance, use the static
  * {@link module:editor-decoupled/decouplededitor~DecoupledEditor.create `DecoupledEditor.create()`} method.
  *
- * Note that you will need to attach the editor toolbar to your web page manually, in a desired place, after the editor is initialized.
+ * Note that you will need to attach the editor toolbar and menu bar to your web page manually, in a desired place,
+ * after the editor is initialized.
  *
  * # Decoupled editor and document editor build
  *
@@ -60,7 +60,7 @@ import { isElement as _isElement } from 'lodash-es';
  * Read more about initializing the editor from source or as a build in
  * {@link module:editor-decoupled/decouplededitor~DecoupledEditor.create `DecoupledEditor.create()`}.
  */
-export default class DecoupledEditor extends DataApiMixin( ElementApiMixin( Editor ) ) {
+export default class DecoupledEditor extends ElementApiMixin( Editor ) {
 	/**
 	 * @inheritDoc
 	 */

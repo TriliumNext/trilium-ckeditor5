@@ -26,6 +26,7 @@ import type {
 	ImageCaptionUtils,
 	ImageInsertUI,
 	ImageResizeEditing,
+	ImageCustomResizeUI,
 	ImageSizeAttributes,
 	ImageStyleEditing,
 	ImageStyleUI,
@@ -43,7 +44,7 @@ import type {
 	ImageStyleCommand,
 	ImageTextAlternativeCommand,
 	UploadImageCommand
-} from '.';
+} from './index.js';
 
 declare module '@ckeditor/ckeditor5-core' {
   interface EditorConfig {
@@ -77,6 +78,7 @@ declare module '@ckeditor/ckeditor5-core' {
 		[ ImageCaptionUtils.pluginName ]: ImageCaptionUtils;
 		[ ImageInsertUI.pluginName ]: ImageInsertUI;
 		[ ImageResizeEditing.pluginName ]: ImageResizeEditing;
+		[ ImageCustomResizeUI.pluginName ]: ImageCustomResizeUI;
 		[ ImageSizeAttributes.pluginName ]: ImageSizeAttributes;
 		[ ImageStyleEditing.pluginName ]: ImageStyleEditing;
 		[ ImageStyleUI.pluginName ]: ImageStyleUI;

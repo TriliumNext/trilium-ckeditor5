@@ -64,6 +64,11 @@ ClassicEditor
 					value: null
 				},
 				{
+					name: 'resizeImage:custom',
+					label: 'Custom size',
+					value: 'custom'
+				},
+				{
 					name: 'resizeImage:50',
 					label: '50%',
 					value: '50'
@@ -76,7 +81,7 @@ ClassicEditor
 			],
 			toolbar: [
 				'imageTextAlternative', 'toggleImageCaption', '|',
-				'imageStyle:inline', 'imageStyle:wrapText', 'imageStyle:breakText', 'imageStyle:side', '|',
+				'imageStyle:inline', 'imageStyle:breakText', 'imageStyle:wrapText', '|',
 				'resizeImage'
 			]
 		}

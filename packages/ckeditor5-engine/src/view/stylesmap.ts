@@ -11,8 +11,6 @@ import { get, isObject, merge, set, unset } from 'lodash-es';
 
 /**
  * Styles map. Allows handling (adding, removing, retrieving) a set of style rules (usually, of an element).
- *
- * The styles map is capable of normalizing style names so e.g. the following operations are possible:
  */
 export default class StylesMap {
 	/**
@@ -303,7 +301,7 @@ export default class StylesMap {
 			return '';
 		}
 
-		return this._getStylesEntries()
+		return this.getStylesEntries()
 			.map( arr => arr.join( ':' ) )
 			.sort()
 			.join( ';' ) + ';';
@@ -411,7 +409,7 @@ export default class StylesMap {
 			return this._styleProcessor.getStyleNames( this._styles );
 		}
 
-		const entries = this._getStylesEntries();
+		const entries = this.getStylesEntries();
 
 		return entries.map( ( [ key ] ) => key );
 	}
@@ -426,7 +424,7 @@ export default class StylesMap {
 	/**
 	 * Returns normalized styles entries for further processing.
 	 */
-	private _getStylesEntries(): Array<PropertyDescriptor> {
+	public getStylesEntries(): Array<PropertyDescriptor> {
 		const parsed: Array<PropertyDescriptor> = [];
 
 		const keys = Object.keys( this._styles );

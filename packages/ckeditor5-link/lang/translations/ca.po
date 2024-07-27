@@ -29,6 +29,10 @@ msgctxt "Label for the URL input in the Link URL editing balloon."
 msgid "Link URL"
 msgstr "Enllaçar URL"
 
+msgctxt "An error text displayed when user attempted to enter an empty URL."
+msgid "Link URL must not be empty."
+msgstr "L'URL de l'enllaç no pot estar buit."
+
 msgctxt "Label for the image link button."
 msgid "Link image"
 msgstr "Enllaçar imatge"
@@ -52,3 +56,11 @@ msgstr "Obrir en una pestanya nova"
 msgctxt "The label of the switch button that controls whether the edited link refers to downloadable resource."
 msgid "Downloadable"
 msgstr "Es pot descarregar"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for creating a link."
+msgid "Create link"
+msgstr "Crea un enllaç"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for moving out of a link."
+msgid "Move out of a link"
+msgstr "Surt d'un enllaç"

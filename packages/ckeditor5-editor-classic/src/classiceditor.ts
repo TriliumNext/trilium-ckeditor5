@@ -13,7 +13,6 @@ import ClassicEditorUIView from './classiceditoruiview.js';
 import {
 	Editor,
 	Context,
-	DataApiMixin,
 	ElementApiMixin,
 	attachToForm,
 	type EditorConfig,
@@ -48,7 +47,7 @@ import { isElement as _isElement } from 'lodash-es';
  * Read more about initializing the editor from source or as a build in
  * {@link module:editor-classic/classiceditor~ClassicEditor.create `ClassicEditor.create()`}.
  */
-export default class ClassicEditor extends DataApiMixin( ElementApiMixin( Editor ) ) {
+export default class ClassicEditor extends ElementApiMixin( Editor ) {
 	/**
 	 * @inheritDoc
 	 */
@@ -75,6 +74,8 @@ export default class ClassicEditor extends DataApiMixin( ElementApiMixin( Editor
 
 		super( config );
 
+		this.config.define( 'menuBar.isVisible', false );
+
 		if ( this.config.get( 'initialData' ) === undefined ) {
 			this.config.set( 'initialData', getInitialData( sourceElementOrData ) );
 		}
@@ -86,8 +87,12 @@ export default class ClassicEditor extends DataApiMixin( ElementApiMixin( Editor
 		this.model.document.createRoot();
 
 		const shouldToolbarGroupWhenFull = !this.config.get( 'toolbar.shouldNotGroupWhenFull' );
+
+		const menuBarConfig = this.config.get( 'menuBar' )!;
+
 		const view = new ClassicEditorUIView( this.locale, this.editing.view, {
-			shouldToolbarGroupWhenFull
+			shouldToolbarGroupWhenFull,
+			useMenuBar: menuBarConfig.isVisible
 		} );
 
 		this.ui = new ClassicEditorUI( this, view );

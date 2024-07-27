@@ -53,6 +53,10 @@
 				transform var(--ck-labeled-field-view-transition),
 				padding var(--ck-labeled-field-view-transition),
 				background var(--ck-labeled-field-view-transition);
+
+			@media (prefers-reduced-motion: reduce) {
+				transition: none;
+			}
 		}
 	}
 
@@ -88,7 +92,7 @@
 	/* Fields that are disabled or not focused and without a placeholder should have full-sized labels. */
 	/* stylelint-disable-next-line no-descending-specificity */
 	&.ck-disabled.ck-labeled-field-view_empty:not(.ck-labeled-field-view_placeholder) > .ck.ck-labeled-field-view__input-wrapper > .ck.ck-label,
-	&.ck-labeled-field-view_empty:not(.ck-labeled-field-view_focused):not(.ck-labeled-field-view_placeholder) > .ck.ck-labeled-field-view__input-wrapper > .ck.ck-label {
+	&.ck-labeled-field-view_empty:not(.ck-labeled-field-view_focused):not(.ck-labeled-field-view_placeholder):not(.ck-error) > .ck.ck-labeled-field-view__input-wrapper > .ck.ck-label {
 		@mixin ck-dir ltr {
 			transform: translate(var(--ck-labeled-field-label-default-position-x), var(--ck-labeled-field-label-default-position-y)) scale(1);
 		}

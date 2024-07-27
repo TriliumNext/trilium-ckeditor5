@@ -5,7 +5,7 @@ export default class FileUploadEditing extends Plugin {
     init(): void;
     _readAndUpload(loader: any, fileElement: any): any;
 }
-import { Plugin } from "@ckeditor/ckeditor5-core";
-import { Notification } from "@ckeditor/ckeditor5-ui";
-import { FileRepository } from "@ckeditor/ckeditor5-upload";
-import { Clipboard } from "@ckeditor/ckeditor5-clipboard";
+import { Plugin } from 'ckeditor5/src/core';
+import { Notification } from 'ckeditor5/src/ui';
+import { FileRepository } from 'ckeditor5/src/upload';
+import { Clipboard } from 'ckeditor5/src/clipboard';

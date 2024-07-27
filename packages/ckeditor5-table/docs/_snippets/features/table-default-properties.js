@@ -5,6 +5,8 @@
 
 /* globals ClassicEditor, CKEditorPlugins, console, window, document */
 
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
+
 ClassicEditor
 	.create( document.querySelector( '#snippet-table-default-properties' ), {
 		extraPlugins: [
@@ -34,7 +36,7 @@ ClassicEditor
 		image: {
 			toolbar: [
 				'imageStyle:block',
-				'imageStyle:side',
+				'imageStyle:wrapText',
 				'|',
 				'imageTextAlternative',
 				'|',
@@ -47,7 +49,8 @@ ClassicEditor
 			}
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
 			forceDemoLabel: true
 		},
 		placeholder: 'Insert the new table with the default styles applied.'
