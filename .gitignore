@@ -35,6 +35,7 @@ yalc.lock
 # Ignore compiled TypeScript files.
 packages/*/src/**/*.d.ts
 packages/*/src/**/*.js
+!packages/ckeditor5-build-balloon-block/src/*.js
 packages/*/src/**/*.js.map
 src/**/*.js
 src/**/*.js.map
