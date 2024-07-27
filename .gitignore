@@ -36,6 +36,7 @@ yalc.lock
 packages/*/src/**/*.d.ts
 packages/*/src/**/*.js
 !packages/ckeditor5-build-balloon-block/src/*.js
+packages/ckeditor5-build-balloon-block/build
 packages/*/src/**/*.js.map
 src/**/*.js
 src/**/*.js.map
