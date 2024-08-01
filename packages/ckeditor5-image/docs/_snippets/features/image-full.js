@@ -6,6 +6,7 @@
 /* globals ClassicEditor, console, window, document */
 
 import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud-services-config.js';
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
 
 ClassicEditor
 	.create( document.querySelector( '#snippet-image-full' ), {
@@ -24,7 +25,8 @@ ClassicEditor
 			}
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
 			forceDemoLabel: true
 		},
 		image: {
@@ -34,11 +36,12 @@ ClassicEditor
 				'|',
 				'imageStyle:inline',
 				'imageStyle:block',
-				'imageStyle:side',
+				'imageStyle:wrapText',
 				'|',
 				'resizeImage:100',
 				'resizeImage:200',
 				'resizeImage:original',
+				'resizeImage:custom',
 				'|',
 				'ckboxImageEdit'
 			],
@@ -47,6 +50,11 @@ ClassicEditor
 					name: 'resizeImage:original',
 					value: null,
 					icon: 'original'
+				},
+				{
+					name: 'resizeImage:custom',
+					value: 'custom',
+					icon: 'custom'
 				},
 				{
 					name: 'resizeImage:100',

@@ -17,6 +17,8 @@ export { default as Context, type ContextConfig } from './context.js';
 export { default as ContextPlugin, type ContextPluginDependencies } from './contextplugin.js';
 export { type EditingKeystrokeCallback } from './editingkeystrokehandler.js';
 
+export type { PartialBy, NonEmptyArray, HexColor } from './typings.js';
+
 export { default as Editor, type EditorReadyEvent, type EditorDestroyEvent } from './editor/editor.js';
 export type {
 	EditorConfig,
@@ -32,6 +34,13 @@ export { default as ElementApiMixin, type ElementApi } from './editor/utils/elem
 export { default as secureSourceElement } from './editor/utils/securesourceelement.js';
 
 export { default as PendingActions, type PendingAction } from './pendingactions.js';
+
+export type {
+	KeystrokeInfos as KeystrokeInfoDefinitions,
+	KeystrokeInfoGroup as KeystrokeInfoGroupDefinition,
+	KeystrokeInfoCategory as KeystrokeInfoCategoryDefinition,
+	KeystrokeInfoDefinition as KeystrokeInfoDefinition
+} from './accessibility.js';
 
 import cancel from './../theme/icons/cancel.svg';
 import caption from './../theme/icons/caption.svg';
@@ -67,6 +76,7 @@ import objectLeft from './../theme/icons/object-inline-left.svg';
 import objectRight from './../theme/icons/object-inline-right.svg';
 
 import objectSizeFull from './../theme/icons/object-size-full.svg';
+import objectSizeCustom from './../theme/icons/object-size-custom.svg';
 import objectSizeLarge from './../theme/icons/object-size-large.svg';
 import objectSizeSmall from './../theme/icons/object-size-small.svg';
 import objectSizeMedium from './../theme/icons/object-size-medium.svg';
@@ -149,6 +159,7 @@ export const icons = {
 	objectBlockLeft,
 	objectBlockRight,
 
+	objectSizeCustom,
 	objectSizeFull,
 	objectSizeLarge,
 	objectSizeSmall,

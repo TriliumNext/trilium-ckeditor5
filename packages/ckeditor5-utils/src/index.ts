@@ -72,7 +72,7 @@ export * from './dom/scroll.js';
 
 export * from './keyboard.js';
 export * from './language.js';
-export { default as Locale, type LocaleTranslate } from './locale.js';
+export { default as Locale, type LocaleTranslate, type Translations } from './locale.js';
 export {
 	default as Collection,
 	type CollectionAddEvent,
@@ -93,6 +93,7 @@ export { default as uid } from './uid.js';
 export { default as delay, type DelayedFunc } from './delay.js';
 export { default as verifyLicense } from './verifylicense.js';
 export { default as wait } from './wait.js';
+
 export * from './unicode.js';
 
 export { default as version, releaseDate } from './version.js';

@@ -29,6 +29,10 @@ msgctxt "Label for the URL input in the Link URL editing balloon."
 msgid "Link URL"
 msgstr "URL del collegamento"
 
+msgctxt "An error text displayed when user attempted to enter an empty URL."
+msgid "Link URL must not be empty."
+msgstr "L'URL del link non può essere lasciato in bianco."
+
 msgctxt "Label for the image link button."
 msgid "Link image"
 msgstr "Collega immagine"
@@ -52,3 +56,11 @@ msgstr "Apri in una nuova scheda"
 msgctxt "The label of the switch button that controls whether the edited link refers to downloadable resource."
 msgid "Downloadable"
 msgstr "Scaricabile"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for creating a link."
+msgid "Create link"
+msgstr "Crea un link"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for moving out of a link."
+msgid "Move out of a link"
+msgstr "Esce da un link"

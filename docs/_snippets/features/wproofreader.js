@@ -13,6 +13,7 @@ import { PictureEditing, ImageInsert, ImageUpload } from '@ckeditor/ckeditor5-im
 import WProofreader from '@webspellchecker/wproofreader-ckeditor5/src/wproofreader.js';
 
 import { CS_CONFIG } from '@ckeditor/ckeditor5-cloud-services/tests/_utils/cloud-services-config.js';
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
 
 ClassicEditor
 	.create( document.querySelector( '#snippet-wproofreader' ), {
@@ -39,12 +40,13 @@ ClassicEditor
 			}
 		},
 		ckbox: {
+			tokenUrl: TOKEN_URL,
 			forceDemoLabel: true,
-			allowExternalImagesEditing: [ /^data:/, 'origin' ]
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ]
 		},
 		image: {
 			toolbar: [
-				'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+				'imageStyle:inline', 'imageStyle:block', 'imageStyle:wrapText', '|',
 				'toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit'
 			]
 		},
@@ -57,7 +59,7 @@ ClassicEditor
 
 		window.attachTourBalloon( {
 			target: window.findToolbarItem( editor.ui.view.toolbar,
-				item => item.buttonView && item.buttonView.label && item.buttonView.label === 'WProofreader' ),
+				item => item?.buttonView?.label === 'WProofreader text checker' ),
 			text: 'Click for spell and grammar checking.',
 			editor
 		} );

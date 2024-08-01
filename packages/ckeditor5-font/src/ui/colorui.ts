@@ -14,10 +14,11 @@ import {
 	normalizeColorOptions,
 	getLocalizedColorOptions,
 	focusChildOnDropdownOpen,
-	type ColorSelectorView,
 	type ColorSelectorExecuteEvent,
 	type ColorSelectorColorPickerCancelEvent,
-	type ColorSelectorColorPickerShowEvent
+	type ColorSelectorColorPickerShowEvent,
+	MenuBarMenuView,
+	ColorSelectorView
 } from 'ckeditor5/src/ui.js';
 
 import {
@@ -64,11 +65,6 @@ export default class ColorUI extends Plugin {
 	public columns: number;
 
 	/**
-	 * Keeps a reference to {@link module:ui/colorselector/colorselectorview~ColorSelectorView}.
-	 */
-	public colorSelectorView: ColorSelectorView | undefined;
-
-	/**
 	 * Keeps all changes in color picker in one batch while dropdown is open.
 	 */
 	declare private _undoStepBatch: Batch;
@@ -100,7 +96,6 @@ export default class ColorUI extends Plugin {
 		this.icon = icon;
 		this.dropdownLabel = dropdownLabel;
 		this.columns = editor.config.get( `${ this.componentName }.columns` )!;
-		this.colorSelectorView = undefined;
 	}
 
 	/**
@@ -123,7 +118,7 @@ export default class ColorUI extends Plugin {
 			// Font color dropdown rendering is deferred once it gets open to improve performance (#6192).
 			let dropdownContentRendered = false;
 
-			this.colorSelectorView = addColorSelectorToDropdown( {
+			const colorSelectorView = addColorSelectorToDropdown( {
 				dropdownView,
 				colors: localizedColors.map( option => ( {
 					label: option.label,
@@ -140,7 +135,7 @@ export default class ColorUI extends Plugin {
 				colorPickerViewConfig: hasColorPicker ? ( componentConfig.colorPicker || {} ) : false
 			} );
 
-			this.colorSelectorView.bind( 'selectedColor' ).to( command, 'value' );
+			colorSelectorView.bind( 'selectedColor' ).to( command, 'value' );
 
 			dropdownView.buttonView.set( {
 				label: this.dropdownLabel,
@@ -156,7 +151,7 @@ export default class ColorUI extends Plugin {
 
 			dropdownView.bind( 'isEnabled' ).to( command );
 
-			this.colorSelectorView.on<ColorSelectorExecuteEvent>( 'execute', ( evt, data ) => {
+			colorSelectorView.on<ColorSelectorExecuteEvent>( 'execute', ( evt, data ) => {
 				if ( dropdownView.isOpen ) {
 					editor.execute( this.commandName, {
 						value: data.value,
@@ -173,11 +168,11 @@ export default class ColorUI extends Plugin {
 				}
 			} );
 
-			this.colorSelectorView.on<ColorSelectorColorPickerShowEvent>( 'colorPicker:show', () => {
+			colorSelectorView.on<ColorSelectorColorPickerShowEvent>( 'colorPicker:show', () => {
 				this._undoStepBatch = editor.model.createBatch();
 			} );
 
-			this.colorSelectorView.on<ColorSelectorColorPickerCancelEvent>( 'colorPicker:cancel', () => {
+			colorSelectorView.on<ColorSelectorColorPickerCancelEvent>( 'colorPicker:cancel', () => {
 				if ( this._undoStepBatch!.operations.length ) {
 					// We need to close the dropdown before the undo batch.
 					// Otherwise, ColorUI treats undo as a selected color change,
@@ -199,11 +194,11 @@ export default class ColorUI extends Plugin {
 
 				if ( isVisible ) {
 					if ( documentColorsCount !== 0 ) {
-						this.colorSelectorView!.updateDocumentColors( editor.model, this.componentName );
+						colorSelectorView!.updateDocumentColors( editor.model, this.componentName );
 					}
 
-					this.colorSelectorView!.updateSelectedColors();
-					this.colorSelectorView!.showColorGridsFragment();
+					colorSelectorView!.updateSelectedColors();
+					colorSelectorView!.showColorGridsFragment();
 				}
 			} );
 
@@ -214,6 +209,70 @@ export default class ColorUI extends Plugin {
 			);
 
 			return dropdownView;
+		} );
+
+		// Register menu bar button..
+		editor.ui.componentFactory.add( `menuBar:${ this.componentName }`, locale => {
+			const menuView = new MenuBarMenuView( locale );
+
+			menuView.buttonView.set( {
+				label: this.dropdownLabel,
+				icon: this.icon
+			} );
+
+			menuView.bind( 'isEnabled' ).to( command );
+
+			// Font color sub-menu rendering is deferred once it gets open to improve performance (#6192).
+			let contentRendered = false;
+
+			const colorSelectorView = new ColorSelectorView( locale, {
+				colors: localizedColors.map( option => ( {
+					label: option.label,
+					color: option.model,
+					options: {
+						hasBorder: option.hasBorder
+					}
+				} ) ),
+				columns: this.columns,
+				removeButtonLabel: t( 'Remove color' ),
+				colorPickerLabel: t( 'Color picker' ),
+				documentColorsLabel: documentColorsCount !== 0 ? t( 'Document colors' ) : '',
+				documentColorsCount: documentColorsCount === undefined ? this.columns : documentColorsCount,
+				colorPickerViewConfig: false
+			} );
+
+			colorSelectorView.bind( 'selectedColor' ).to( command, 'value' );
+
+			colorSelectorView.delegate( 'execute' ).to( menuView );
+			colorSelectorView.on<ColorSelectorExecuteEvent>( 'execute', ( evt, data ) => {
+				editor.execute( this.commandName, {
+					value: data.value,
+					batch: this._undoStepBatch
+				} );
+
+				editor.editing.view.focus();
+			} );
+
+			menuView.on( 'change:isOpen', ( evt, name, isVisible ) => {
+				if ( !contentRendered ) {
+					contentRendered = true;
+
+					colorSelectorView!.appendUI();
+				}
+
+				if ( isVisible ) {
+					if ( documentColorsCount !== 0 ) {
+						colorSelectorView!.updateDocumentColors( editor.model, this.componentName );
+					}
+
+					colorSelectorView!.updateSelectedColors();
+					colorSelectorView!.showColorGridsFragment();
+				}
+			} );
+
+			menuView.panelView.children.add( colorSelectorView );
+
+			return menuView;
 		} );
 	}
 }

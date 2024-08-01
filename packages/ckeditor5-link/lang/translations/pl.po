@@ -29,6 +29,10 @@ msgctxt "Label for the URL input in the Link URL editing balloon."
 msgid "Link URL"
 msgstr "Adres URL"
 
+msgctxt "An error text displayed when user attempted to enter an empty URL."
+msgid "Link URL must not be empty."
+msgstr "Adres URL linku nie może być pusty"
+
 msgctxt "Label for the image link button."
 msgid "Link image"
 msgstr "Wstaw odnośnik do obrazka"
@@ -52,3 +56,11 @@ msgstr "Otwórz w nowej zakładce"
 msgctxt "The label of the switch button that controls whether the edited link refers to downloadable resource."
 msgid "Downloadable"
 msgstr "Do pobrania"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for creating a link."
+msgid "Create link"
+msgstr "Tworzy link"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for moving out of a link."
+msgid "Move out of a link"
+msgstr "Umożliwia wyjście z linku"

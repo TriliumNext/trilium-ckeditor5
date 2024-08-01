@@ -10,6 +10,8 @@ import { TodoList } from '@ckeditor/ckeditor5-list';
 import { CKBox, CKBoxImageEdit } from '@ckeditor/ckeditor5-ckbox';
 import { PictureEditing, ImageResize, AutoImage } from '@ckeditor/ckeditor5-image';
 
+import { TOKEN_URL } from '@ckeditor/ckeditor5-ckbox/tests/_utils/ckbox-config.js';
+
 // Umberto combines all `packages/*/docs` into the `docs/` directory. The import path must be valid after merging all directories.
 import ClassicEditor from '../build-classic.js';
 
@@ -28,7 +30,7 @@ ClassicEditor
 		},
 		image: {
 			toolbar: [
-				'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+				'imageStyle:inline', 'imageStyle:block', 'imageStyle:wrapText', '|',
 				'toggleImageCaption', 'imageTextAlternative',
 				'|', 'ckboxImageEdit'
 			]
@@ -39,7 +41,8 @@ ClassicEditor
 			}
 		},
 		ckbox: {
-			allowExternalImagesEditing: [ /^data:/, 'origin' ],
+			tokenUrl: TOKEN_URL,
+			allowExternalImagesEditing: [ /^data:/, 'origin', /ckbox/ ],
 			forceDemoLabel: true
 		}
 	} )

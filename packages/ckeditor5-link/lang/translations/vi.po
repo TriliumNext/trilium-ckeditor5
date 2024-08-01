@@ -29,6 +29,10 @@ msgctxt "Label for the URL input in the Link URL editing balloon."
 msgid "Link URL"
 msgstr "Đường dẫn liên kết"
 
+msgctxt "An error text displayed when user attempted to enter an empty URL."
+msgid "Link URL must not be empty."
+msgstr "Không được để trống URL đường liên kết."
+
 msgctxt "Label for the image link button."
 msgid "Link image"
 msgstr "Liên kết của ảnh"
@@ -52,3 +56,11 @@ msgstr "Mở trên tab mới"
 msgctxt "The label of the switch button that controls whether the edited link refers to downloadable resource."
 msgid "Downloadable"
 msgstr "Có thể tải về"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for creating a link."
+msgid "Create link"
+msgstr "Tạo liên kết"
+
+msgctxt "Keystroke description for assistive technologies: keystroke for moving out of a link."
+msgid "Move out of a link"
+msgstr "Di chuyển ra khỏi một liên kết"
