@@ -62,8 +62,8 @@ import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
 import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckeditor5-special-characters';
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 
-import Math from '@isaul32/ckeditor5-math/src/math';
-import AutoformatMath from '@isaul32/ckeditor5-math/src/autoformatmath';
+import Math from '@triliumnext/ckeditor5-math/src/math';
+import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
 
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';

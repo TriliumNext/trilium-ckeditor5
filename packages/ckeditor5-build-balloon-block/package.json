@@ -58,7 +58,7 @@
     "@ckeditor/ckeditor5-upload": "41.4.2",
     "@ckeditor/ckeditor5-watchdog": "41.4.2",
     "@ckeditor/ckeditor5-widget": "41.4.2",
-    "@isaul32/ckeditor5-math": "41.4.2"
+    "@triliumnext/ckeditor5-math": "41.4.2-hotfix1"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "41.4.2",
