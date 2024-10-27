@@ -77,6 +77,7 @@ export function modelToViewCodeBlockInsertion(
 		// Attributes added only in the editing view.
 		if ( useLabels ) {
 			preAttributes[ 'data-language' ] = languagesToLabels[ codeBlockLanguage ];
+			preAttributes.class = "hljs";
 			preAttributes.spellcheck = 'false';
 		}
 
