@@ -18,7 +18,7 @@ import { Strikethrough } from '@ckeditor/ckeditor5-basic-styles';
 import { Code } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
 import { Heading } from '@ckeditor/ckeditor5-heading';
-import { Image } from '@ckeditor/ckeditor5-image';
+import { Image, ImageInline } from '@ckeditor/ckeditor5-image';
 import { ImageCaption } from '@ckeditor/ckeditor5-image';
 import { ImageStyle } from '@ckeditor/ckeditor5-image';
 import { ImageToolbar } from '@ckeditor/ckeditor5-image';
@@ -103,6 +103,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 		ImageToolbar,
 		ImageUpload,
 		ImageResize,
+		ImageInline,
 		Link,
 		AutoLink,
 		List,
@@ -172,6 +173,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 		image: {
 			styles: {
 				options: [
+					'inline',
 					'alignBlockLeft',
 					'alignCenter',
 					'alignBlockRight',
@@ -204,6 +206,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 				}
 			],
 			toolbar: [
+				'imageStyle:inline',
 				'imageStyle:alignBlockLeft',
 				'imageStyle:alignCenter',
 				'imageStyle:alignBlockRight',
