@@ -206,6 +206,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 				}
 			],
 			toolbar: [
+				// Image styles, see https://ckeditor.com/docs/ckeditor5/latest/features/images/images-styles.html#demo.
 				'imageStyle:inline',
 				'imageStyle:alignCenter',
 				{
