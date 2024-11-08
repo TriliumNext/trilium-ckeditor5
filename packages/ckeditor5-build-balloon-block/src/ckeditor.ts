@@ -207,11 +207,25 @@ export default class BalloonEditor extends BalloonEditorBase {
 			],
 			toolbar: [
 				'imageStyle:inline',
-				'imageStyle:alignBlockLeft',
 				'imageStyle:alignCenter',
-				'imageStyle:alignBlockRight',
-				'imageStyle:alignLeft',
-				'imageStyle:alignRight',
+				{
+					name: "imageStyle:wrapText",
+					title: "Wrap text",
+					items: [
+						'imageStyle:alignLeft',
+						'imageStyle:alignRight',
+					],
+					defaultItem: 'imageStyle:alignRight'
+				},
+				{
+					name: "imageStyle:block",
+					title: "Block align",
+					items: [
+						'imageStyle:alignBlockLeft',
+						'imageStyle:alignBlockRight'
+					],
+					defaultItem: "imageStyle:alignBlockLeft",
+				},
 				'|',
 				'imageResize:25',
 				'imageResize:50',
