@@ -39,7 +39,6 @@ import { TableCellProperties } from '@ckeditor/ckeditor5-table';
 import { TableCaption } from '@ckeditor/ckeditor5-table';
 import { TableSelection } from '@ckeditor/ckeditor5-table';
 import { TableColumnResize } from '@ckeditor/ckeditor5-table';
-import { BlockToolbar } from '@ckeditor/ckeditor5-ui';
 import { HeadingButtonsUI } from '@ckeditor/ckeditor5-heading';
 import { ParagraphButtonUI } from '@ckeditor/ckeditor5-paragraph';
 import { TextTransformation } from '@ckeditor/ckeditor5-typing';
@@ -121,7 +120,6 @@ export default class ClassicEditor extends ClassicEditorBase {
 		TableColumnResize,
 		Indent,
 		IndentBlock,
-		BlockToolbar,
 		ParagraphButtonUI,
 		HeadingButtonsUI,
 		Uploadfileplugin,
