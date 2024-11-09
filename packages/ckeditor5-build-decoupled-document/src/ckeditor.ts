@@ -179,18 +179,13 @@ export default class DecoupledEditor extends DecoupledEditorBase {
 				'|',
 				'outdent', 'indent', 'horizontalLine',
 				'|',
-				{
-					label: "Additional options",
-					items: [
-						'imageUpload',
-						'markdownImport',
-						'findAndReplace',
-						'specialCharacters',
-						'link',
-						'internallink',
-						'cuttonote'
-					]
-				}
+				'imageUpload',
+				'markdownImport',
+				'findAndReplace',
+				'specialCharacters',
+				'link',
+				'internallink',
+				'cuttonote'
 			]
 		},
 		image: {
