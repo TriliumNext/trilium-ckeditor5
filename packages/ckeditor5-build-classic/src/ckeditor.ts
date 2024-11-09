@@ -152,18 +152,32 @@ export default class ClassicEditor extends ClassicEditorBase {
 	public static override defaultConfig = {
 		toolbar: {
 			items: [
+				'heading',
 				'fontSize',
+				'|',
 				'bold',
 				'italic',
 				'underline',
 				'strikethrough',
 				'superscript',
 				'subscript',
+				'|',
 				'fontColor',
 				'fontBackgroundColor',
+				'removeFormat',
+				'|',
+				'bulletedList', 'numberedList', 'todoList',
+				'|',
+				'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
+				'|',
+				'outdent', 'indent', 'horizontalLine',
+				'|',
+				'imageUpload',
+				'markdownImport',
+				'findAndReplace',
+				'specialCharacters',
 				'code',
 				'link',
-				'removeFormat',
 				'internallink',
 				'cuttonote'
 			]
@@ -247,20 +261,6 @@ export default class ClassicEditor extends ClassicEditorBase {
 				{ model: 'heading6' as const, view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
 			]
 		},
-		blockToolbar: [
-			'heading',
-			'|',
-			'bulletedList', 'numberedList', 'todoList',
-			'|',
-			'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
-			'|',
-			'outdent', 'indent', 'horizontalLine',
-			'|',
-			'imageUpload',
-			'markdownImport',
-			'findAndReplace',
-			'specialCharacters'
-		],
 		table: {
 			contentToolbar: [
 				'tableColumn',
