@@ -157,10 +157,17 @@ export default class ClassicEditor extends ClassicEditorBase {
 				'|',
 				'bold',
 				'italic',
-				'underline',
-				'strikethrough',
-				'superscript',
-				'subscript',
+				{
+					label: "Text formatting",
+					icon: "text",
+					items: [
+						'underline',
+						'strikethrough',
+						'superscript',
+						'subscript',
+						'code',
+					],
+				},
 				'|',
 				'fontColor',
 				'fontBackgroundColor',
@@ -168,18 +175,22 @@ export default class ClassicEditor extends ClassicEditorBase {
 				'|',
 				'bulletedList', 'numberedList', 'todoList',
 				'|',
-				'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
+				'blockQuote', 'codeBlock', 'insertTable', 'includeNote', 'math',
 				'|',
 				'outdent', 'indent', 'horizontalLine',
 				'|',
-				'imageUpload',
-				'markdownImport',
-				'findAndReplace',
-				'specialCharacters',
-				'code',
-				'link',
-				'internallink',
-				'cuttonote'
+				{
+					label: "Additional options",
+					items: [
+						'imageUpload',
+						'markdownImport',
+						'findAndReplace',
+						'specialCharacters',
+						'link',
+						'internallink',
+						'cuttonote'
+					]
+				}
 			]
 		},
 		image: {
