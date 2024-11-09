@@ -78,10 +78,6 @@ import removeFormatLinksPlugin from './remove_format_links';
 import '../theme/theme.css';
 import {SpecialCharactersEmoji} from "./special_characters_emoji";
 
-// expose so that Trilium can use it
-// eslint-disable-next-line no-undef
-(window as any).EditorWatchdog = EditorWatchdog;
-
 export default class BalloonEditor extends BalloonEditorBase {
 	public static override builtinPlugins = [
 		// essentials package expanded to allow selectively disable Enter and ShiftEnter
