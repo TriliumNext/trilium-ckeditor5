@@ -37,6 +37,8 @@ yalc.lock
 packages/*/src/**/*.d.ts
 packages/*/src/**/*.js
 !packages/ckeditor5-build-balloon-block/src/*.js
+!packages/ckeditor5-build-classic/src/*.js
+!packages/ckeditor5-build-decoupled-document/src/*.js
 packages/ckeditor5-build-balloon-block/build
 packages/ckeditor5-build-classic/build
 packages/ckeditor5-build-decoupled-document/build
