@@ -281,7 +281,8 @@ export default class BalloonEditor extends BalloonEditorBase {
 			}
 		},
 		link: {
-			defaultProtocol: 'https://'
+			defaultProtocol: 'https://',
+			allowedProtocols: ['https?', 'tel', 'sms', 'sftp', 'smb', 'slack', 'file', 'zotero']
 		},
 		// This value must be kept in sync with the language defined in webpack.config.js.
 		language: 'en'
