@@ -64,7 +64,8 @@ export default class DecoupledEditor extends DecoupledEditorBase {
 				'outdent', 'indent',
 				'|',
 				'markdownImport',
-				'cuttonote'
+				'cuttonote',
+				'findAndReplace'
 			]
 		}
 	};
