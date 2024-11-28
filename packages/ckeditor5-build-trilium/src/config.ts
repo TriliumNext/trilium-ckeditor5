@@ -52,6 +52,7 @@ import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
 import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckeditor5-special-characters';
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
+import { PageBreak } from '@ckeditor/ckeditor5-page-break';
 
 import Math from '@triliumnext/ckeditor5-math/src/math';
 import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
@@ -132,7 +133,8 @@ export const COMMON_PLUGINS = [
 	indentBlockShortcutPlugin,
 	removeFormatLinksPlugin,
 	Math,
-	AutoformatMath
+	AutoformatMath,
+	PageBreak
 ];
 
 export const COMMON_SETTINGS = {
