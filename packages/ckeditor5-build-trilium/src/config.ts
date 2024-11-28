@@ -51,6 +51,7 @@ import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
 import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckeditor5-special-characters';
+import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
 
@@ -134,7 +135,8 @@ export const COMMON_PLUGINS = [
 	removeFormatLinksPlugin,
 	Math,
 	AutoformatMath,
-	PageBreak
+	PageBreak,
+	GeneralHtmlSupport
 ];
 
 export const COMMON_SETTINGS = {
