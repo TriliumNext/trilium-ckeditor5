@@ -42,14 +42,25 @@ export default class BalloonEditor extends BalloonEditorBase {
 			'|',
 			'bulletedList', 'numberedList', 'todoList',
 			'|',
-			'blockQuote', 'codeBlock', 'insertTable', 'internallink', 'includeNote', 'math',
+			'blockQuote', 'codeBlock', 'insertTable',
+			{
+				label: "Insert",
+				icon: "plus",
+				items: [
+					'internallink',
+					'includeNote',
+					'|',
+					'math',
+					'horizontalLine'
+				]
+			},
 			'|',
-			'outdent', 'indent', 'horizontalLine',
+			'outdent', 'indent',
 			'|',
 			'imageUpload',
 			'markdownImport',
-			'findAndReplace',
-			'specialCharacters'
+			'specialCharacters',
+			'findAndReplace'
 		]
 	};
 }
