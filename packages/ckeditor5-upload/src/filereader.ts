@@ -80,6 +80,11 @@ export default class FileReader extends ObservableMixin() {
 	 */
 	public read( file: File ): Promise<string> {
 		const reader = this._reader;
+		if (!file) {
+			return new Promise((res, rej) => {
+				rej("error");
+			});
+		}
 		this.total = file.size;
 
 		return new Promise( ( resolve, reject ) => {
