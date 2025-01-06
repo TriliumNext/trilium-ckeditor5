@@ -41,7 +41,6 @@ packages/*/src/**/*.js
 !packages/ckeditor5-build-decoupled-document/src/*.js
 !packages/ckeditor5-build-trilium/src/*.js
 packages/ckeditor5-build-balloon-block/build
-packages/ckeditor5-build-decoupled-document/build
 packages/ckeditor5-build-trilium/build
 packages/*/src/**/*.js.map
 src/**/*.js

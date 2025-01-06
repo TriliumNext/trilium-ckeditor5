@@ -6,288 +6,96 @@
 // The editor creator to use.
 import { DecoupledEditor as DecoupledEditorBase } from '@ckeditor/ckeditor5-editor-decoupled';
 
-import { FindAndReplace } from '@ckeditor/ckeditor5-find-and-replace';
+import { Essentials } from '@ckeditor/ckeditor5-essentials';
+import { Alignment } from '@ckeditor/ckeditor5-alignment';
+import { FontSize, FontFamily, FontColor, FontBackgroundColor } from '@ckeditor/ckeditor5-font';
 import { CKFinderUploadAdapter } from '@ckeditor/ckeditor5-adapter-ckfinder';
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
-import { Bold } from '@ckeditor/ckeditor5-basic-styles';
-import { Italic } from '@ckeditor/ckeditor5-basic-styles';
-import { Superscript } from '@ckeditor/ckeditor5-basic-styles';
-import { Subscript } from '@ckeditor/ckeditor5-basic-styles';
-import { Underline } from '@ckeditor/ckeditor5-basic-styles';
-import { Strikethrough } from '@ckeditor/ckeditor5-basic-styles';
-import { Code } from '@ckeditor/ckeditor5-basic-styles';
+import { Bold, Italic, Strikethrough, Underline } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
+import { CKBox } from '@ckeditor/ckeditor5-ckbox';
+import { CKFinder } from '@ckeditor/ckeditor5-ckfinder';
+import { EasyImage } from '@ckeditor/ckeditor5-easy-image';
 import { Heading } from '@ckeditor/ckeditor5-heading';
-import { Image, ImageInline } from '@ckeditor/ckeditor5-image';
-import { ImageCaption } from '@ckeditor/ckeditor5-image';
-import { ImageStyle } from '@ckeditor/ckeditor5-image';
-import { ImageToolbar } from '@ckeditor/ckeditor5-image';
-import { ImageUpload } from '@ckeditor/ckeditor5-image';
-import { ImageResize } from '@ckeditor/ckeditor5-image';
+import { Image, ImageCaption, ImageResize, ImageStyle, ImageToolbar, ImageUpload, PictureEditing } from '@ckeditor/ckeditor5-image';
+import { Indent, IndentBlock } from '@ckeditor/ckeditor5-indent';
 import { Link } from '@ckeditor/ckeditor5-link';
-import { AutoLink } from '@ckeditor/ckeditor5-link';
-import { List } from '@ckeditor/ckeditor5-list';
-import { ListProperties } from '@ckeditor/ckeditor5-list';
-import { TodoList } from '@ckeditor/ckeditor5-list';
+import { List, ListProperties } from '@ckeditor/ckeditor5-list';
+import { MediaEmbed } from '@ckeditor/ckeditor5-media-embed';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
 import { PasteFromOffice } from '@ckeditor/ckeditor5-paste-from-office';
-import { PictureEditing } from '@ckeditor/ckeditor5-image';
-import { Table } from '@ckeditor/ckeditor5-table';
-import { TableToolbar } from '@ckeditor/ckeditor5-table';
-import { TableProperties } from '@ckeditor/ckeditor5-table';
-import { TableCellProperties } from '@ckeditor/ckeditor5-table';
-import { TableCaption } from '@ckeditor/ckeditor5-table';
-import { TableSelection } from '@ckeditor/ckeditor5-table';
-import { TableColumnResize } from '@ckeditor/ckeditor5-table';
-import { HeadingButtonsUI } from '@ckeditor/ckeditor5-heading';
-import { ParagraphButtonUI } from '@ckeditor/ckeditor5-paragraph';
+import { Table, TableToolbar } from '@ckeditor/ckeditor5-table';
 import { TextTransformation } from '@ckeditor/ckeditor5-typing';
-import { Font } from '@ckeditor/ckeditor5-font';
-import { FontColor } from '@ckeditor/ckeditor5-font';
-import { FontBackgroundColor } from '@ckeditor/ckeditor5-font';
-import { CodeBlock } from '@ckeditor/ckeditor5-code-block';
-import { Mention } from '@ckeditor/ckeditor5-mention';
-import { Indent } from '@ckeditor/ckeditor5-indent';
-import { IndentBlock } from '@ckeditor/ckeditor5-indent';
-import { SelectAll } from '@ckeditor/ckeditor5-select-all';
-import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
-import { Clipboard } from '@ckeditor/ckeditor5-clipboard';
-import { Enter } from '@ckeditor/ckeditor5-enter';
-import { ShiftEnter } from '@ckeditor/ckeditor5-enter';
-import { Typing } from '@ckeditor/ckeditor5-typing';
-import { Undo } from '@ckeditor/ckeditor5-undo';
-import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
-import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
-import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckeditor5-special-characters';
-import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
-
-import Math from '@triliumnext/ckeditor5-math/src/math';
-import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
-
-import MentionCustomization from './mention_customization';
-import UploadimagePlugin from './uploadimage';
-import InternalLinkPlugin from './internallink';
-import MarkdownImportPlugin from './markdownimport';
-import CuttonotePlugin from './cuttonote';
-import IncludeNote from './includenote';
-import ReferenceLink from './referencelink';
-import indentBlockShortcutPlugin from './indent_block_shortcut';
-import removeFormatLinksPlugin from './remove_format_links';
-
-import '../theme/theme.css';
-import {SpecialCharactersEmoji} from "./special_characters_emoji";
-
-// expose so that Trilium can use it
-// eslint-disable-next-line no-undef
-(window as any).EditorWatchdog = EditorWatchdog;
+import { CloudServices } from '@ckeditor/ckeditor5-cloud-services';
 
 export default class DecoupledEditor extends DecoupledEditorBase {
 	public static override builtinPlugins = [
-		// essentials package expanded to allow selectively disable Enter and ShiftEnter
-		Clipboard, Enter, SelectAll, ShiftEnter, Typing, Undo,
+		Essentials,
+		Alignment,
+		FontSize,
+		FontFamily,
+		FontColor,
+		FontBackgroundColor,
 		CKFinderUploadAdapter,
 		Autoformat,
 		Bold,
 		Italic,
-		Underline,
 		Strikethrough,
-		Code,
-		Superscript,
-		Subscript,
+		Underline,
 		BlockQuote,
+		CKBox,
+		CKFinder,
+		CloudServices,
+		EasyImage,
 		Heading,
 		Image,
 		ImageCaption,
+		ImageResize,
 		ImageStyle,
 		ImageToolbar,
 		ImageUpload,
-		ImageResize,
-		ImageInline,
+		Indent,
+		IndentBlock,
 		Link,
-		AutoLink,
 		List,
-		// ListProperties, deactivated because it crashes the editor. Can be reproduced with ListProperties-repro-crash.html
-		TodoList,
+		ListProperties,
+		MediaEmbed,
 		Paragraph,
 		PasteFromOffice,
 		PictureEditing,
 		Table,
 		TableToolbar,
-		TableProperties,
-		TableCellProperties,
-		TableSelection,
-		TableCaption,
-		TableColumnResize,
-		Indent,
-		IndentBlock,
-		ParagraphButtonUI,
-		HeadingButtonsUI,
-		Uploadfileplugin,
-		UploadimagePlugin,
-		TextTransformation,
-		Font,
-		FontColor,
-		FontBackgroundColor,
-		CodeBlock,
-		SelectAll,
-		HorizontalLine,
-		RemoveFormat,
-		SpecialCharacters,
-		SpecialCharactersEssentials,
-		SpecialCharactersEmoji,
-		FindAndReplace,
-		Mention,
-		InternalLinkPlugin,
-		MarkdownImportPlugin,
-		CuttonotePlugin,
-		MentionCustomization,
-		IncludeNote,
-		ReferenceLink,
-		indentBlockShortcutPlugin,
-		removeFormatLinksPlugin,
-		Math,
-		AutoformatMath
+		TextTransformation
 	];
 
 	public static override defaultConfig = {
-		// For nested toolbars, refer to https://ckeditor.com/docs/ckeditor5/latest/getting-started/setup/toolbar.html#grouping-toolbar-items-in-dropdowns-nested-toolbars.
 		toolbar: {
 			items: [
-				'heading',
-				'fontSize',
-				'|',
-				'bold',
-				'italic',
-				{
-					label: "Text formatting",
-					icon: "text",
-					items: [
-						'underline',
-						'strikethrough',
-						'superscript',
-						'subscript',
-						'code',
-					],
-				},
-				'|',
-				'fontColor',
-				'fontBackgroundColor',
-				'removeFormat',
-				'|',
-				'bulletedList', 'numberedList', 'todoList',
-				'|',
-				'blockQuote',
-				'insertTable',
-				'codeBlock',
-				{
-					label: "Insert",
-					icon: "plus",
-					items: [
-						'imageUpload',
-						'|',
-						'link',
-						'internallink',
-						'includeNote',
-						'|',
-						'specialCharacters',
-						'math',
-						'horizontalLine'
-					]
-				},
-				'|',
-				'outdent', 'indent',
-				'|',
-				'markdownImport',
-				'cuttonote'
+				'undo', 'redo',
+				'|', 'heading',
+				'|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+				'|', 'bold', 'italic', 'underline', 'strikethrough',
+				'|', 'link', 'uploadImage', 'insertTable', 'blockQuote', 'mediaEmbed',
+				'|', 'alignment',
+				'|', 'bulletedList', 'numberedList', 'outdent', 'indent'
 			]
 		},
 		image: {
-			styles: {
-				options: [
-					'inline',
-					'alignBlockLeft',
-					'alignCenter',
-					'alignBlockRight',
-					'alignLeft',
-					'alignRight',
-					'full', // full and side are for BC since the old images have been created with these styles
-					'side'
-				]
-			},
-			resizeOptions: [
-				{
-					name: 'imageResize:original',
-					value: null,
-					icon: 'original'
-				},
-				{
-					name: 'imageResize:25',
-					value: '25',
-					icon: 'small'
-				},
-				{
-					name: 'imageResize:50',
-					value: '50',
-					icon: 'medium'
-				},
-				{
-					name: 'imageResize:75',
-					value: '75',
-					icon: 'medium'
-				}
-			],
+			resizeUnit: 'px' as const,
 			toolbar: [
-				// Image styles, see https://ckeditor.com/docs/ckeditor5/latest/features/images/images-styles.html#demo.
 				'imageStyle:inline',
-				'imageStyle:alignCenter',
-				{
-					name: "imageStyle:wrapText",
-					title: "Wrap text",
-					items: [
-						'imageStyle:alignLeft',
-						'imageStyle:alignRight',
-					],
-					defaultItem: 'imageStyle:alignRight'
-				},
-				{
-					name: "imageStyle:block",
-					title: "Block align",
-					items: [
-						'imageStyle:alignBlockLeft',
-						'imageStyle:alignBlockRight'
-					],
-					defaultItem: "imageStyle:alignBlockLeft",
-				},
+				'imageStyle:wrapText',
+				'imageStyle:breakText',
 				'|',
-				'imageResize:25',
-				'imageResize:50',
-				'imageResize:original',
-				'|',
-				'toggleImageCaption'
-			],
-			upload: {
-				types: [ 'jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff', 'svg', 'svg+xml', 'avif' ]
-			}
-		},
-		heading: {
-			options: [
-				{ model: 'paragraph' as const, title: 'Paragraph', class: 'ck-heading_paragraph' },
-				// // heading1 is not used since that should be a note's title
-				{ model: 'heading2' as const, view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-				{ model: 'heading3' as const, view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-				{ model: 'heading4' as const, view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-				{ model: 'heading5' as const, view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-				{ model: 'heading6' as const, view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+				'toggleImageCaption',
+				'imageTextAlternative'
 			]
 		},
 		table: {
 			contentToolbar: [
 				'tableColumn',
 				'tableRow',
-				'mergeTableCells',
-				'tableProperties',
-				'tableCellProperties',
-				'toggleTableCaption'
+				'mergeTableCells'
 			]
 		},
 		list: {
@@ -296,9 +104,6 @@ export default class DecoupledEditor extends DecoupledEditorBase {
 				startIndex: true,
 				reversed: true
 			}
-		},
-		link: {
-			defaultProtocol: 'https://'
 		},
 		// This value must be kept in sync with the language defined in webpack.config.js.
 		language: 'en'
