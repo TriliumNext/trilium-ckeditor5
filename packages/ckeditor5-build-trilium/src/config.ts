@@ -55,9 +55,6 @@ import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
 
-import Math from '@triliumnext/ckeditor5-math/src/math';
-import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
-
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
 import InternalLinkPlugin from './internallink';
@@ -69,6 +66,13 @@ import indentBlockShortcutPlugin from './indent_block_shortcut';
 import removeFormatLinksPlugin from './remove_format_links';
 
 import {SpecialCharactersEmoji} from "./special_characters_emoji";
+
+// External plugins
+import Math from '@triliumnext/ckeditor5-math/src/math';
+import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
+
+import '@triliumnext/ckeditor5-footnotes/src/footnote.css';
+import { Footnotes } from '@triliumnext/ckeditor5-footnotes';
 
 export const COMMON_PLUGINS = [
 	// essentials package expanded to allow selectively disable Enter and ShiftEnter
@@ -133,10 +137,13 @@ export const COMMON_PLUGINS = [
 	ReferenceLink,
 	indentBlockShortcutPlugin,
 	removeFormatLinksPlugin,
+	PageBreak,
+	GeneralHtmlSupport,
+
+	// External plugins
 	Math,
 	AutoformatMath,
-	PageBreak,
-	GeneralHtmlSupport
+	Footnotes
 ];
 
 export const COMMON_SETTINGS = {

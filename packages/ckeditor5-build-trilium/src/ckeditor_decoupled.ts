@@ -46,6 +46,7 @@ export default class DecoupledEditor extends DecoupledEditorBase {
 				'blockQuote',
 				'insertTable',
 				'codeBlock',
+				'footnote',
 				{
 					label: "Insert",
 					icon: "plus",

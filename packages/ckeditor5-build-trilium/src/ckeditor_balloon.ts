@@ -44,6 +44,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 			'bulletedList', 'numberedList', 'todoList',
 			'|',
 			'blockQuote', 'codeBlock', 'insertTable',
+			'footnote',
 			{
 				label: "Insert",
 				icon: "plus",
