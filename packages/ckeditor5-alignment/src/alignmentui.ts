@@ -24,12 +24,12 @@ import { isSupported, normalizeAlignmentOptions } from './utils.js';
 import type { AlignmentFormat, SupportedOption } from './alignmentconfig.js';
 import type AlignmentCommand from './alignmentcommand.js';
 
-const iconsMap = new Map( [
+const iconsMap = /* #__PURE__ */ ( () => new Map( [
 	[ 'left', icons.alignLeft ],
 	[ 'right', icons.alignRight ],
 	[ 'center', icons.alignCenter ],
 	[ 'justify', icons.alignJustify ]
-] );
+] ) )();
 
 /**
  * The default alignment UI plugin.
@@ -219,16 +219,12 @@ export default class AlignmentUI extends Plugin {
 				const listItemView = new MenuBarMenuListItemView( locale, menuView );
 				const buttonView = new MenuBarMenuListItemButtonView( locale );
 
-				buttonView.extendTemplate( {
-					attributes: {
-						'aria-checked': buttonView.bindTemplate.to( 'isOn' )
-					}
-				} );
-
 				buttonView.delegate( 'execute' ).to( menuView );
 				buttonView.set( {
 					label: this.localizedOptionTitles[ option.name ],
-					icon: iconsMap.get( option.name )
+					icon: iconsMap.get( option.name ),
+					role: 'menuitemcheckbox',
+					isToggleable: true
 				} );
 
 				buttonView.on( 'execute', () => {

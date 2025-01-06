@@ -71,7 +71,10 @@ export default class Dialog extends Plugin {
 		this._initFocusToggler();
 		this._initMultiRootIntegration();
 
-		this.set( 'id', null );
+		this.set( {
+			id: null,
+			isOpen: false
+		} );
 
 		// Add the information about the keystroke to the accessibility database.
 		editor.accessibility.addKeystrokeInfos( {
@@ -284,7 +287,6 @@ export default class Dialog extends Plugin {
 		} );
 
 		editor.ui.view.body.add( view );
-		editor.ui.focusTracker.add( view.element! );
 		editor.keystrokes.listenTo( view.element! );
 
 		// Unless the user specified a position, modals should always be centered on the screen.

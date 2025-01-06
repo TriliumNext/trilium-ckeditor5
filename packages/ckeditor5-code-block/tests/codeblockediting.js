@@ -129,17 +129,15 @@ describe( 'CodeBlockEditing', () => {
 		expect( model.schema.checkChild( [ '$root', 'codeBlock' ], 'codeBlock' ) ).to.be.false;
 	} );
 
-	it( 'disallows object elements in codeBlock', () => {
-		// Fake "inline-widget".
-		model.schema.register( 'inline-widget', {
-			inheritAllFrom: '$block',
-			// Allow to be a child of the `codeBlock` element.
-			allowIn: 'codeBlock',
-			// And mark as an object.
-			isObject: true
+	it( 'disallows $inlineObject', () => {
+		// Disallow `$inlineObject` and its derivatives like `inlineWidget` inside `codeBlock` to ensure that only text,
+		// not other inline elements like inline images, are allowed. This maintains the semantic integrity of code blocks.
+		model.schema.register( 'inlineWidget', {
+			inheritAllFrom: '$inlineObject'
 		} );
 
-		expect( model.schema.checkChild( [ '$root', 'codeBlock' ], 'inline-widget' ) ).to.be.false;
+		expect( model.schema.checkChild( [ '$root', 'codeBlock' ], '$inlineObject' ) ).to.be.false;
+		expect( model.schema.checkChild( [ '$root', 'codeBlock' ], 'inlineWidget' ) ).to.be.false;
 	} );
 
 	it( 'allows only for $text in codeBlock', () => {
@@ -152,9 +150,40 @@ describe( 'CodeBlockEditing', () => {
 		setModelData( model, '<codeBlock language="css">f[o]o</codeBlock>' );
 
 		editor.execute( 'alignment', { value: 'right' } );
+
+		expect( getModelData( model ) ).to.equal( '<codeBlock language="css">f[o]o</codeBlock>' );
+	} );
+
+	it( 'disallows for formatting attributes on nodes inside codeBlock #1 - text', () => {
+		setModelData( model, '<codeBlock language="css">f[o]o</codeBlock>' );
+
 		editor.execute( 'bold' );
 
 		expect( getModelData( model ) ).to.equal( '<codeBlock language="css">f[o]o</codeBlock>' );
+	} );
+
+	it( 'disallows for formatting attributes on nodes inside codeBlock #2 - object', () => {
+		model.schema.register( 'codeBlockObject', {
+			inheritAllFrom: '$inlineObject',
+			allowIn: 'codeBlock',
+			allowAttributes: [ 'bold' ]
+		} );
+
+		const isAllowed = model.schema.checkAttribute( [ '$root', 'codeBlock', 'bold' ], 'objId' );
+
+		expect( isAllowed ).to.be.false;
+	} );
+
+	it( 'allows for non-formatting attributes on nodes inside codeBlock', () => {
+		model.schema.register( 'codeBlockObject', {
+			inheritAllFrom: '$inlineObject',
+			allowIn: 'codeBlock',
+			allowAttributes: [ 'objId' ]
+		} );
+
+		const isAllowed = model.schema.checkAttribute( [ '$root', 'codeBlock', 'codeBlockObject' ], 'objId' );
+
+		expect( isAllowed ).to.be.true;
 	} );
 
 	describe( 'tab key handling', () => {
@@ -1687,6 +1716,37 @@ describe( 'CodeBlockEditing', () => {
 			);
 
 			sinon.assert.calledOnce( dataTransferMock.getData );
+
+			// Make sure that ClipboardPipeline was not interrupted.
+			sinon.assert.calledOnce( contentInsertionSpy );
+		} );
+
+		it( 'should filter out the disallowed element from pasted content', () => {
+			setModelData( model, '<codeBlock language="css">f[o]o</codeBlock>' );
+
+			const clipboardPlugin = editor.plugins.get( ClipboardPipeline );
+			const contentInsertionSpy = sinon.spy();
+
+			clipboardPlugin.on( 'contentInsertion', contentInsertionSpy );
+			clipboardPlugin.on( 'contentInsertion', ( evt, data ) => {
+				model.change( writer => {
+					const fragment = writer.createDocumentFragment();
+					const element = writer.createElement( 'paragraph' );
+					writer.append( element, fragment );
+					data.content = fragment;
+				} );
+			}, { priority: 'high' } );
+
+			const dataTransferMock = {
+				getData: sinon.stub().withArgs( 'text/plain' ).returns( 'bar\nbaz\n' )
+			};
+
+			viewDoc.fire( 'clipboardInput', {
+				dataTransfer: dataTransferMock,
+				stop: sinon.spy()
+			} );
+
+			expect( getModelData( model ) ).to.equal( '<codeBlock language="css">f[]o</codeBlock>' );
 
 			// Make sure that ClipboardPipeline was not interrupted.
 			sinon.assert.calledOnce( contentInsertionSpy );

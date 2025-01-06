@@ -112,6 +112,18 @@ describe( 'AccessibilityHelp', () => {
 				it( 'should set keystroke in the model', () => {
 					expect( button.keystroke ).to.equal( featureKeystroke );
 				} );
+
+				it( 'should set isOn=true if dialog is visible', () => {
+					button.fire( 'execute' );
+
+					expect( dialogPlugin.id ).to.be.equal( 'accessibilityHelp' );
+					expect( button.isOn ).to.be.true;
+
+					button.fire( 'execute' );
+
+					expect( dialogPlugin.id ).to.be.null;
+					expect( button.isOn ).to.be.false;
+				} );
 			}
 		} );
 
@@ -120,7 +132,23 @@ describe( 'AccessibilityHelp', () => {
 				const viewRoot = editor.editing.view.document.getRoot( 'main' );
 				const ariaLabel = viewRoot.getAttribute( 'aria-label' );
 
-				expect( ariaLabel ).to.equal( 'Editor editing area: main. Press Alt+0 for help.' );
+				expect( ariaLabel ).to.equal( 'Rich Text Editor. Editing area: main. Press Alt+0 for help.' );
+			} );
+
+			it( 'should inject a label into a root with no aria-label', async () => {
+				const editor = await ClassicTestEditor.create( domElement, {
+					plugins: [
+						AccessibilityHelp
+					],
+					label: ''
+				} );
+
+				const viewRoot = editor.editing.view.document.getRoot( 'main' );
+				const ariaLabel = viewRoot.getAttribute( 'aria-label' );
+
+				expect( ariaLabel ).to.equal( 'Press Alt+0 for help.' );
+
+				await editor.destroy();
 			} );
 
 			it( 'should work for multiple roots (MultiRootEditor)', async () => {
@@ -202,7 +230,7 @@ describe( 'AccessibilityHelp', () => {
 		it( 'should create #contentView', () => {
 			expect( plugin.contentView ).to.be.null;
 
-			plugin._showDialog();
+			plugin._toggleDialog();
 
 			expect( plugin.contentView ).to.be.instanceof( AccessibilityHelpContentView );
 		} );

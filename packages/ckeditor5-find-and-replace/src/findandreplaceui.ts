@@ -185,13 +185,8 @@ export default class FindAndReplaceUI extends Plugin {
 		const editor = this.editor;
 		const buttonView = this._createButton( ButtonView );
 		const dialog = editor.plugins.get( 'Dialog' );
-		const t = editor.locale.t;
 
 		buttonView.set( {
-			icon: loupeIcon,
-			label: t( 'Find and replace' ),
-			// FIXME: keyboard shortcut doesn't work: https://github.com/ckeditor/ckeditor5/issues/10645
-			// keystroke: 'CTRL+F',
 			tooltip: true
 		} );
 
@@ -219,6 +214,15 @@ export default class FindAndReplaceUI extends Plugin {
 	private _createDialogButtonForMenuBar(): MenuBarMenuListItemButtonView {
 		const buttonView = this._createButton( MenuBarMenuListItemButtonView );
 		const dialogPlugin = this.editor.plugins.get( 'Dialog' );
+		const dialog = this.editor.plugins.get( 'Dialog' );
+
+		buttonView.set( {
+			role: 'menuitemcheckbox',
+			isToggleable: true
+		} );
+
+		// Button should be on when the find and replace dialog is opened.
+		buttonView.bind( 'isOn' ).to( dialog, 'id', id => id === 'findAndReplace' );
 
 		buttonView.on( 'execute', () => {
 			if ( dialogPlugin.id === 'findAndReplace' ) {

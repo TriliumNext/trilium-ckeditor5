@@ -36,9 +36,50 @@ export function createUIComponents(
 		return buttonView;
 	} );
 
+	editor.ui.componentFactory.add( `menuBar:${ commandName }`, () => {
+		const buttonView = _createButton( MenuBarMenuListItemButtonView, editor, commandName, label, icon );
+
+		buttonView.set( {
+			role: 'menuitemcheckbox',
+			isToggleable: true
+		} );
+
+		return buttonView;
+	} );
+
 	editor.ui.componentFactory.add( `menuBar:${ commandName }`, () =>
 		_createButton( MenuBarMenuListItemButtonView, editor, commandName, label, icon )
 	);
+}
+
+/**
+ * Creates a button to use either in toolbar or in menu bar.
+ */
+function _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>(
+	ButtonClass: T,
+	editor: Editor,
+	commandName: 'bulletedList' | 'numberedList' | 'todoList',
+	label: string,
+	icon: string
+): InstanceType<T> {
+	const command = editor.commands.get( commandName )!;
+	const view = new ButtonClass( editor.locale ) as InstanceType<T>;
+
+	view.set( {
+		label,
+		icon
+	} );
+
+	// Bind button model to command.
+	view.bind( 'isOn', 'isEnabled' ).to( command, 'value', 'isEnabled' );
+
+	// Execute the command.
+	view.on<ButtonExecuteEvent>( 'execute', () => {
+		editor.execute( commandName );
+		editor.editing.view.focus();
+	} );
+
+	return view;
 }
 
 /**

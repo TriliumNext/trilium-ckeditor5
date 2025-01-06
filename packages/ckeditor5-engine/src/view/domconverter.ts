@@ -233,7 +233,7 @@ export default class DomConverter {
 			this._domToViewMapping.delete( domElement );
 			this._viewToDomMapping.delete( viewElement );
 
-			for ( const child of Array.from( domElement.children ) ) {
+			for ( const child of domElement.children ) {
 				this.unbindDomElement( child as DomElement );
 			}
 		}
@@ -563,7 +563,17 @@ export default class DomConverter {
 				!first( childView.getAttributes() );
 
 			if ( transparentRendering && this.renderingMode == 'data' ) {
-				yield* this.viewChildrenToDom( childView, options );
+				// `RawElement` doesn't have #children defined, so they need to be temporarily rendered
+				// and extracted directly.
+				if ( childView.is( 'rawElement' ) ) {
+					const tempElement = this._domDocument.createElement( childView.name );
+
+					childView.render( tempElement, this );
+
+					yield* [ ...tempElement.childNodes ];
+				} else {
+					yield* this.viewChildrenToDom( childView, options );
+				}
 			} else {
 				if ( transparentRendering ) {
 					/**
@@ -1508,7 +1518,7 @@ export default class DomConverter {
 			let data: string;
 			let nodeEndsWithSpace: boolean = false;
 
-			if ( _hasViewParentOfType( node, this.preElements ) ) {
+			if ( this._isPreFormatted( node ) ) {
 				data = getDataWithoutFiller( node.data );
 			} else {
 				// Change all consecutive whitespace characters (from the [ \n\t\r] set –
@@ -1604,9 +1614,8 @@ export default class DomConverter {
 	private _processDataFromViewText( node: ViewText | ViewTextProxy ): string {
 		let data = node.data;
 
-		// If any of node ancestors has a name which is in `preElements` array, then currently processed
-		// view text node is (will be) in preformatted element. We should not change whitespaces then.
-		if ( node.getAncestors().some( parent => this.preElements.includes( ( parent as ViewElement ).name ) ) ) {
+		// If the currently processed view text node is preformatted, we should not change whitespaces.
+		if ( this._isPreFormatted( node ) ) {
 			return data;
 		}
 
@@ -1650,13 +1659,40 @@ export default class DomConverter {
 	 * @returns `true` if given `node` ends with space, `false` otherwise.
 	 */
 	private _nodeEndsWithSpace( node: ViewTextProxy ): boolean {
-		if ( node.getAncestors().some( parent => this.preElements.includes( ( parent as ViewElement ).name ) ) ) {
+		if ( this._isPreFormatted( node ) ) {
 			return false;
 		}
 
 		const data = this._processDataFromViewText( node );
 
 		return data.charAt( data.length - 1 ) == ' ';
+	}
+
+	/**
+	 * Checks whether given text contains preformatted white space. This is the case if
+	 * * any of node ancestors has a name which is in `preElements` array, or
+	 * * the closest ancestor that has the `white-space` CSS property sets it to a value that preserves spaces
+	 *
+	 * @param node Node to check
+	 * @returns `true` if given node contains preformatted white space, `false` otherwise.
+	 */
+	private _isPreFormatted( node: ViewText | ViewTextProxy ): boolean {
+		if ( _hasViewParentOfType( node, this.preElements ) ) {
+			return true;
+		}
+
+		for ( const ancestor of node.getAncestors( { parentFirst: true } ) ) {
+			if ( !ancestor.is( 'element' ) || !ancestor.hasStyle( 'white-space' ) || ancestor.getStyle( 'white-space' ) === 'inherit' ) {
+				continue;
+			}
+
+			// If the node contains the `white-space` property with a value that does not preserve spaces, it will take
+			// precedence over any white-space settings its ancestors contain, so no further parent checking needs to
+			// be done.
+			return [ 'pre', 'pre-wrap', 'break-spaces' ].includes( ancestor.getStyle( 'white-space' )! );
+		}
+
+		return false;
 	}
 
 	/**
@@ -1673,23 +1709,27 @@ export default class DomConverter {
 			direction: getNext ? 'forward' : 'backward'
 		} );
 
-		for ( const value of treeWalker ) {
+		for ( const { item } of treeWalker ) {
+			// Found a text node in the same container element.
+			if ( item.is( '$textProxy' ) ) {
+				return item;
+			}
+			// Found a transparent element, skip it and continue inside it.
+			else if ( item.is( 'element' ) && item.getCustomProperty( 'dataPipeline:transparentRendering' ) ) {
+				continue;
+			}
 			// <br> found – it works like a block boundary, so do not scan further.
-			if ( value.item.is( 'element', 'br' ) ) {
+			else if ( item.is( 'element', 'br' ) ) {
 				return null;
 			}
 			// Found an inline object (for example an image).
-			else if ( this._isInlineObjectElement( value.item ) ) {
-				return value.item;
+			else if ( this._isInlineObjectElement( item ) ) {
+				return item;
 			}
 			// ViewContainerElement is found on a way to next ViewText node, so given `node` was first/last
 			// text node in its container element.
-			else if ( value.item.is( 'containerElement' ) ) {
+			else if ( item.is( 'containerElement' ) ) {
 				return null;
-			}
-			// Found a text node in the same container element.
-			else if ( value.item.is( '$textProxy' ) ) {
-				return value.item;
 			}
 		}
 
@@ -1793,7 +1833,7 @@ export default class DomConverter {
  *
  * @returns`true` if such parent exists or `false` if it does not.
  */
-function _hasViewParentOfType( node: ViewNode, types: ReadonlyArray<string> ) {
+function _hasViewParentOfType( node: ViewNode | ViewTextProxy, types: ReadonlyArray<string> ) {
 	return node.getAncestors().some( parent => parent.is( 'element' ) && types.includes( parent.name ) );
 }
 

@@ -22,9 +22,7 @@ import {
 	ViewCollection,
 	type FocusableView,
 	type NormalizedColorOption,
-	type ColorPickerConfig,
-	type FocusCyclerBackwardCycleEvent,
-	type FocusCyclerForwardCycleEvent
+	type ColorPickerConfig
 } from 'ckeditor5/src/ui.js';
 import {
 	KeystrokeHandler,
@@ -47,16 +45,6 @@ import type { TableCellPropertiesOptions } from '../../tableconfig.js';
 import '../../../theme/form.css';
 import '../../../theme/tableform.css';
 import '../../../theme/tablecellproperties.css';
-
-const ALIGNMENT_ICONS = {
-	left: icons.alignLeft,
-	center: icons.alignCenter,
-	right: icons.alignRight,
-	justify: icons.alignJustify,
-	top: icons.alignTop,
-	middle: icons.alignMiddle,
-	bottom: icons.alignBottom
-};
 
 export interface TableCellPropertiesViewOptions {
 	borderColors: Array<NormalizedColorOption>;
@@ -394,15 +382,7 @@ export default class TableCellPropertiesView extends View {
 
 		// Maintain continuous focus cycling over views that have focusable children and focus cyclers themselves.
 		[ this.borderColorInput, this.backgroundInput ].forEach( view => {
-			view.fieldView.focusCycler.on<FocusCyclerForwardCycleEvent>( 'forwardCycle', evt => {
-				this._focusCycler.focusNext();
-				evt.stop();
-			} );
-
-			view.fieldView.focusCycler.on<FocusCyclerBackwardCycleEvent>( 'backwardCycle', evt => {
-				this._focusCycler.focusPrevious();
-				evt.stop();
-			} );
+			this._focusCycler.chain( view.fieldView.focusCycler );
 		} );
 
 		[
@@ -715,6 +695,16 @@ export default class TableCellPropertiesView extends View {
 		const t = this.t!;
 
 		const alignmentLabel = new LabelView( locale );
+
+		const ALIGNMENT_ICONS = {
+			left: icons.alignLeft,
+			center: icons.alignCenter,
+			right: icons.alignRight,
+			justify: icons.alignJustify,
+			top: icons.alignTop,
+			middle: icons.alignMiddle,
+			bottom: icons.alignBottom
+		};
 
 		alignmentLabel.text = t( 'Table cell text alignment' );
 

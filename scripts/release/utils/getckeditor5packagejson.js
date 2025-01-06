@@ -26,7 +26,16 @@ module.exports = function getCKEditor5PackageJson( isNightly = false ) {
 		description: 'A set of ready-to-use rich text editors created with a powerful framework.' +
 			' Made with real-time collaborative editing in mind.',
 		type: 'module',
+		main: 'dist/ckeditor5.js',
+		module: 'dist/ckeditor5.js',
+		types: 'dist/index.d.ts',
 		exports: {
+			'.': {
+				'types': './dist/index.d.ts',
+				'import': './dist/ckeditor5.js'
+			},
+			'./*': './dist/*',
+			'./browser/*': null,
 			'./build/*': './build/*',
 			'./src/*': './src/*',
 			'./package.json': './package.json'
@@ -54,30 +63,4 @@ module.exports = function getCKEditor5PackageJson( isNightly = false ) {
 			'README.md'
 		]
 	};
-
-	if ( isNightly ) {
-		/**
-		 * TODO: Add to the returned object once we are ready for a final release.
-		 *
-		 * https://github.com/ckeditor/ckeditor5/issues/16257.
-		 */
-
-		content.main = 'dist/index.js';
-		content.module = 'dist/index.js';
-		content.types = 'dist/types/index.d.ts';
-		content.exports = {
-			'.': {
-				'types': './dist/types/index.d.ts',
-				'import': './dist/index.js'
-			},
-			'./translations/*.js': {
-				'types': './dist/translations/*.d.ts',
-				'import': './dist/translations/*.js'
-			},
-			'./*.css': './dist/*.css',
-			...content.exports
-		};
-	}
-
-	return content;
 };

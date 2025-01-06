@@ -41,8 +41,7 @@ const PROTOCOL_REG_EXP = /^((\w+:(\/{2,})?)|(\W))/i;
 const DEFAULT_LINK_PROTOCOLS = [
 	'https?',
 	'ftps?',
-	'mailto',
-	'geo'
+	'mailto'
 ];
 
 /**

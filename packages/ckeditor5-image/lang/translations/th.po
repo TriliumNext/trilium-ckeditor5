@@ -85,9 +85,13 @@ msgctxt "The label for the upload image from computer toolbar button."
 msgid "Upload image from computer"
 msgstr "อัปโหลดภาพจากคอมพิวเตอร์"
 
-msgctxt "The label for the upload image from computer menu bar button."
+msgctxt "The label for the upload image from computer menu bar button (standalone button)."
 msgid "Image from computer"
 msgstr "ภาพจากคอมพิวเตอร์"
+
+msgctxt "The label for the upload image from computer menu bar button (inside 'Image' menu)."
+msgid "From computer"
+msgstr "จากคอมพิวเตอร์"
 
 msgctxt "The label for the replace image by upload from computer toolbar button."
 msgid "Replace image from computer"
@@ -96,6 +100,10 @@ msgstr "แทนที่ภาพจากคอมพิวเตอร์"
 msgctxt "The title of the notification displayed when upload fails."
 msgid "Upload failed"
 msgstr "อัปโหลดไม่สำเร็จ"
+
+msgctxt "The title of the notification displayed when there is no permission to upload assets."
+msgid "You have no image upload permissions."
+msgstr "คุณไม่มีสิทธิ์อัปโหลดรูปภาพ"
 
 msgctxt "The label used by assistive technologies describing an image toolbar attached to an image widget."
 msgid "Image toolbar"
@@ -133,17 +141,21 @@ msgctxt "The accessibility label of the image resize dropdown for screen readers
 msgid "Image resize list"
 msgstr "รายการปรับขนาดภาพ"
 
-msgctxt "The label of the form submit button if the image source URL input has no value."
-msgid "Insert"
-msgstr "แทรก"
-
-msgctxt "The label of the form submit button if the image source URL input has a value."
-msgid "Update"
-msgstr "อัปเดต"
-
 msgctxt "The input label for the Insert image via URL form."
 msgid "Insert image via URL"
 msgstr "แทรกภาพผ่าน URL"
+
+msgctxt "The label for the insert image via url dropdown button."
+msgid "Insert via URL"
+msgstr "แทรกทาง URL"
+
+msgctxt "The label for the insert image via url menu bar button (standalone button)."
+msgid "Image via URL"
+msgstr "ภาพทาง URL"
+
+msgctxt "The label for the insert image via url menu bar button (inside 'Image' menu)."
+msgid "Via URL"
+msgstr "ทาง URL"
 
 msgctxt "The input label for the Insert image via URL form for a pre-existing image."
 msgid "Update image URL"
@@ -176,3 +188,7 @@ msgstr "อัปโหลดรูปภาพเสร็จสิ้น"
 msgctxt "Aria status message indicating that an error has occurred during image upload. Example: 'Error during image upload'."
 msgid "Error during image upload"
 msgstr "เกิดข้อผิดพลาดระหว่างอัปโหลดรูปภาพ"
+
+msgctxt "Label for the widget inserted by the image feature (as in 'insert image')"
+msgid "Image"
+msgstr "ภาพ"

@@ -8,7 +8,7 @@ order: 84
 # Update to CKEditor&nbsp;5 v40.x
 
 <info-box>
-	When updating your CKEditor&nbsp;5 installation, make sure **all the packages are the same version** to avoid errors.
+	When updating your CKEditor&nbsp;5 installation, ensure **all the packages are the same version** to avoid errors.
 
 	For custom builds, you may try removing the `package-lock.json` or `yarn.lock` files (if applicable) and reinstalling all packages before rebuilding the editor. For best results, make sure you use the most recent package versions.
 </info-box>
@@ -19,7 +19,7 @@ _Released on December 12, 2023._
 
 For the entire list of changes introduced in version 40.2.0, see the [release notes for CKEditor&nbsp;5 v40.2.0](https://github.com/ckeditor/ckeditor5/releases/tag/v40.2.0).
 
-Listed below are the most important changes that require your attention when upgrading to CKEditor&nbsp;5 v40.2.0.
+Below are the most important changes that require your attention when upgrading to CKEditor&nbsp;5 v40.2.0.
 
 ### AI Assistant integration
 
@@ -33,16 +33,18 @@ Before, the OpenAI adapter was automatically required by the `AIAssistant` plugi
 // Before:
 import { AIAssistant } from '@ckeditor/ckeditor5-ai';
 
-ClassicEditor.create( element, {
-	plugins: [ AIAssistant, /* ... */ ]
-} );
+ClassicEditor
+	.create( element, {
+		plugins: [ AIAssistant, /* ... */ ]
+	} );
 
 // After:
 import { AIAssistant, OpenAITextAdapter } from '@ckeditor/ckeditor5-ai';
 
-ClassicEditor.create( element, {
-	plugins: [ AIAssistant, OpenAITextAdapter, /* ... */ ]
-} );
+ClassicEditor
+	.create( element, {
+		plugins: [ AIAssistant, OpenAITextAdapter, /* ... */ ]
+	} );
 ```
 
 Another change is related to the {@link module:ai/aiassistant~AIAssistantConfig configuration structure}:
@@ -54,28 +56,30 @@ Another change is related to the {@link module:ai/aiassistant~AIAssistantConfig 
 
 ```js
 // Before:
-ClassicEditor.create( element, {
-	aiAssitant: {
-		authKey: 'OPENAI_API_KEY',
-		removeCommands: [ 'improveWriting', 'casual' ],
-		useTheme: false
-	}
-} );
+ClassicEditor
+	.create( element, {
+		aiAssitant: {
+			authKey: 'OPENAI_API_KEY',
+			removeCommands: [ 'improveWriting', 'casual' ],
+			useTheme: false
+		}
+	} );
 
 // After:
-ClassicEditor.create( element, {
-	ai: {
-		openAI: {
-			requestHeaders: {
-				Authorization: 'Bearer OPENAI_API_KEY'
-			}
-		},
-		aiAssistant: {
-			removeCommands: [ 'improveWriting', 'casual' ]
-		},
-		useTheme: false
-	}
-} );
+ClassicEditor
+	.create( element, {
+		ai: {
+			openAI: {
+				requestHeaders: {
+					Authorization: 'Bearer OPENAI_API_KEY'
+				}
+			},
+			aiAssistant: {
+				removeCommands: [ 'improveWriting', 'casual' ]
+			},
+			useTheme: false
+		}
+	} );
 ```
 
 ### CKBox image editing
@@ -205,7 +209,7 @@ _Released on November 15, 2023._
 
 For the entire list of changes introduced in version 40.1.0, see the [release notes for CKEditor&nbsp;5 v40.1.0](https://github.com/ckeditor/ckeditor5/releases/tag/v40.1.0).
 
-Listed below are the most important changes that require your attention when upgrading to CKEditor&nbsp;5 v40.1.0.
+Below are the most important changes that require your attention when upgrading to CKEditor&nbsp;5 v40.1.0.
 
 ### Changes to the default insert image action
 
@@ -218,13 +222,14 @@ We renamed the `undefined` option to `auto` (see further details below). Now, if
 If you wish to change this behavior, you can adjust the `type` setting in the editor configuration to meet your needs:
 
 ```js
-ClassicEditor.create( element, {
-	image: {
-		insert: {
-			type: 'auto'
+ClassicEditor
+	.create( element, {
+		image: {
+			insert: {
+				type: 'auto'
+			}
 		}
-	}
-} );
+	} );
 ```
 
 The `type` setting accepts the following values:
@@ -247,7 +252,7 @@ _Released on October 4, 2023._
 
 For the entire list of changes introduced in version 40.0.0, see the [release notes for CKEditor&nbsp;5 v40.0.0](https://github.com/ckeditor/ckeditor5/releases/tag/v40.0.0).
 
-Listed below are the most important changes that require your attention when upgrading to CKEditor&nbsp;5 v40.0.0.
+Below are the most important changes that require your attention when upgrading to CKEditor&nbsp;5 v40.0.0.
 
 ### Changes to the image feature
 
@@ -337,7 +342,7 @@ We simplified the `srcset` model attribute that provides parameters for responsi
 
 #### Changes to content styles
 
-This release updated editor content styles. This means you need to update them in your editor implementation to avoid any discrepancies. Refer to the {@link installation/advanced/content-styles Content styles} guide to learn how to generate the style sheet.
+This release updated editor content styles. This means you need to update them in your editor implementation to avoid any discrepancies. Refer to the {@link getting-started/advanced/content-styles Content styles} guide to learn how to generate the style sheet.
 
 ### Changes to the comments feature
 
@@ -413,7 +418,7 @@ If your custom integration manually adds deleted comment threads to `CommentsRep
 
 ### New balloon block editor icon
 
-We have changed the default {@link features/blocktoolbar balloon block editor toolbar} indicator icon from the pilcrow icon (`¶`) to the braille pattern dots icon (`⠿`). The new icon better corresponds to the dual function of the indicator, which you may use to both invoke the balloon toolbar and to drag to content block around.
+We have changed the default {@link getting-started/setup/toolbar#block-toolbar balloon block editor toolbar} indicator icon from the pilcrow icon (`¶`) to the braille pattern dots icon (`⠿`). The new icon better corresponds to the dual function of the indicator, which you may use to both invoke the balloon toolbar and to drag to content block around.
 
 While `⠿` is now a default, you can still configure it, for example:
 

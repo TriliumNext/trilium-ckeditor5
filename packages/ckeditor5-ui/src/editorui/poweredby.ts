@@ -38,7 +38,7 @@ type PoweredByConfig = Required<UiConfig>[ 'poweredBy' ];
  *
  * @private
  */
-export default class PoweredBy extends DomEmitterMixin() {
+export default class PoweredBy extends /* #__PURE__ */ DomEmitterMixin() {
 	/**
 	 * Editor instance the helper was created for.
 	 */
@@ -151,7 +151,6 @@ export default class PoweredBy extends DomEmitterMixin() {
 		} );
 
 		editor.ui.view.body.add( balloon );
-		editor.ui.focusTracker.add( balloon.element! );
 
 		this._balloonView = balloon;
 	}
@@ -252,7 +251,7 @@ class PoweredByView extends View<HTMLDivElement> {
 				{
 					tag: 'a',
 					attributes: {
-						href: 'https://ckeditor.com/?utm_source=ckeditor&' +
+						href: 'https://ckeditor.com/powered-by-ckeditor/?utm_source=ckeditor&' +
 							'utm_medium=referral&utm_campaign=701Dn000000hVgmIAE_powered_by_ckeditor_logo',
 						target: '_blank',
 						tabindex: '-1'

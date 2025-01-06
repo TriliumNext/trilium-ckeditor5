@@ -8,9 +8,12 @@
  */
 
 import { Plugin } from '@ckeditor/ckeditor5-core';
-import { ButtonView, MenuBarMenuListItemButtonView, Dialog, type EditorUIReadyEvent } from '../../index.js';
+import ButtonView from '../../button/buttonview.js';
+import Dialog from '../../dialog/dialog.js';
+import MenuBarMenuListItemButtonView from '../../menubar/menubarmenulistitembuttonview.js';
 import AccessibilityHelpContentView from './accessibilityhelpcontentview.js';
 import { getEnvKeystrokeText } from '@ckeditor/ckeditor5-utils';
+import type { EditorUIReadyEvent } from '../../editorui/editorui.js';
 import type { AddRootEvent } from '@ckeditor/ckeditor5-editor-multi-root';
 import type { DowncastWriter, ViewRootEditableElement } from '@ckeditor/ckeditor5-engine';
 
@@ -74,7 +77,7 @@ export default class AccessibilityHelp extends Plugin {
 		} );
 
 		editor.keystrokes.set( 'Alt+0', ( evt, cancel ) => {
-			this._showDialog();
+			this._toggleDialog();
 			cancel();
 		} );
 
@@ -84,17 +87,20 @@ export default class AccessibilityHelp extends Plugin {
 	/**
 	 * Creates a button to show accessibility help dialog, for use either in toolbar or in menu bar.
 	 */
-	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
+	private _createButton<T extends typeof ButtonView>( ButtonClass: T ): InstanceType<T> {
 		const editor = this.editor;
+		const dialog = editor.plugins.get( 'Dialog' );
 		const locale = editor.locale;
 		const view = new ButtonClass( locale ) as InstanceType<T>;
 
 		view.set( {
 			keystroke: 'Alt+0',
-			icon: accessibilityIcon
+			icon: accessibilityIcon,
+			isToggleable: true
 		} );
 
-		view.on( 'execute', () => this._showDialog() );
+		view.on( 'execute', () => this._toggleDialog() );
+		view.bind( 'isOn' ).to( dialog, 'id', id => id === 'accessibilityHelp' );
 
 		return view;
 	}
@@ -124,7 +130,9 @@ export default class AccessibilityHelp extends Plugin {
 
 		function addAriaLabelTextToRoot( writer: DowncastWriter, viewRoot: ViewRootEditableElement ) {
 			const currentAriaLabel = viewRoot.getAttribute( 'aria-label' );
-			const newAriaLabel = `${ currentAriaLabel }. ${ t( 'Press %0 for help.', [ getEnvKeystrokeText( 'Alt+0' ) ] ) }`;
+			const newAriaLabel = [ currentAriaLabel, t( 'Press %0 for help.', [ getEnvKeystrokeText( 'Alt+0' ) ] ) ]
+				.filter( segment => segment )
+				.join( '. ' );
 
 			writer.setAttribute( 'aria-label', newAriaLabel, viewRoot );
 		}
@@ -133,7 +141,7 @@ export default class AccessibilityHelp extends Plugin {
 	/**
 	 * Shows the accessibility help dialog. Also, creates {@link #contentView} on demand.
 	 */
-	private _showDialog(): void {
+	private _toggleDialog(): void {
 		const editor = this.editor;
 		const dialog = editor.plugins.get( 'Dialog' );
 		const t = editor.locale.t;
@@ -142,13 +150,17 @@ export default class AccessibilityHelp extends Plugin {
 			this.contentView = new AccessibilityHelpContentView( editor.locale, editor.accessibility.keystrokeInfos );
 		}
 
-		dialog.show( {
-			id: 'accessibilityHelp',
-			className: 'ck-accessibility-help-dialog',
-			title: t( 'Accessibility help' ),
-			icon: accessibilityIcon,
-			hasCloseButton: true,
-			content: this.contentView
-		} );
+		if ( dialog.id === 'accessibilityHelp' ) {
+			dialog.hide();
+		} else {
+			dialog.show( {
+				id: 'accessibilityHelp',
+				className: 'ck-accessibility-help-dialog',
+				title: t( 'Accessibility help' ),
+				icon: accessibilityIcon,
+				hasCloseButton: true,
+				content: this.contentView
+			} );
+		}
 	}
 }

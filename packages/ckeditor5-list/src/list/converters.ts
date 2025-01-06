@@ -8,7 +8,6 @@
  */
 
 import {
-	UpcastWriter,
 	type DowncastAttributeEvent,
 	type DowncastWriter,
 	type EditingController,
@@ -115,29 +114,6 @@ export function listItemUpcastConverter(): GetCallback<UpcastElementEvent> {
 			//	</ul>
 			if ( items[ 1 ].getAttribute( 'listItemId' ) != attributes.listItemId ) {
 				conversionApi.keepEmptyElement( items[ 0 ] );
-			}
-		}
-	};
-}
-
-/**
- * Returns the upcast converter for the `<ul>` and `<ol>` view elements that cleans the input view of garbage.
- * This is mostly to clean whitespaces from between the `<li>` view elements inside the view list element. However,
- * incorrect data can also be cleared if the view was incorrect.
- *
- * @internal
- */
-export function listUpcastCleanList(): GetCallback<UpcastElementEvent> {
-	return ( evt, data, conversionApi ) => {
-		if ( !conversionApi.consumable.test( data.viewItem, { name: true } ) ) {
-			return;
-		}
-
-		const viewWriter = new UpcastWriter( data.viewItem.document );
-
-		for ( const child of Array.from( data.viewItem.getChildren() ) ) {
-			if ( !isListItemView( child ) && !isListView( child ) ) {
-				viewWriter.remove( child );
 			}
 		}
 	};

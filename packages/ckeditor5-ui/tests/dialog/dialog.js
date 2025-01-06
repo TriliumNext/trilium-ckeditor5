@@ -31,14 +31,18 @@ describe( 'Dialog', () => {
 			} );
 	} );
 
-	afterEach( () => {
-		editor.destroy();
+	afterEach( async () => {
+		await editor.destroy();
 		editorElement.remove();
 		Dialog._visibleDialogPlugin = undefined;
 	} );
 
 	it( 'should have a name', () => {
 		expect( Dialog.pluginName ).to.equal( 'Dialog' );
+	} );
+
+	it( 'should initialize with isOpen=false', () => {
+		expect( dialogPlugin.isOpen ).to.be.false;
 	} );
 
 	it( 'should add keystroke accessibility info', () => {

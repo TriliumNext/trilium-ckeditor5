@@ -88,6 +88,7 @@ export default class MediaEmbedEditing extends Plugin {
 					name: 'youtube',
 					url: [
 						/^(?:m\.)?youtube\.com\/watch\?v=([\w-]+)(?:&t=(\d+))?/,
+						/^(?:m\.)?youtube\.com\/shorts\/([\w-]+)(?:\?t=(\d+))?/,
 						/^(?:m\.)?youtube\.com\/v\/([\w-]+)(?:\?t=(\d+))?/,
 						/^youtube\.com\/embed\/([\w-]+)(?:\?start=(\d+))?/,
 						/^youtu\.be\/([\w-]+)(?:\?t=(\d+))?/
@@ -134,11 +135,17 @@ export default class MediaEmbedEditing extends Plugin {
 
 				{
 					name: 'instagram',
-					url: /^instagram\.com\/p\/(\w+)/
+					url: [
+						/^instagram\.com\/p\/(\w+)/,
+						/^instagram\.com\/reel\/(\w+)/
+					]
 				},
 				{
 					name: 'twitter',
-					url: /^twitter\.com/
+					url: [
+						/^twitter\.com/,
+						/^x\.com/
+					]
 				},
 				{
 					name: 'googleMaps',

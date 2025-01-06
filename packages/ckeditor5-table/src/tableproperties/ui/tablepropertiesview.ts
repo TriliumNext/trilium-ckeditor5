@@ -24,8 +24,6 @@ import {
 	type InputTextView,
 	type NormalizedColorOption,
 	type ColorPickerConfig,
-	type FocusCyclerForwardCycleEvent,
-	type FocusCyclerBackwardCycleEvent,
 	type FocusableView
 } from 'ckeditor5/src/ui.js';
 import { FocusTracker, KeystrokeHandler, type ObservableChangeEvent, type Locale } from 'ckeditor5/src/utils.js';
@@ -44,12 +42,6 @@ import '../../../theme/tableform.css';
 import '../../../theme/tableproperties.css';
 import type ColorInputView from '../../ui/colorinputview.js';
 import type { TablePropertiesOptions } from '../../tableconfig.js';
-
-const ALIGNMENT_ICONS = {
-	left: icons.objectLeft,
-	center: icons.objectCenter,
-	right: icons.objectRight
-};
 
 /**
  * Additional configuration of the view.
@@ -363,15 +355,7 @@ export default class TablePropertiesView extends View {
 
 		// Maintain continuous focus cycling over views that have focusable children and focus cyclers themselves.
 		[ this.borderColorInput, this.backgroundInput ].forEach( view => {
-			view.fieldView.focusCycler.on<FocusCyclerForwardCycleEvent>( 'forwardCycle', evt => {
-				this._focusCycler.focusNext();
-				evt.stop();
-			} );
-
-			view.fieldView.focusCycler.on<FocusCyclerBackwardCycleEvent>( 'backwardCycle', evt => {
-				this._focusCycler.focusPrevious();
-				evt.stop();
-			} );
+			this._focusCycler.chain( view.fieldView.focusCycler );
 		} );
 
 		[
@@ -661,7 +645,11 @@ export default class TablePropertiesView extends View {
 
 		fillToolbar( {
 			view: this,
-			icons: ALIGNMENT_ICONS,
+			icons: {
+				left: icons.objectLeft,
+				center: icons.objectCenter,
+				right: icons.objectRight
+			},
 			toolbar: alignmentToolbar,
 			labels: this._alignmentLabels,
 			propertyName: 'alignment',

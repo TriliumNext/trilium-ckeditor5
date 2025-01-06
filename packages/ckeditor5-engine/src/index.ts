@@ -58,6 +58,7 @@ export type { Consumables, default as ViewConsumable } from './conversion/viewco
 // DataProcessor.
 export type { default as DataProcessor } from './dataprocessor/dataprocessor.js';
 export { default as HtmlDataProcessor } from './dataprocessor/htmldataprocessor.js';
+export { default as XmlDataProcessor } from './dataprocessor/xmldataprocessor.js';
 
 // Model / Operation.
 export type { default as Operation } from './model/operation/operation.js';
@@ -104,11 +105,15 @@ export type {
 	SchemaAttributeCheckCallback,
 	SchemaChildCheckCallback,
 	AttributeProperties,
-	SchemaItemDefinition
+	SchemaItemDefinition,
+	SchemaContext
 } from './model/schema.js';
 export type { default as Selection, Selectable } from './model/selection.js';
 export type { default as TypeCheckable } from './model/typecheckable.js';
 export type { default as Writer } from './model/writer.js';
+
+// Model utils.
+export * from './model/utils/autoparagraphing.js';
 
 // Model Events.
 export type { DocumentChangeEvent } from './model/document.js';
@@ -159,7 +164,12 @@ export { default as ClickObserver } from './view/observer/clickobserver.js';
 export { default as DomEventObserver } from './view/observer/domeventobserver.js';
 export { default as MouseObserver } from './view/observer/mouseobserver.js';
 export { default as TabObserver } from './view/observer/tabobserver.js';
-export { default as FocusObserver } from './view/observer/focusobserver.js';
+
+export {
+	default as FocusObserver,
+	type ViewDocumentBlurEvent,
+	type ViewDocumentFocusEvent
+} from './view/observer/focusobserver.js';
 
 export { default as DowncastWriter } from './view/downcastwriter.js';
 export { default as UpcastWriter } from './view/upcastwriter.js';
@@ -177,6 +187,7 @@ export type {
 	ViewDocumentCompositionEndEvent
 } from './view/observer/compositionobserver.js';
 export type { ViewDocumentInputEvent } from './view/observer/inputobserver.js';
+export type { ViewDocumentMutationsEvent, MutationData } from './view/observer/mutationobserver.js';
 export type { ViewDocumentKeyDownEvent, ViewDocumentKeyUpEvent, KeyEventData } from './view/observer/keyobserver.js';
 export type { ViewDocumentLayoutChangedEvent } from './view/document.js';
 export type {

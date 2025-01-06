@@ -21,13 +21,13 @@ import type {
 	MenuBarConfigAddedGroup,
 	MenuBarConfigAddedMenu,
 	MenuBarConfigAddedPosition,
-	NormalizedMenuBarConfigObject
+	NormalizedMenuBarConfigObject,
+	MenuBarConfigAddedItem
 } from './menubarview.js';
 import clickOutsideHandler from '../bindings/clickoutsidehandler.js';
 import type { ButtonExecuteEvent } from '../button/button.js';
 import type ComponentFactory from '../componentfactory.js';
 import type { FocusableView } from '../focuscycler.js';
-import type { Editor } from '@ckeditor/ckeditor5-core';
 import {
 	logWarning,
 	type Locale,
@@ -37,13 +37,6 @@ import {
 import { cloneDeep } from 'lodash-es';
 
 const NESTED_PANEL_HORIZONTAL_OFFSET = 5;
-
-type DeepReadonly<T> = Readonly<{
-	[K in keyof T]:
-		T[K] extends string ? Readonly<T[K]>
-			: T[K] extends Array<infer A> ? Readonly<Array<DeepReadonly<A>>>
-				: DeepReadonly<T[K]>;
-}>;
 
 /**
  * Behaviors of the {@link module:ui/menubar/menubarview~MenuBarView} component.
@@ -56,24 +49,28 @@ export const MenuBarBehaviors = {
 	 */
 	toggleMenusAndFocusItemsOnHover( menuBarView: MenuBarView ): void {
 		menuBarView.on<MenuBarMenuMouseEnterEvent>( 'menu:mouseenter', evt => {
-			// This works only when the menu bar has already been open and the user hover over the menu bar.
-			if ( !menuBarView.isOpen ) {
+			// This behavior should be activated when one of condition is present:
+			// 1. The user opened any submenu of menubar and hover over items in the menu bar.
+			// 2. The user focused whole menubar using keyboard interaction and enabled focus borders and hover over items in the menu bar.
+			if ( !menuBarView.isFocusBorderEnabled && !menuBarView.isOpen ) {
 				return;
 			}
 
-			for ( const menuView of menuBarView.menus ) {
-				// @if CK_DEBUG_MENU_BAR // const wasOpen = menuView.isOpen;
+			if ( menuBarView.isOpen ) {
+				for ( const menuView of menuBarView.menus ) {
+					// @if CK_DEBUG_MENU_BAR // const wasOpen = menuView.isOpen;
 
-				const pathLeaf = evt.path[ 0 ];
-				const isListItemContainingMenu = pathLeaf instanceof MenuBarMenuListItemView && pathLeaf.children.first === menuView;
+					const pathLeaf = evt.path[ 0 ];
+					const isListItemContainingMenu = pathLeaf instanceof MenuBarMenuListItemView && pathLeaf.children.first === menuView;
 
-				menuView.isOpen = ( evt.path.includes( menuView ) || isListItemContainingMenu ) && menuView.isEnabled;
+					menuView.isOpen = ( evt.path.includes( menuView ) || isListItemContainingMenu ) && menuView.isEnabled;
 
-				// @if CK_DEBUG_MENU_BAR // if ( wasOpen !== menuView.isOpen ) {
-				// @if CK_DEBUG_MENU_BAR // console.log( '[BEHAVIOR] toggleMenusAndFocusItemsOnHover(): Toggle',
-				// @if CK_DEBUG_MENU_BAR // 	logMenu( menuView ), 'isOpen', menuView.isOpen
-				// @if CK_DEBUG_MENU_BAR // );
-				// @if CK_DEBUG_MENU_BAR // }
+					// @if CK_DEBUG_MENU_BAR // if ( wasOpen !== menuView.isOpen ) {
+					// @if CK_DEBUG_MENU_BAR // console.log( '[BEHAVIOR] toggleMenusAndFocusItemsOnHover(): Toggle',
+					// @if CK_DEBUG_MENU_BAR // 	logMenu( menuView ), 'isOpen', menuView.isOpen
+					// @if CK_DEBUG_MENU_BAR // );
+					// @if CK_DEBUG_MENU_BAR // }
+				}
 			}
 
 			( evt.source as FocusableView ).focus();
@@ -163,6 +160,43 @@ export const MenuBarBehaviors = {
 			callback: () => menuBarView.close(),
 			contextElements: () => menuBarView.children.map( child => child.element! )
 		} );
+	},
+
+	/**
+	 * Tracks the keyboard focus interaction on the menu bar view. It is used to determine if the nested items
+	 * of the menu bar should render focus rings after first interaction with the keyboard.
+	 */
+	enableFocusHighlightOnInteraction( menuBarView: MenuBarView ): void {
+		let isKeyPressed: boolean = false;
+
+		menuBarView.on<ObservableChangeEvent<boolean>>( 'change:isOpen', ( _, evt, isOpen ) => {
+			if ( !isOpen ) {
+				// Keep the focus border if the menu bar was closed by a keyboard interaction (Esc key).
+				// The user remains in the keyboard navigation mode and can traverse the main categories.
+				// See https://github.com/ckeditor/ckeditor5/issues/16719.
+				if ( !isKeyPressed ) {
+					menuBarView.isFocusBorderEnabled = false;
+				}
+
+				// Reset the flag when the menu bar is closed, menu items tend to intercept `keyup` event
+				// and sometimes, after pressing `enter` on focused item, `isKeyPressed` stuck in `true` state.
+				isKeyPressed = false;
+			}
+		} );
+
+		menuBarView.listenTo( menuBarView.element!, 'keydown', () => {
+			isKeyPressed = true;
+		}, { useCapture: true } );
+
+		menuBarView.listenTo( menuBarView.element!, 'keyup', () => {
+			isKeyPressed = false;
+		}, { useCapture: true } );
+
+		menuBarView.listenTo( menuBarView.element!, 'focus', () => {
+			if ( isKeyPressed ) {
+				menuBarView.isFocusBorderEnabled = true;
+			}
+		}, { useCapture: true } );
 	}
 };
 
@@ -216,7 +250,6 @@ export const MenuBarMenuBehaviors = {
 	openOnButtonClick( menuView: MenuBarMenuView ): void {
 		menuView.buttonView.on<ButtonExecuteEvent>( 'execute', () => {
 			menuView.isOpen = true;
-			menuView.panelView.focus();
 		} );
 	},
 
@@ -226,10 +259,23 @@ export const MenuBarMenuBehaviors = {
 	toggleOnButtonClick( menuView: MenuBarMenuView ): void {
 		menuView.buttonView.on<ButtonExecuteEvent>( 'execute', () => {
 			menuView.isOpen = !menuView.isOpen;
+		} );
+	},
 
-			if ( menuView.isOpen ) {
-				menuView.panelView.focus();
+	/**
+	 * Opens the menu and focuses the panel content upon pressing the Enter key.
+	 */
+	openAndFocusOnEnterKeyPress( menuView: MenuBarMenuView ): void {
+		menuView.keystrokes.set( 'enter', ( data, cancel ) => {
+			// Engage only for Enter key press when the button is focused. The panel can contain
+			// other UI components and features that rely on the Enter key press.
+			if ( menuView.focusTracker.focusedElement !== menuView.buttonView.element ) {
+				return;
 			}
+
+			menuView.isOpen = true;
+			menuView.panelView.focus();
+			cancel();
 		} );
 	},
 
@@ -490,6 +536,12 @@ export const MenuBarMenuViewPanelPositioningFunctions: Record<string, Positionin
  * 				]
  * 			},
  * 			{
+ * 				groupId: 'previewMergeFields',
+ * 				items: [
+ * 					'menuBar:previewMergeFields'
+ * 				]
+ * 			},
+ * 			{
  * 				groupId: 'restrictedEditingException',
  * 				items: [
  * 					'menuBar:restrictedEditingException'
@@ -504,7 +556,7 @@ export const MenuBarMenuViewPanelPositioningFunctions: Record<string, Positionin
  * 			{
  * 				groupId: 'insertMainWidgets',
  * 				items: [
- * 					'menuBar:uploadImage',
+ * 					'menuBar:insertImage',
  * 					'menuBar:ckbox',
  * 					'menuBar:ckfinder',
  * 					'menuBar:insertTable'
@@ -514,12 +566,14 @@ export const MenuBarMenuViewPanelPositioningFunctions: Record<string, Positionin
  * 				groupId: 'insertInline',
  * 				items: [
  * 					'menuBar:link',
- * 					'menuBar:comment'
+ * 					'menuBar:comment',
+ * 					'menuBar:insertMergeField'
  * 				]
  * 			},
  * 			{
  * 				groupId: 'insertMinorWidgets',
  * 				items: [
+ * 					'menuBar:mediaEmbed',
  * 					'menuBar:insertTemplate',
  * 					'menuBar:blockQuote',
  * 					'menuBar:codeBlock',
@@ -607,6 +661,7 @@ export const MenuBarMenuViewPanelPositioningFunctions: Record<string, Positionin
  * 				items: [
  * 					'menuBar:bulletedList',
  * 					'menuBar:numberedList',
+ * 					'menuBar:multiLevelList',
  * 					'menuBar:todoList'
  * 				]
  * 			},
@@ -670,7 +725,7 @@ export const MenuBarMenuViewPanelPositioningFunctions: Record<string, Positionin
  * The menu bar can be customized using the `config.menuBar.removeItems` and `config.menuBar.addItems` properties.
  */
 // **NOTE: Whenever you make changes to this value, reflect it in the documentation above!**
-export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> = [
+export const DefaultMenuBarItems: MenuBarConfigObject[ 'items' ] = [
 	{
 		menuId: 'file',
 		label: 'File',
@@ -738,9 +793,15 @@ export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> =
 				]
 			},
 			{
-				groupId: 'restrictedEditingException',
+				groupId: 'previewMergeFields',
 				items: [
-					'menuBar:restrictedEditingException'
+					'menuBar:previewMergeFields'
+				]
+			},
+			{
+				groupId: 'restrictedEditing',
+				items: [
+					'menuBar:restrictedEditing'
 				]
 			}
 		]
@@ -752,7 +813,7 @@ export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> =
 			{
 				groupId: 'insertMainWidgets',
 				items: [
-					'menuBar:uploadImage',
+					'menuBar:insertImage',
 					'menuBar:ckbox',
 					'menuBar:ckfinder',
 					'menuBar:insertTable'
@@ -762,13 +823,16 @@ export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> =
 				groupId: 'insertInline',
 				items: [
 					'menuBar:link',
-					'menuBar:comment'
+					'menuBar:comment',
+					'menuBar:insertMergeField'
 				]
 			},
 			{
 				groupId: 'insertMinorWidgets',
 				items: [
+					'menuBar:mediaEmbed',
 					'menuBar:insertTemplate',
+					'menuBar:specialCharacters',
 					'menuBar:blockQuote',
 					'menuBar:codeBlock',
 					'menuBar:htmlEmbed'
@@ -783,9 +847,9 @@ export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> =
 				]
 			},
 			{
-				groupId: 'restrictedEditing',
+				groupId: 'restrictedEditingException',
 				items: [
-					'menuBar:restrictedEditing'
+					'menuBar:restrictedEditingException'
 				]
 			}
 		]
@@ -855,6 +919,7 @@ export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> =
 				items: [
 					'menuBar:bulletedList',
 					'menuBar:numberedList',
+					'menuBar:multiLevelList',
 					'menuBar:todoList'
 				]
 			},
@@ -896,7 +961,6 @@ export const DefaultMenuBarItems: DeepReadonly<MenuBarConfigObject[ 'items' ]> =
 				items: [
 					'menuBar:trackChanges',
 					'menuBar:commentsArchive'
-
 				]
 			}
 		]
@@ -959,16 +1023,19 @@ export function normalizeMenuBarConfig( config: Readonly<MenuBarConfig> ): Norma
 export function processMenuBarConfig( {
 	normalizedConfig,
 	locale,
-	componentFactory
+	componentFactory,
+	extraItems
 }: {
 	normalizedConfig: NormalizedMenuBarConfigObject;
 	locale: Locale;
 	componentFactory: ComponentFactory;
+	extraItems: Array<MenuBarConfigAddedItem | MenuBarConfigAddedGroup | MenuBarConfigAddedMenu>;
 } ): NormalizedMenuBarConfigObject {
 	const configClone = cloneDeep( normalizedConfig ) as NormalizedMenuBarConfigObject;
 
+	handleAdditions( normalizedConfig, configClone, extraItems );
 	handleRemovals( normalizedConfig, configClone );
-	handleAdditions( normalizedConfig, configClone );
+	handleAdditions( normalizedConfig, configClone, configClone.addItems );
 	purgeUnavailableComponents( normalizedConfig, configClone, componentFactory );
 	purgeEmptyMenus( normalizedConfig, configClone );
 	localizeMenuLabels( configClone, locale );
@@ -1047,17 +1114,21 @@ function handleRemovals(
 }
 
 /**
- * Handles the `config.menuBar.addItems` configuration. It allows for adding menus, groups, and items at arbitrary
+ * Adds provided items to config. It allows for adding menus, groups, and items at arbitrary
  * positions in the menu bar. If the position does not exist, a warning is logged.
  */
 function handleAdditions(
 	originalConfig: NormalizedMenuBarConfigObject,
-	config: NormalizedMenuBarConfigObject
+	config: NormalizedMenuBarConfigObject,
+	items: Array<MenuBarConfigAddedItem | MenuBarConfigAddedGroup | MenuBarConfigAddedMenu>
 ) {
-	const itemsToBeAdded = config.addItems;
-	const successFullyAddedItems: typeof itemsToBeAdded = [];
+	const successFullyAddedItems: typeof items = [];
 
-	for ( const itemToAdd of itemsToBeAdded ) {
+	if ( items.length == 0 ) {
+		return;
+	}
+
+	for ( const itemToAdd of items ) {
 		const relation = getRelationFromPosition( itemToAdd.position );
 		const relativeId = getRelativeIdFromPosition( itemToAdd.position );
 
@@ -1139,7 +1210,7 @@ function handleAdditions(
 		}
 	}
 
-	for ( const addedItemConfig of itemsToBeAdded ) {
+	for ( const addedItemConfig of items ) {
 		if ( !successFullyAddedItems.includes( addedItemConfig ) ) {
 			/**
 			 * There was a problem processing the configuration of the menu bar. The configured item could not be added
@@ -1217,7 +1288,7 @@ function addMenuOrItemToGroup(
  * not be instantiated. Warns about missing components if the menu bar configuration was specified by the user.
  */
 function purgeUnavailableComponents(
-	originalConfig: DeepReadonly<NormalizedMenuBarConfigObject>,
+	originalConfig: NormalizedMenuBarConfigObject,
 	config: NormalizedMenuBarConfigObject,
 	componentFactory: ComponentFactory
 ) {
@@ -1327,7 +1398,7 @@ function purgeEmptyMenus(
 
 function warnAboutEmptyMenu(
 	originalConfig: NormalizedMenuBarConfigObject,
-	emptyMenuConfig: MenuBarMenuDefinition | DeepReadonly<NormalizedMenuBarConfigObject>,
+	emptyMenuConfig: MenuBarMenuDefinition | NormalizedMenuBarConfigObject,
 	isUsingDefaultConfig: boolean
 ) {
 	if ( isUsingDefaultConfig ) {
@@ -1472,34 +1543,3 @@ function getIdFromGroupItem( item: string | MenuBarMenuDefinition ): string {
 function isMenuDefinition( definition: any ): definition is MenuBarMenuDefinition {
 	return typeof definition === 'object' && 'menuId' in definition;
 }
-
-/**
- * Initializes menu bar for given editor.
- *
- * @internal
- */
-export function _initMenuBar( editor: Editor, menuBarView: MenuBarView ): void {
-	const menuBarViewElement = menuBarView.element!;
-
-	editor.ui.focusTracker.add( menuBarViewElement );
-	editor.keystrokes.listenTo( menuBarViewElement );
-
-	const normalizedMenuBarConfig = normalizeMenuBarConfig( editor.config.get( 'menuBar' ) || {} );
-
-	menuBarView.fillFromConfig( normalizedMenuBarConfig, editor.ui.componentFactory );
-
-	editor.keystrokes.set( 'Esc', ( data, cancel ) => {
-		if ( menuBarViewElement.contains( editor.ui.focusTracker.focusedElement ) ) {
-			editor.editing.view.focus();
-			cancel();
-		}
-	} );
-
-	editor.keystrokes.set( 'Alt+F9', ( data, cancel ) => {
-		if ( !menuBarViewElement.contains( editor.ui.focusTracker.focusedElement ) ) {
-			menuBarView!.focus();
-			cancel();
-		}
-	} );
-}
-

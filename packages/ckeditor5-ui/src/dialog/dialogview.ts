@@ -24,8 +24,6 @@ import FormHeaderView from '../formheader/formheaderview.js';
 import ButtonView from '../button/buttonview.js';
 import { type ButtonExecuteEvent } from '../button/button.js';
 import FocusCycler, { isViewWithFocusCycler,
-	type FocusCyclerBackwardCycleEvent,
-	type FocusCyclerForwardCycleEvent,
 	type FocusableView,
 	isFocusable
 }
@@ -63,12 +61,12 @@ export const DialogViewPosition = {
 	EDITOR_BELOW_CENTER: 'editor-below-center'
 } as const;
 
-const toPx = toUnit( 'px' );
+const toPx = /* #__PURE__ */ toUnit( 'px' );
 
 /**
  * A dialog view class.
  */
-export default class DialogView extends DraggableViewMixin( View ) implements DraggableView {
+export default class DialogView extends /* #__PURE__ */ DraggableViewMixin( View ) implements DraggableView {
 	/**
 	 * A collection of the child views inside of the dialog.
 	 * A dialog can have 3 optional parts: header, content, and actions.
@@ -652,23 +650,7 @@ export default class DialogView extends DraggableViewMixin( View ) implements Dr
 			this.focusTracker.add( focusable.element! );
 
 			if ( isViewWithFocusCycler( focusable ) ) {
-				this.listenTo<FocusCyclerForwardCycleEvent>( focusable.focusCycler, 'forwardCycle', evt => {
-					this._focusCycler.focusNext();
-
-					// Stop the event propagation only if there are more focusables.
-					if ( this._focusCycler.next !== this._focusCycler.focusables.get( this._focusCycler.current! ) ) {
-						evt.stop();
-					}
-				} );
-
-				this.listenTo<FocusCyclerBackwardCycleEvent>( focusable.focusCycler, 'backwardCycle', evt => {
-					this._focusCycler.focusPrevious();
-
-					// Stop the event propagation only if there are more focusables.
-					if ( this._focusCycler.previous !== this._focusCycler.focusables.get( this._focusCycler.current! ) ) {
-						evt.stop();
-					}
-				} );
+				this._focusCycler.chain( focusable.focusCycler );
 			}
 		} );
 	}

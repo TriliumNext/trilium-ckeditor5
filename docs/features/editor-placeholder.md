@@ -7,7 +7,7 @@ meta-title: Editor placeholder | CKEditor 5 Documentation
 
 # Editor placeholder
 
-You can prompt the user to input content by displaying a configurable placeholder text when the editor is empty. This works similarly to the native DOM [`placeholder` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-placeholder) used by inputs. Not to be confused with {@link examples/framework/content-placeholder content placeholder}.
+You can prompt the user to input content by displaying a configurable placeholder text when the editor is empty. This works similarly to the native DOM [`placeholder` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-placeholder) used by inputs. Not to be confused with the content placeholders offered by the {@link features/merge-fields merge fields} feature.
 
 ## Demo
 
@@ -21,10 +21,6 @@ See the demo of the placeholder feature:
 
 ## Installation
 
-<info-box info>
-	This feature is enabled by default in all {@link installation/getting-started/predefined-builds predefined builds}.
-</info-box>
-
 The editor placeholder feature does not require a separate plugin installation. It does, however, require configuring the editor before use. There are two different ways of configuring the editor placeholder text:
 
 ### Using the `placeholder` attribute of a textarea
@@ -36,8 +32,12 @@ Set the `placeholder` attribute on a `<textarea>` element passed to the `Editor.
 ```
 
 ```js
+import { ClassicEditor, Essentials } from 'ckeditor5';
+
 ClassicEditor
-	.create( document.querySelector( '#editor' ) )
+	.create( document.querySelector( '#editor' ), {
+		plugins: [ Essentials, /* ... */ ],
+	} )
 	.then( editor => {
 		console.log( editor );
 	} )
@@ -55,43 +55,48 @@ You can use the {@link module:core/editor/editorconfig~EditorConfig#placeholder 
 * to override the `placeholder` text of a `<textarea>`, if one was passed into `Editor.create()` but the placeholder text should be different.
 
 ```js
-ClassicEditor.create(
-	document.querySelector( '#editor' ),
-    {
+import { ClassicEditor, Essentials } from 'ckeditor5';
+
+ClassicEditor
+	.create( document.querySelector( '#editor' ), {
+		plugins: [ Essentials, /* ... */ ],
 		placeholder: 'Type the content here!'
-	}
-).then( editor => {
-    console.log( editor );
-} ).catch( error => {
-    console.error( error );
-} );
+	} )
+	.then( editor => {
+		console.log( editor );
+	} )
+	.catch( error => {
+		console.error( error );
+	} );
 ```
 
 If your editor implementation uses multiple roots, you should pass an object with keys corresponding to the editor roots names and values equal to the placeholder that should be set in each root:
 
 ```js
-MultiRootEditor.create(
+MultiRootEditor
+	.create(
 	// Roots for the editor:
-	{
-		header: document.querySelector( '#header' ),
-		content: document.querySelector( '#content' ),
-		leftSide: document.querySelector( '#left-side' ),
-		rightSide: document.querySelector( '#right-side' )
-	},
-	// Config:
-	{
-		placeholder: {
-			header: 'Type header...',
-			content: 'Type content...',
-			leftSide: 'Type left-side...',
-			rightSide: 'Type right-side...'
-		}
-	}
-).then( editor => {
-    console.log( editor );
-} ).catch( error => {
-    console.error( error );
-} );
+		{
+			header: document.querySelector( '#header' ),
+			content: document.querySelector( '#content' ),
+			leftSide: document.querySelector( '#left-side' ),
+			rightSide: document.querySelector( '#right-side' )
+		},
+		// Config:
+		{
+			placeholder: {
+				header: 'Type header...',
+				content: 'Type content...',
+				leftSide: 'Type left-side...',
+				rightSide: 'Type right-side...'
+			}
+		} )
+	.then( editor => {
+		console.log( editor );
+	} )
+	.catch( error => {
+		console.error( error );
+	} );
 ```
 
 ## Styling the placeholder

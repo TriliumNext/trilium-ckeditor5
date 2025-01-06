@@ -393,6 +393,69 @@ describe( 'CKBoxImageEditCommand', () => {
 				expect( command.value ).to.be.false;
 				sinon.assert.calledOnce( refreshSpy );
 			} );
+
+			it( 'should update ui after closing the CKBox Image Editor dialog', async () => {
+				const ckboxImageId = 'example-id';
+				const clock = sinon.useFakeTimers();
+
+				setModelData( model,
+					`[<imageBlock alt="alt text" ckboxImageId="${ ckboxImageId }" src="/assets/sample.png"></imageBlock>]`
+				);
+
+				const imageElement = editor.model.document.selection.getSelectedElement();
+
+				const options = await command._prepareOptions( {
+					element: imageElement,
+					ckboxImageId,
+					controller: new AbortController()
+				} );
+
+				const updateUISpy = testUtils.sinon.spy( editor.ui, 'update' );
+
+				expect( command.value ).to.be.false;
+
+				command.execute();
+				expect( command.value ).to.be.true;
+
+				options.onClose();
+
+				await clock.tickAsync( 10 );
+
+				expect( command.value ).to.be.false;
+				sinon.assert.calledOnce( updateUISpy );
+				clock.restore();
+			} );
+
+			it( 'should clear timer on editor destroy', async () => {
+				const ckboxImageId = 'example-id';
+
+				setModelData( model,
+					`[<imageBlock alt="alt text" ckboxImageId="${ ckboxImageId }" src="/assets/sample.png"></imageBlock>]`
+				);
+
+				const imageElement = editor.model.document.selection.getSelectedElement();
+
+				const options = await command._prepareOptions( {
+					element: imageElement,
+					ckboxImageId,
+					controller: new AbortController()
+				} );
+
+				const clearTimeoutSpy = sinon.spy( command._updateUiDelayed, 'cancel' );
+
+				editor.fire( 'ready' );
+
+				expect( command.value ).to.be.false;
+
+				command.execute();
+
+				options.onClose();
+
+				command.destroy();
+				sinon.assert.calledTwice( clearTimeoutSpy );
+
+				expect( command.value ).to.be.false;
+			} );
 		} );
 
 		describe( 'saving edited asset', () => {
@@ -796,6 +859,27 @@ describe( 'CKBoxImageEditCommand', () => {
 				command.execute();
 
 				expect( getModelData( model ) ).to.equal( modelData );
+			} );
+
+			it( 'should replace inline image with saved one after it is processed', () => {
+				setModelData( model, '<paragraph>[<imageInline ' +
+						'alt="alt text" ckboxImageId="example-id" height="50" src="/assets/sample.png" width="50">' +
+					'</imageInline>]</paragraph>' );
+
+				const imageElement = editor.model.document.selection.getSelectedElement();
+
+				command._replaceImage( imageElement, dataMock );
+
+				expect( getModelData( model ) ).to.equal(
+					'<paragraph>[<imageInline ' +
+						'alt="alt text" ' +
+						'ckboxImageId="image-id1" ' +
+						'height="100" ' +
+						'sources="[object Object]" ' +
+						'src="https://example.com/workspace1/assets/image-id1/images/100.png" ' +
+						'width="100">' +
+					'</imageInline>]</paragraph>'
+				);
 			} );
 
 			it( 'should replace image with saved one after it is processed', () => {
