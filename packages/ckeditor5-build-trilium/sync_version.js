@@ -12,4 +12,7 @@ function updateDependencies(sourceDeps, destDeps) {
 updateDependencies(sourcePackageJson.dependencies, destPackageJson.dependencies);
 updateDependencies(sourcePackageJson.devDependencies, destPackageJson.devDependencies);
 
+const coreVersion = sourcePackageJson.devDependencies["@ckeditor/ckeditor5-core"];
+destPackageJson.version = coreVersion;
+
 fs.writeFileSync("./package.json", JSON.stringify(destPackageJson, null, 2));
