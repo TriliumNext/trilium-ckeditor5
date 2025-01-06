@@ -13,8 +13,7 @@ import {
 
 import {
 	EditorUI,
-	type EditorUIReadyEvent,
-	_initMenuBar
+	type EditorUIReadyEvent
 } from 'ckeditor5/src/ui.js';
 
 import { enablePlaceholder } from 'ckeditor5/src/engine.js';

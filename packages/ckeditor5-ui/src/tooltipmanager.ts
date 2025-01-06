@@ -119,11 +119,6 @@ export default class TooltipManager extends /* #__PURE__ */ DomEmitterMixin() {
 	private _mutationObserver: MutationObserverWrapper | null = null;
 
 	/**
-	 * An instance of the mutation observer that keeps track on target element attributes changes.
-	 */
-	private _mutationObserver: MutationObserverWrapper | null = null;
-
-	/**
 	 * A debounced version of {@link #_pinTooltip}. Tooltips show with a delay to avoid flashing and
 	 * to improve the UX.
 	 */

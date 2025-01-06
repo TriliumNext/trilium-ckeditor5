@@ -13,7 +13,6 @@ import {
 
 import {
 	EditorUI,
-	_initMenuBar,
 	type EditorUIReadyEvent,
 	type InlineEditableUIView
 } from 'ckeditor5/src/ui.js';

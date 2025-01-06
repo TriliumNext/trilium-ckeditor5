@@ -125,14 +125,6 @@ const env: EnvType = {
 		return isMotionReduced();
 	},
 
-	get isMediaForcedColors() {
-		return isMediaForcedColors();
-	},
-
-	get isMotionReduced() {
-		return isMotionReduced();
-	},
-
 	features: {
 		isRegExpUnicodePropertySupported: /* #__PURE__ */ isRegExpUnicodePropertySupported()
 	}

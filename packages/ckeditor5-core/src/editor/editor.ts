@@ -61,11 +61,6 @@ export default abstract class Editor extends /* #__PURE__ */ ObservableMixin() {
 	public readonly accessibility: Accessibility;
 
 	/**
-	 * A namespace for the accessibility features of the editor.
-	 */
-	public readonly accessibility: Accessibility;
-
-	/**
 	 * Commands registered to the editor.
 	 *
 	 * Use the shorthand {@link #execute `editor.execute()`} method to execute commands:

@@ -195,7 +195,6 @@ describe( 'ListPropertiesUI', () => {
 						expect( componentFactory.has( 'numberedList' ) ).to.be.false;
 					} );
 				} );
-			} );
 
 				it( 'should not register a dropdown as "numberedList" and "bulletedList" in the component ' +
 					'factory when `numbered` and `bulleted` list are disabled (other features are not enabled as well)', () => {

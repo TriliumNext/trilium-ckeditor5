@@ -121,10 +121,6 @@ msgctxt "The error message displayed when the numbered list start index input va
 msgid "Invalid start index value."
 msgstr "ئىناۋەتسىز باشلىنىش ئىندېكىس قىممىتى"
 
-msgctxt "The error message displayed when the numbered list start index input value is not a valid number."
-msgid "Invalid start index value."
-msgstr ""
-
 msgctxt "The error message displayed when the numbered list start index input value is invalid."
 msgid "Start index must be greater than 0."
 msgstr "باشلىنىدىغان ئىندېكىس قىممىتى چوقۇم 0 دىن چوڭ بولۇشى كېرەك."

@@ -9,6 +9,7 @@ import { BlockToolbar } from '@ckeditor/ckeditor5-ui';
 import '../theme/theme.css';
 import { COMMON_PLUGINS, COMMON_SETTINGS } from './config';
 
+//@ts-ignore
 export default class BalloonEditor extends BalloonEditorBase {
 	public static override builtinPlugins = [
 		...COMMON_PLUGINS,

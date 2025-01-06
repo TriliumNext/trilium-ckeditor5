@@ -8,6 +8,7 @@ import { DecoupledEditor as DecoupledEditorBase } from '@ckeditor/ckeditor5-edit
 import '../theme/theme.css';
 import { COMMON_PLUGINS, COMMON_SETTINGS } from './config';
 
+//@ts-ignore
 export default class DecoupledEditor extends DecoupledEditorBase {
 	public static override builtinPlugins = [
 		...COMMON_PLUGINS,

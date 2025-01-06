@@ -73,7 +73,7 @@ export interface HeadingConfig {
 /**
  * Heading option descriptor.
  */
-export type HeadingOption = HeadingElementOption | HeadingParagraphOption | HeadingCustomElementOption;
+export type HeadingOption = HeadingElementOption | HeadingParagraphOption;
 
 export interface HeadingElementOption {
 

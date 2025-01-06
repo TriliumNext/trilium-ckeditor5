@@ -155,11 +155,6 @@ export default class ButtonView extends View<HTMLButtonElement> implements Butto
 	/**
 	 * @inheritDoc
 	 */
-	declare public ariaChecked: boolean | undefined;
-
-	/**
-	 * @inheritDoc
-	 */
 	declare public ariaLabel?: string | undefined;
 
 	/**

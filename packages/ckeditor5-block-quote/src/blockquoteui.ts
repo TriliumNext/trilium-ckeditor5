@@ -52,35 +52,6 @@ export default class BlockQuoteUI extends Plugin {
 
 			return buttonView;
 		} );
-
-		editor.ui.componentFactory.add( 'menuBar:blockQuote', () => this._createButton( MenuBarMenuListItemButtonView ) );
-	}
-
-	/**
-	 * Creates a button for block quote command to use either in toolbar or in menu bar.
-	 */
-	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
-		const editor = this.editor;
-		const locale = editor.locale;
-		const command = editor.commands.get( 'blockQuote' )!;
-		const view = new ButtonClass( editor.locale ) as InstanceType<T>;
-		const t = locale.t;
-
-		view.set( {
-			label: t( 'Block quote' ),
-			icon: icons.quote,
-			isToggleable: true
-		} );
-
-		view.bind( 'isEnabled' ).to( command, 'isEnabled' );
-
-		// Execute the command.
-		this.listenTo( view, 'execute', () => {
-			editor.execute( 'blockQuote' );
-			editor.editing.view.focus();
-		} );
-
-		return view;
 	}
 
 	/**
