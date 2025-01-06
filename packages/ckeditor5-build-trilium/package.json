@@ -52,7 +52,7 @@
     "@ckeditor/ckeditor5-typing": "43.2.0",
     "@ckeditor/ckeditor5-utils": "43.2.0",
     "@triliumnext/ckeditor5-math": "43.2.0-hotfix1",
-    "@triliumnext/ckeditor5-footnotes": "0.0.4-hotfix10"
+    "@triliumnext/ckeditor5-footnotes": "0.0.4-hotfix11"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "43.2.0",
