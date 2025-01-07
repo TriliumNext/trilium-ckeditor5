@@ -59,6 +59,7 @@ export default class DecoupledEditor extends DecoupledEditorBase {
 						'|',
 						'specialCharacters',
 						'math',
+						'mermaid',
 						'horizontalLine',
 						'pageBreak'
 					]

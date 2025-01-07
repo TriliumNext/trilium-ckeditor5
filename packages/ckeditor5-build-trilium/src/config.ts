@@ -54,6 +54,7 @@ import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckedit
 import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
+import { Mermaid } from "../../ckeditor5-mermaid/src/index";
 
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
@@ -143,7 +144,8 @@ export const COMMON_PLUGINS = [
 	// External plugins
 	Math,
 	AutoformatMath,
-	Footnotes
+	Footnotes,
+	Mermaid
 ];
 
 export const COMMON_SETTINGS = {

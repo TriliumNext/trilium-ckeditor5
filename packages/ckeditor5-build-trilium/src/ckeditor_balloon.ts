@@ -53,6 +53,7 @@ export default class BalloonEditor extends BalloonEditorBase {
 					'includeNote',
 					'|',
 					'math',
+					'mermaid',
 					'horizontalLine',
 					'pageBreak'
 				]
