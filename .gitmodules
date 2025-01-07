@@ -1,0 +1,4 @@
+[submodule "packages/ckeditor5-mermaid"]
+	path = packages/ckeditor5-mermaid
+	url = https://github.com/TriliumNext/ckeditor5-mermaid
+	branch = master
