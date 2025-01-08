@@ -54,7 +54,6 @@ import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckedit
 import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
-import { Mermaid } from "../../ckeditor5-mermaid/src/index";
 
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
@@ -72,8 +71,10 @@ import {SpecialCharactersEmoji} from "./special_characters_emoji";
 import Math from '@triliumnext/ckeditor5-math/src/math';
 import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
 
-import '@triliumnext/ckeditor5-footnotes/src/footnote.css';
-import { Footnotes } from '@triliumnext/ckeditor5-footnotes';
+import { Mermaid } from "../../ckeditor5-mermaid/src/index";
+
+import '../../ckeditor5-footnotes/src/footnote.css';
+import { Footnotes } from '../../ckeditor5-footnotes';
 
 export const COMMON_PLUGINS = [
 	// essentials package expanded to allow selectively disable Enter and ShiftEnter

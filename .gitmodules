@@ -2,3 +2,6 @@
 	path = packages/ckeditor5-mermaid
 	url = https://github.com/TriliumNext/ckeditor5-mermaid
 	branch = master
+[submodule "packages/ckeditor5-footnotes"]
+	path = packages/ckeditor5-footnotes
+	url = https://github.com/TriliumNext/ckeditor5-footnotes.git
