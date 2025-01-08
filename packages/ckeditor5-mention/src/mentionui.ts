@@ -718,7 +718,6 @@ export function createRegExp( marker: string, minimumCharacters: number ): RegEx
 	// When "u" flag is used, the regexp has "strict" escaping rules, i.e. if you try to escape a character that does not need
 	// to be escaped, RegExp() will throw. It made it difficult to write a generic util, because different characters are
 	// allowed in different context. For example, escaping "-" sometimes was correct, but sometimes it threw an error.
-	marker = marker.replace( /[.*+?^${}()\-|[\]\\]/g, '\\$&' );
 
 	// The pattern consists of 3 groups:
 	//
@@ -727,8 +726,8 @@ export function createRegExp( marker: string, minimumCharacters: number ): RegEx
 	// - 2: Mention input (taking the minimal length into consideration to trigger the UI),
 	//
 	// The pattern matches up to the caret (end of string switch - $).
-	//               (0:      opening sequence       )(1:   marker  )(2:                typed mention              )$
-	const pattern = `(?:^|[ ${ openAfterCharacters }])([${ marker }])(${ mentionCharacters }${ numberOfCharacters })$`;
+	//               (0:      opening sequence        )(1:  marker   )(2:                typed mention                )$
+	const pattern = `(?:^|[= ${ openAfterCharacters }])([${ marker }])([${ mentionCharacters }]${ numberOfCharacters })$`;
 
 	return new RegExp( pattern, 'u' );
 }
