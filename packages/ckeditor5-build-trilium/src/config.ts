@@ -100,7 +100,7 @@ export const COMMON_PLUGINS = [
 	Link,
 	AutoLink,
 	List,
-	// ListProperties, deactivated because it crashes the editor. Can be reproduced with ListProperties-repro-crash.html
+	ListProperties,
 	TodoList,
 	Paragraph,
 	PasteFromOffice,
