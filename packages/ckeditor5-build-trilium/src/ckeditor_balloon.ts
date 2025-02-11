@@ -15,8 +15,4 @@ export default class BalloonEditor extends BalloonEditorBase {
 		...COMMON_PLUGINS,
 		BlockToolbar
 	];
-
-	public static override defaultConfig = {
-		...COMMON_SETTINGS
-	};
 }

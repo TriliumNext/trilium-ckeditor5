@@ -13,8 +13,4 @@ export default class DecoupledEditor extends DecoupledEditorBase {
 	public static override builtinPlugins = [
 		...COMMON_PLUGINS,
 	];
-
-	public static override defaultConfig = {
-		...COMMON_SETTINGS
-	};
 }
