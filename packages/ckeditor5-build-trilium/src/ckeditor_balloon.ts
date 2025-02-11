@@ -17,54 +17,6 @@ export default class BalloonEditor extends BalloonEditorBase {
 	];
 
 	public static override defaultConfig = {
-		...COMMON_SETTINGS,
-
-		toolbar: {
-			items: [
-				'fontSize',
-				'bold',
-				'italic',
-				'underline',
-				'strikethrough',
-				'superscript',
-				'subscript',
-				'fontColor',
-				'fontBackgroundColor',
-				'code',
-				'link',
-				'removeFormat',
-				'internallink',
-				'cuttonote'
-			]
-		},
-
-		blockToolbar: [
-			'heading',
-			'|',
-			'bulletedList', 'numberedList', 'todoList',
-			'|',
-			'blockQuote', 'codeBlock', 'insertTable',
-			'footnote',
-			{
-				label: "Insert",
-				icon: "plus",
-				items: [
-					'internallink',
-					'includeNote',
-					'|',
-					'math',
-					'mermaid',
-					'horizontalLine',
-					'pageBreak'
-				]
-			},
-			'|',
-			'outdent', 'indent',
-			'|',
-			'imageUpload',
-			'markdownImport',
-			'specialCharacters',
-			'findAndReplace'
-		]
+		...COMMON_SETTINGS
 	};
 }
