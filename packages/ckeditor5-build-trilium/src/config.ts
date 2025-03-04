@@ -49,11 +49,11 @@ import { ShiftEnter } from '@ckeditor/ckeditor5-enter';
 import { Typing } from '@ckeditor/ckeditor5-typing';
 import { Undo } from '@ckeditor/ckeditor5-undo';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
-import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
 import { SpecialCharacters, SpecialCharactersEssentials } from '@ckeditor/ckeditor5-special-characters';
 import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
+import { TextPartLanguage } from "@ckeditor/ckeditor5-language";
 
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
@@ -141,6 +141,7 @@ export const COMMON_PLUGINS = [
 	removeFormatLinksPlugin,
 	PageBreak,
 	GeneralHtmlSupport,
+	TextPartLanguage,
 
 	// External plugins
 	Math,
