@@ -75,6 +75,7 @@ import { Mermaid } from "../../ckeditor5-mermaid/src/index";
 
 import '../../ckeditor5-footnotes/src/footnote.css';
 import { Footnotes } from '../../ckeditor5-footnotes';
+import Kbd from "../../ckeditor5-keyboard-marker/src/Kbd";
 
 export const COMMON_PLUGINS = [
 	// essentials package expanded to allow selectively disable Enter and ShiftEnter
@@ -147,7 +148,8 @@ export const COMMON_PLUGINS = [
 	Math,
 	AutoformatMath,
 	Footnotes,
-	Mermaid
+	Mermaid,
+	Kbd
 ];
 
 export const COMMON_SETTINGS = { };
