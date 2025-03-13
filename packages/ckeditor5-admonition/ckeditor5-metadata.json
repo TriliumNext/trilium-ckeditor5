@@ -1,15 +1,15 @@
 {
 	"plugins": [
 		{
-			"name": "Block quote",
-			"className": "BlockQuote",
-			"description": "Implements the block quote support to easily include quotations and passages in the rich-text content.",
+			"name": "Admonitions",
+			"className": "Admonition",
+			"description": "Implements admonitions (warning, info boxes) in a similar fashion to blockquotes",
 			"docs": "features/block-quote.html",
-			"path": "src/blockquote.js",
+			"path": "src/admonition.js",
 			"uiComponents": [
 				{
 					"type": "Button",
-					"name": "blockQuote",
+					"name": "admonition",
 					"iconPath": "@ckeditor/ckeditor5-core/theme/icons/quote.svg"
 				}
 			],

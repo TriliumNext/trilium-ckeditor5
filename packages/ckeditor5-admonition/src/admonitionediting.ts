@@ -25,7 +25,7 @@ export default class AdmonitionEditing extends Plugin {
 	 * @inheritDoc
 	 */
 	public static get pluginName() {
-		return 'BlockQuoteEditing' as const;
+		return 'AdmonitionEditing' as const;
 	}
 
 	/**

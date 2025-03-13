@@ -24,7 +24,7 @@ export default class AdmonitionUI extends Plugin {
 	 * @inheritDoc
 	 */
 	public static get pluginName() {
-		return 'BlockQuoteUI' as const;
+		return 'AdmonitionUI' as const;
 	}
 
 	/**

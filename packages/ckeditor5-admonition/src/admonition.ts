@@ -34,6 +34,6 @@ export default class Admonition extends Plugin {
 	 * @inheritDoc
 	 */
 	public static get pluginName() {
-		return 'BlockQuote' as const;
+		return 'Admonition' as const;
 	}
 }
