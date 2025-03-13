@@ -9,8 +9,8 @@
 
 import { Plugin } from 'ckeditor5/src/core.js';
 
-import BlockQuoteEditing from './blockquoteediting.js';
-import BlockQuoteUI from './blockquoteui.js';
+import AdmonitionEditing from './blockquoteediting.js';
+import AdmonitionUI from './blockquoteui.js';
 
 /**
  * The block quote plugin.
@@ -22,12 +22,12 @@ import BlockQuoteUI from './blockquoteui.js';
  *
  * @extends module:core/plugin~Plugin
  */
-export default class BlockQuote extends Plugin {
+export default class Admonition extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
 	public static get requires() {
-		return [ BlockQuoteEditing, BlockQuoteUI ] as const;
+		return [ AdmonitionEditing, AdmonitionUI ] as const;
 	}
 
 	/**

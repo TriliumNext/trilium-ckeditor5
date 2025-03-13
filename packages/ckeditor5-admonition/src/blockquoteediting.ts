@@ -11,7 +11,7 @@ import { Plugin } from 'ckeditor5/src/core.js';
 import { Enter, type ViewDocumentEnterEvent } from 'ckeditor5/src/enter.js';
 import { Delete, type ViewDocumentDeleteEvent } from 'ckeditor5/src/typing.js';
 
-import BlockQuoteCommand from './blockquotecommand.js';
+import AdmonitionCommand from './blockquotecommand.js';
 
 /**
  * The block quote editing.
@@ -20,7 +20,7 @@ import BlockQuoteCommand from './blockquotecommand.js';
  *
  * @extends module:core/plugin~Plugin
  */
-export default class BlockQuoteEditing extends Plugin {
+export default class AdmonitionEditing extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -42,7 +42,7 @@ export default class BlockQuoteEditing extends Plugin {
 		const editor = this.editor;
 		const schema = editor.model.schema;
 
-		editor.commands.add( 'blockQuote', new BlockQuoteCommand( editor ) );
+		editor.commands.add( 'blockQuote', new AdmonitionCommand( editor ) );
 
 		schema.register( 'blockQuote', {
 			inheritAllFrom: '$container'
@@ -105,7 +105,7 @@ export default class BlockQuoteEditing extends Plugin {
 
 		const viewDocument = this.editor.editing.view.document;
 		const selection = editor.model.document.selection;
-		const blockQuoteCommand: BlockQuoteCommand = editor.commands.get( 'blockQuote' )!;
+		const blockQuoteCommand: AdmonitionCommand = editor.commands.get( 'blockQuote' )!;
 
 		// Overwrite default Enter key behavior.
 		// If Enter key is pressed with selection collapsed in empty block inside a quote, break the quote.
