@@ -16,7 +16,7 @@ import AdmonitionCommand from './admonitioncommand.js';
 /**
  * The block quote editing.
  *
- * Introduces the `'blockQuote'` command and the `'blockQuote'` model element.
+ * Introduces the `'admonition'` command and the `'aside'` model element.
  *
  * @extends module:core/plugin~Plugin
  */
@@ -44,11 +44,11 @@ export default class AdmonitionEditing extends Plugin {
 
 		editor.commands.add( 'admonition', new AdmonitionCommand( editor ) );
 
-		schema.register( 'admonition', {
+		schema.register( 'aside', {
 			inheritAllFrom: '$container'
 		} );
 
-		editor.conversion.elementToElement( { model: 'blockQuote', view: 'admonition' } );
+		editor.conversion.elementToElement( { model: 'aside', view: 'aside' } );
 
 		// Postfixer which cleans incorrect model states connected with block quotes.
 		editor.model.document.registerPostFixer( writer => {
@@ -63,13 +63,13 @@ export default class AdmonitionEditing extends Plugin {
 						continue;
 					}
 
-					if ( element.is( 'element', 'blockQuote' ) && element.isEmpty ) {
-						// Added an empty blockQuote - remove it.
+					if ( element.is( 'element', 'aside' ) && element.isEmpty ) {
+						// Added an empty aside - remove it.
 						writer.remove( element );
 
 						return true;
-					} else if ( element.is( 'element', 'blockQuote' ) && !schema.checkChild( entry.position, element ) ) {
-						// Added a blockQuote in incorrect place. Unwrap it so the content inside is not lost.
+					} else if ( element.is( 'element', 'aside' ) && !schema.checkChild( entry.position, element ) ) {
+						// Added a aside in incorrect place. Unwrap it so the content inside is not lost.
 						writer.unwrap( element );
 
 						return true;
@@ -79,7 +79,7 @@ export default class AdmonitionEditing extends Plugin {
 
 						for ( const child of range.getItems() ) {
 							if (
-								child.is( 'element', 'blockQuote' ) &&
+								child.is( 'element', 'aside' ) &&
 								!schema.checkChild( writer.createPositionBefore( child ), child )
 							) {
 								writer.unwrap( child );
@@ -91,8 +91,8 @@ export default class AdmonitionEditing extends Plugin {
 				} else if ( entry.type == 'remove' ) {
 					const parent = entry.position.parent;
 
-					if ( parent.is( 'element', 'blockQuote' ) && parent.isEmpty ) {
-						// Something got removed and now blockQuote is empty. Remove the blockQuote as well.
+					if ( parent.is( 'element', 'aside' ) && parent.isEmpty ) {
+						// Something got removed and now aside is empty. Remove the aside as well.
 						writer.remove( parent );
 
 						return true;

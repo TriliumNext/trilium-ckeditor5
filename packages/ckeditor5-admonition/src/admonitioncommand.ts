@@ -151,7 +151,7 @@ export default class AdmonitionCommand extends Command {
 			let quote = findQuote( groupRange.start );
 
 			if ( !quote ) {
-				quote = writer.createElement( 'blockQuote' );
+				quote = writer.createElement( 'aside' );
 
 				writer.wrap( groupRange, quote );
 			}
@@ -176,7 +176,7 @@ export default class AdmonitionCommand extends Command {
 }
 
 function findQuote( elementOrPosition: Element | Position ): Element | DocumentFragment | null {
-	return elementOrPosition.parent!.name == 'blockQuote' ? elementOrPosition.parent : null;
+	return elementOrPosition.parent!.name == 'aside' ? elementOrPosition.parent : null;
 }
 
 /**
@@ -215,8 +215,8 @@ function getRangesOfBlockGroups( writer: Writer, blocks: Array<Element> ): Array
  */
 function checkCanBeQuoted( schema: Schema, block: Element ): boolean {
 	// TMP will be replaced with schema.checkWrap().
-	const isBQAllowed = schema.checkChild( block.parent as Element, 'blockQuote' );
-	const isBlockAllowedInBQ = schema.checkChild( [ '$root', 'blockQuote' ], block );
+	const isBQAllowed = schema.checkChild( block.parent as Element, 'aside' );
+	const isBlockAllowedInBQ = schema.checkChild( [ '$root', 'aside' ], block );
 
 	return isBQAllowed && isBlockAllowedInBQ;
 }
