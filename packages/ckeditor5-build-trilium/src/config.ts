@@ -64,6 +64,7 @@ import CuttonotePlugin from './cuttonote';
 import IncludeNote from './includenote';
 import ReferenceLink from './referencelink';
 import indentBlockShortcutPlugin from './indent_block_shortcut';
+import moveBlockUpDownShortcutPlugin from './move_block_updown_shortcuts';
 import removeFormatLinksPlugin from './remove_format_links';
 
 import {SpecialCharactersEmoji} from "./special_characters_emoji";
@@ -140,6 +141,7 @@ export const COMMON_PLUGINS = [
 	IncludeNote,
 	ReferenceLink,
 	indentBlockShortcutPlugin,
+	moveBlockUpDownShortcutPlugin,
 	removeFormatLinksPlugin,
 	PageBreak,
 	GeneralHtmlSupport,
