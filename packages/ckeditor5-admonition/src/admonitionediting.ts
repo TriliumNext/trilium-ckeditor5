@@ -73,13 +73,7 @@ export default class AdmonitionEditing extends Plugin {
 		editor.conversion.for("downcast")
 			.elementToElement( {
 				model: 'aside',
-				view: (modelElement, { writer }) => {
-					return writer.createContainerElement(
-						"aside", {
-							class: [ "admonition", modelElement.getAttribute("type") ].join(" ")
-						}
-					)
-				}
+				view: "aside"
 			})
 			.attributeToAttribute({
 				model: "type",
