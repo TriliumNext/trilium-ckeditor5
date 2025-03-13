@@ -7,11 +7,34 @@
  * @module admonition/admonitionui
  */
 
-import { Plugin, icons } from 'ckeditor5/src/core.js';
-import { ButtonView, MenuBarMenuListItemButtonView } from 'ckeditor5/src/ui.js';
+import { Plugin, } from 'ckeditor5/src/core.js';
+import { addListToDropdown, createDropdown, ListDropdownButtonDefinition, ViewModel } from 'ckeditor5/src/ui.js';
 
 import '../theme/blockquote.css';
 import admonitionIcon from '../theme/icons/admonition.svg';
+import { Collection } from '@ckeditor/ckeditor5-utils';
+
+interface AdmonitionDefinition {
+	title: string;
+}
+
+const ADMONITION_TYPES: Record<string, AdmonitionDefinition> = {
+	"note": {
+		title: "Note"
+	},
+	"tip": {
+		title: "Tip"
+	},
+	"important": {
+		title: "Important"
+	},
+	"caution": {
+		title: "Caution"
+	},
+	"warning": {
+		title: "Warning"
+	}
+};
 
 /**
  * The block quote UI plugin.
@@ -35,21 +58,7 @@ export default class AdmonitionUI extends Plugin {
 		const editor = this.editor;
 
 		editor.ui.componentFactory.add( 'admonition', () => {
-			const buttonView = this._createButton( ButtonView );
-
-			buttonView.set( {
-				tooltip: true
-			} );
-
-			return buttonView;
-		} );
-
-		editor.ui.componentFactory.add( 'menuBar:admonition', () => {
-			const buttonView = this._createButton( MenuBarMenuListItemButtonView );
-
-			buttonView.set( {
-				role: 'menuitemcheckbox'
-			} );
+			const buttonView = this._createButton();
 
 			return buttonView;
 		} );
@@ -58,21 +67,24 @@ export default class AdmonitionUI extends Plugin {
 	/**
 	 * Creates a button for admonition command to use either in toolbar or in menu bar.
 	 */
-	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
+	private _createButton() {
 		const editor = this.editor;
 		const locale = editor.locale;
 		const command = editor.commands.get( 'admonition' )!;
-		const view = new ButtonClass( editor.locale ) as InstanceType<T>;
+		const view = createDropdown(locale);
 		const t = locale.t;
 
-		view.set( {
+		addListToDropdown(view, this._getDropdownItems())
+
+		view.buttonView.set( {
 			label: t( 'Admonition' ),
 			icon: admonitionIcon,
-			isToggleable: true
+			isToggleable: true,
+			tooltip: true
 		} );
 
 		view.bind( 'isEnabled' ).to( command, 'isEnabled' );
-		view.bind( 'isOn' ).to( command, 'value' );
+		// view.buttonView.bind( 'isOn' ).to( command, 'value' );
 
 		// Execute the command.
 		this.listenTo( view, 'execute', () => {
@@ -81,5 +93,24 @@ export default class AdmonitionUI extends Plugin {
 		} );
 
 		return view;
+	}
+
+	private _getDropdownItems() {
+		const itemDefinitions = new Collection<ListDropdownButtonDefinition>();
+
+		for (const [ type, admonition ] of Object.entries(ADMONITION_TYPES)) {
+			const definition: ListDropdownButtonDefinition = {
+				type: "button",
+				model: new ViewModel({
+					commandParam: type,
+					label: admonition.title,
+					withText: true
+				})
+			}
+
+			itemDefinitions.add(definition);
+		}
+
+		return itemDefinitions;
 	}
 }
