@@ -12,6 +12,7 @@ import { Enter, type ViewDocumentEnterEvent } from 'ckeditor5/src/enter.js';
 import { Delete, type ViewDocumentDeleteEvent } from 'ckeditor5/src/typing.js';
 
 import AdmonitionCommand from './admonitioncommand.js';
+import { ADMONITION_TYPES } from './admonitionui.js';
 
 /**
  * The block quote editing.
@@ -45,14 +46,38 @@ export default class AdmonitionEditing extends Plugin {
 		editor.commands.add( 'admonition', new AdmonitionCommand( editor ) );
 
 		schema.register( 'aside', {
-			inheritAllFrom: '$container'
+			inheritAllFrom: '$container',
+			allowAttributes: "type"
 		} );
 
-		editor.conversion.elementToElement( {
-			model: 'aside',
+		editor.conversion.for("upcast").elementToElement({
 			view: {
 				name: "aside",
-				classes: "admonition"
+				classes: "admonition",
+			},
+			model: (viewElement, { writer }) => {
+				let type = "note";
+				const allowedTypes = Object.keys(ADMONITION_TYPES);
+				for (const className of viewElement.getClassNames()) {
+					if (className !== "admonition" && allowedTypes.includes(className)) {
+						type = className;
+					}
+				}
+
+				return writer.createElement("aside", {
+					type
+				});
+			}
+		});
+
+		editor.conversion.for("downcast").elementToElement( {
+			model: 'aside',
+			view: (modelElement, { writer }) => {
+				return writer.createContainerElement(
+					"aside", {
+						class: [ "admonition", modelElement.getAttribute("type") ].join(" ")
+					}
+				)
 			}
 		});
 

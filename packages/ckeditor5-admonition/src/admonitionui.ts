@@ -18,7 +18,7 @@ interface AdmonitionDefinition {
 	title: string;
 }
 
-const ADMONITION_TYPES: Record<string, AdmonitionDefinition> = {
+export const ADMONITION_TYPES: Record<string, AdmonitionDefinition> = {
 	"note": {
 		title: "Note"
 	},
@@ -71,28 +71,28 @@ export default class AdmonitionUI extends Plugin {
 		const editor = this.editor;
 		const locale = editor.locale;
 		const command = editor.commands.get( 'admonition' )!;
-		const view = createDropdown(locale);
+		const dropdownView = createDropdown(locale);
 		const t = locale.t;
 
-		addListToDropdown(view, this._getDropdownItems())
+		addListToDropdown(dropdownView, this._getDropdownItems())
 
-		view.buttonView.set( {
+		dropdownView.buttonView.set( {
 			label: t( 'Admonition' ),
 			icon: admonitionIcon,
 			isToggleable: true,
 			tooltip: true
 		} );
 
-		view.bind( 'isEnabled' ).to( command, 'isEnabled' );
+		dropdownView.bind( 'isEnabled' ).to( command, 'isEnabled' );
 		// view.buttonView.bind( 'isOn' ).to( command, 'value' );
 
 		// Execute the command.
-		this.listenTo( view, 'execute', () => {
-			editor.execute( 'admonition' );
+		this.listenTo(dropdownView, 'execute', evt => {
+			editor.execute("admonition", { forceValue: ( evt.source as any ).commandParam } );
 			editor.editing.view.focus();
-		} );
+		});
 
-		return view;
+		return dropdownView;
 	}
 
 	private _getDropdownItems() {

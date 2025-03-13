@@ -16,6 +16,10 @@ import type { DocumentFragment, Element, Position, Range, Schema, Writer } from 
  *
  * @extends module:core/command~Command
  */
+
+// TODO: Change me.
+type AdmonitionType = string;
+
 export default class AdmonitionCommand extends Command {
 	/**
 	 * Whether the selection starts in a block quote.
@@ -23,7 +27,7 @@ export default class AdmonitionCommand extends Command {
 	 * @observable
 	 * @readonly
 	 */
-	declare public value: boolean;
+	declare public value: AdmonitionType | false;
 
 	/**
 	 * @inheritDoc
@@ -43,7 +47,7 @@ export default class AdmonitionCommand extends Command {
 	 * @param options.forceValue If set, it will force the command behavior. If `true`, the command will apply a block quote,
 	 * otherwise the command will remove the block quote. If not set, the command will act basing on its current value.
 	 */
-	public override execute( options: { forceValue?: boolean } = {} ): void {
+	public override execute( options: { forceValue?: AdmonitionType } = {} ): void {
 		const model = this.editor.model;
 		const schema = model.schema;
 		const selection = model.document.selection;
@@ -51,6 +55,8 @@ export default class AdmonitionCommand extends Command {
 		const blocks = Array.from( selection.getSelectedBlocks() );
 
 		const value = ( options.forceValue === undefined ) ? !this.value : options.forceValue;
+		// TODO: Fix me.
+		const valueString = (typeof value === "string" ? value : "note");
 
 		model.change( writer => {
 			if ( !value ) {
@@ -62,7 +68,7 @@ export default class AdmonitionCommand extends Command {
 					return findQuote( block ) || checkCanBeQuoted( schema, block );
 				} );
 
-				this._applyQuote( writer, blocksToQuote );
+				this._applyQuote( writer, blocksToQuote, valueString);
 			}
 		} );
 	}
@@ -70,13 +76,15 @@ export default class AdmonitionCommand extends Command {
 	/**
 	 * Checks the command's {@link #value}.
 	 */
-	private _getValue(): boolean {
+	private _getValue(): AdmonitionType | false {
 		const selection = this.editor.model.document.selection;
 
 		const firstBlock = first( selection.getSelectedBlocks() );
 
 		// In the current implementation, the block quote must be an immediate parent of a block element.
-		return !!( firstBlock && findQuote( firstBlock ) );
+		// TODO: Read correct quote.
+		const result = !!( firstBlock && findQuote( firstBlock ) );
+		return result ? "note" : false;
 	}
 
 	/**
@@ -143,7 +151,7 @@ export default class AdmonitionCommand extends Command {
 	/**
 	 * Applies the quote to given blocks.
 	 */
-	private _applyQuote( writer: Writer, blocks: Array<Element> ): void {
+	private _applyQuote( writer: Writer, blocks: Array<Element>, type?: AdmonitionType | false): void {
 		const quotesToMerge: Array<Element | DocumentFragment> = [];
 
 		// Quote all groups of block. Iterate in the reverse order to not break following ranges.
@@ -151,7 +159,7 @@ export default class AdmonitionCommand extends Command {
 			let quote = findQuote( groupRange.start );
 
 			if ( !quote ) {
-				quote = writer.createElement( 'aside' );
+				quote = writer.createElement( 'aside', { type });
 
 				writer.wrap( groupRange, quote );
 			}
