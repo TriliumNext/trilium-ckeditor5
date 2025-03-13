@@ -8,7 +8,7 @@
  */
 
 import { Plugin, } from 'ckeditor5/src/core.js';
-import { addListToDropdown, createDropdown, ListDropdownButtonDefinition, ViewModel } from 'ckeditor5/src/ui.js';
+import { addListToDropdown, createDropdown, ListDropdownButtonDefinition, SplitButtonView, ViewModel } from 'ckeditor5/src/ui.js';
 
 import '../theme/blockquote.css';
 import admonitionIcon from '../theme/icons/admonition.svg';
@@ -72,23 +72,28 @@ export default class AdmonitionUI extends Plugin {
 		const editor = this.editor;
 		const locale = editor.locale;
 		const command = editor.commands.get( 'admonition' )!;
-		const dropdownView = createDropdown(locale);
+		const dropdownView = createDropdown(locale, SplitButtonView);
+		const splitButtonView = dropdownView.buttonView;
 		const t = locale.t;
 
 		addListToDropdown(dropdownView, this._getDropdownItems())
 
-		dropdownView.buttonView.set( {
+		// Button configuration.
+		splitButtonView.set( {
 			label: t( 'Admonition' ),
 			icon: admonitionIcon,
 			isToggleable: true,
 			tooltip: true
 		} );
+		splitButtonView.on("execute", () => {
+			editor.execute("admonition", { usePreviousChoice: true });
+			editor.editing.view.focus();
+		});
+		splitButtonView.bind( 'isOn' ).to( command, 'value', value => (!!value) as boolean);
 
+		// Dropdown configuration
 		dropdownView.bind( 'isEnabled' ).to( command, 'isEnabled' );
-		// view.buttonView.bind( 'isOn' ).to( command, 'value' );
-
-		// Execute the command.
-		this.listenTo(dropdownView, 'execute', evt => {
+		dropdownView.on("execute", evt => {
 			editor.execute("admonition", { forceValue: ( evt.source as any ).commandParam } );
 			editor.editing.view.focus();
 		});

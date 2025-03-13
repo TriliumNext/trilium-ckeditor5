@@ -20,6 +20,18 @@ import type { DocumentFragment, Element, Position, Range, Schema, Writer } from 
 // TODO: Change me.
 type AdmonitionType = string;
 
+interface ExecuteOpts {
+	/**
+	 * If set, it will force the command behavior. If `true`, the command will apply a block quote,
+	 * otherwise the command will remove the block quote. If not set, the command will act basing on its current value.
+	 */
+	forceValue?: AdmonitionType;
+	/**
+	 * If set to true and `forceValue` is not specified, the command will apply the previous admonition type (if the command was already executed).
+	 */
+	usePreviousChoice?: boolean
+}
+
 export default class AdmonitionCommand extends Command {
 	/**
 	 * Whether the selection starts in a block quote.
@@ -28,6 +40,8 @@ export default class AdmonitionCommand extends Command {
 	 * @readonly
 	 */
 	declare public value: AdmonitionType | false;
+
+	private _lastType?: AdmonitionType;
 
 	/**
 	 * @inheritDoc
@@ -44,19 +58,15 @@ export default class AdmonitionCommand extends Command {
 	 *
 	 * @fires execute
 	 * @param options Command options.
-	 * @param options.forceValue If set, it will force the command behavior. If `true`, the command will apply a block quote,
-	 * otherwise the command will remove the block quote. If not set, the command will act basing on its current value.
 	 */
-	public override execute( options: { forceValue?: AdmonitionType } = {} ): void {
+	public override execute( options: ExecuteOpts = {} ): void {
 		const model = this.editor.model;
 		const schema = model.schema;
 		const selection = model.document.selection;
 
 		const blocks = Array.from( selection.getSelectedBlocks() );
 
-		const value = ( options.forceValue === undefined ) ? !this.value : options.forceValue;
-		// TODO: Fix me.
-		const valueString = (typeof value === "string" ? value : "note");
+		const value = this._getType(options);
 
 		model.change( writer => {
 			if ( !value ) {
@@ -68,9 +78,31 @@ export default class AdmonitionCommand extends Command {
 					return findQuote( block ) || checkCanBeQuoted( schema, block );
 				} );
 
-				this._applyQuote( writer, blocksToQuote, valueString);
+				this._applyQuote( writer, blocksToQuote, value);
 			}
 		} );
+	}
+
+	private _getType(options: ExecuteOpts): AdmonitionType | false {
+		const value = (options.forceValue === undefined) ? !this.value : options.forceValue;
+
+		// Allow removing the admonition.
+		if (!value) {
+			return false;
+		}
+
+		// Prefer the type from the command, if any.
+		if (typeof value === "string") {
+			return value;
+		}
+
+		// See if we can restore the previous language.
+		if (options.usePreviousChoice && this._lastType) {
+			return this._lastType;
+		}
+
+		// Otherwise return a default.
+		return "note";
 	}
 
 	/**
@@ -156,7 +188,8 @@ export default class AdmonitionCommand extends Command {
 	/**
 	 * Applies the quote to given blocks.
 	 */
-	private _applyQuote( writer: Writer, blocks: Array<Element>, type?: AdmonitionType | false): void {
+	private _applyQuote( writer: Writer, blocks: Array<Element>, type?: AdmonitionType): void {
+		this._lastType = type;
 		const quotesToMerge: Array<Element | DocumentFragment> = [];
 
 		// Quote all groups of block. Iterate in the reverse order to not break following ranges.
