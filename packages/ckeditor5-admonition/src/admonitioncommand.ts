@@ -78,13 +78,18 @@ export default class AdmonitionCommand extends Command {
 	 */
 	private _getValue(): AdmonitionType | false {
 		const selection = this.editor.model.document.selection;
-
 		const firstBlock = first( selection.getSelectedBlocks() );
+		if (!firstBlock) {
+			return false;
+		}
 
-		// In the current implementation, the block quote must be an immediate parent of a block element.
-		// TODO: Read correct quote.
-		const result = !!( firstBlock && findQuote( firstBlock ) );
-		return result ? "note" : false;
+		// In the current implementation, the admonition must be an immediate parent of a block element.
+		const firstQuote = findQuote( firstBlock );
+		if (firstQuote?.is("element")) {
+			return firstQuote.getAttribute("type") as string;
+		}
+
+		return false;
 	}
 
 	/**

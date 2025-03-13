@@ -13,6 +13,7 @@ import { addListToDropdown, createDropdown, ListDropdownButtonDefinition, ViewMo
 import '../theme/blockquote.css';
 import admonitionIcon from '../theme/icons/admonition.svg';
 import { Collection } from '@ckeditor/ckeditor5-utils';
+import AdmonitionCommand from './admonitioncommand';
 
 interface AdmonitionDefinition {
 	title: string;
@@ -97,6 +98,7 @@ export default class AdmonitionUI extends Plugin {
 
 	private _getDropdownItems() {
 		const itemDefinitions = new Collection<ListDropdownButtonDefinition>();
+		const command = this.editor.commands.get("admonition") as AdmonitionCommand
 
 		for (const [ type, admonition ] of Object.entries(ADMONITION_TYPES)) {
 			const definition: ListDropdownButtonDefinition = {
@@ -104,10 +106,12 @@ export default class AdmonitionUI extends Plugin {
 				model: new ViewModel({
 					commandParam: type,
 					label: admonition.title,
+					role: 'menuitemradio',
 					withText: true
 				})
 			}
 
+			definition.model.bind("isOn").to(command, "value", currentType => currentType === type);
 			itemDefinitions.add(definition);
 		}
 
