@@ -129,7 +129,7 @@ export default class AdmonitionEditing extends Plugin {
 				data.preventDefault();
 				evt.stop();
 			}
-		}, { context: 'blockquote' } );
+		}, { context: 'aside' } );
 
 		// Overwrite default Backspace key behavior.
 		// If Backspace key is pressed with selection collapsed in first empty block inside a quote, break the quote.
@@ -147,6 +147,6 @@ export default class AdmonitionEditing extends Plugin {
 				data.preventDefault();
 				evt.stop();
 			}
-		}, { context: 'blockquote' } );
+		}, { context: 'aside' } );
 	}
 }
