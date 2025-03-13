@@ -11,6 +11,7 @@ import { Plugin, icons } from 'ckeditor5/src/core.js';
 import { ButtonView, MenuBarMenuListItemButtonView } from 'ckeditor5/src/ui.js';
 
 import '../theme/blockquote.css';
+import admonitionIcon from '../theme/icons/admonition.svg';
 
 /**
  * The block quote UI plugin.
@@ -66,7 +67,7 @@ export default class AdmonitionUI extends Plugin {
 
 		view.set( {
 			label: t( 'Admonition' ),
-			icon: icons.quote,
+			icon: admonitionIcon,
 			isToggleable: true
 		} );
 
