@@ -54,6 +54,7 @@ import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
 import Uploadfileplugin from "../../ckeditor5-file-upload/uploadfileplugin";
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
 import { TextPartLanguage } from "@ckeditor/ckeditor5-language";
+import { Style } from "../../ckeditor5-style";
 
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
@@ -143,6 +144,7 @@ export const COMMON_PLUGINS = [
 	PageBreak,
 	GeneralHtmlSupport,
 	TextPartLanguage,
+	Style,
 
 	// External plugins
 	Math,
