@@ -162,6 +162,10 @@ export default class AdmonitionCommand extends Command {
 				quote = writer.createElement( 'aside', { type });
 
 				writer.wrap( groupRange, quote );
+			} else if (quote.is("element")) {
+				this.editor.model.change((writer) => {
+					writer.setAttribute("type", type, quote as Element);
+				});
 			}
 
 			quotesToMerge.push( quote );

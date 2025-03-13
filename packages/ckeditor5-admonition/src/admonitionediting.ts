@@ -70,16 +70,24 @@ export default class AdmonitionEditing extends Plugin {
 			}
 		});
 
-		editor.conversion.for("downcast").elementToElement( {
-			model: 'aside',
-			view: (modelElement, { writer }) => {
-				return writer.createContainerElement(
-					"aside", {
-						class: [ "admonition", modelElement.getAttribute("type") ].join(" ")
-					}
-				)
-			}
-		});
+		editor.conversion.for("downcast")
+			.elementToElement( {
+				model: 'aside',
+				view: (modelElement, { writer }) => {
+					return writer.createContainerElement(
+						"aside", {
+							class: [ "admonition", modelElement.getAttribute("type") ].join(" ")
+						}
+					)
+				}
+			})
+			.attributeToAttribute({
+				model: "type",
+				view: (value) => ({
+					key: "class",
+					value: [ "admonition", value as string ]
+				})
+			});
 
 		// Postfixer which cleans incorrect model states connected with block quotes.
 		editor.model.document.registerPostFixer( writer => {
