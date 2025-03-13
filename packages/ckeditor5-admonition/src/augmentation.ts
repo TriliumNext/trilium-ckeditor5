@@ -4,20 +4,20 @@
  */
 
 import type {
-	BlockQuote,
-	BlockQuoteCommand,
-	BlockQuoteEditing,
-	BlockQuoteUI
+	Admonition,
+	AdmonitionCommand,
+	AdmonitionEditing,
+	AdmonitionUI
 } from './index.js';
 
 declare module '@ckeditor/ckeditor5-core' {
 	interface PluginsMap {
-		[ BlockQuote.pluginName ]: BlockQuote;
-		[ BlockQuoteEditing.pluginName ]: BlockQuoteEditing;
-		[ BlockQuoteUI.pluginName ]: BlockQuoteUI;
+		[ Admonition.pluginName ]: Admonition;
+		[ AdmonitionEditing.pluginName ]: AdmonitionEditing;
+		[ AdmonitionUI.pluginName ]: AdmonitionUI;
 	}
 
 	interface CommandsMap {
-		blockQuote: BlockQuoteCommand;
+		blockQuote: AdmonitionCommand;
 	}
 }
