@@ -55,7 +55,7 @@ export default class AdmonitionUI extends Plugin {
 	}
 
 	/**
-	 * Creates a button for block quote command to use either in toolbar or in menu bar.
+	 * Creates a button for admonition command to use either in toolbar or in menu bar.
 	 */
 	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
 		const editor = this.editor;
@@ -65,7 +65,7 @@ export default class AdmonitionUI extends Plugin {
 		const t = locale.t;
 
 		view.set( {
-			label: t( 'Block quote' ),
+			label: t( 'Admonition' ),
 			icon: icons.quote,
 			isToggleable: true
 		} );
