@@ -11,7 +11,7 @@ import { Plugin } from 'ckeditor5/src/core.js';
 import { Enter, type ViewDocumentEnterEvent } from 'ckeditor5/src/enter.js';
 import { Delete, type ViewDocumentDeleteEvent } from 'ckeditor5/src/typing.js';
 
-import AdmonitionCommand from './blockquotecommand.js';
+import AdmonitionCommand from './admonitioncommand.js';
 
 /**
  * The block quote editing.

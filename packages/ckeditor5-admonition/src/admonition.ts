@@ -9,8 +9,8 @@
 
 import { Plugin } from 'ckeditor5/src/core.js';
 
-import AdmonitionEditing from './blockquoteediting.js';
-import AdmonitionUI from './blockquoteui.js';
+import AdmonitionEditing from './admonitionediting.js';
+import AdmonitionUI from './admonitionui.js';
 
 /**
  * The block quote plugin.
