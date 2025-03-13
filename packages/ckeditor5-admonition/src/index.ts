@@ -4,7 +4,7 @@
  */
 
 /**
- * @module block-quote
+ * @module admonition
  */
 
 export { default as Admonition } from './admonition.js';

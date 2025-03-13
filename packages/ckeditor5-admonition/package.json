@@ -1,5 +1,5 @@
 {
-  "name": "@ckeditor/ckeditor5-block-quote",
+  "name": "@ckeditor/ckeditor5-admonition",
   "version": "43.2.0",
   "description": "Block quote feature for CKEditor 5.",
   "keywords": [
@@ -42,7 +42,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ckeditor/ckeditor5.git",
-    "directory": "packages/ckeditor5-block-quote"
+    "directory": "packages/ckeditor5-admonition"
   },
   "files": [
     "dist",

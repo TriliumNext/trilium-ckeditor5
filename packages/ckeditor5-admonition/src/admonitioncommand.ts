@@ -4,7 +4,7 @@
  */
 
 /**
- * @module block-quote/blockquotecommand
+ * @module admonition/admonitioncommand
  */
 
 import { Command } from 'ckeditor5/src/core.js';

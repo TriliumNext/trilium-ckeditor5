@@ -4,7 +4,7 @@
  */
 
 /**
- * @module block-quote/blockquote
+ * @module admonition/admonition
  */
 
 import { Plugin } from 'ckeditor5/src/core.js';

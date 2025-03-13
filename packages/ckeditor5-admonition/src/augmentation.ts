@@ -18,6 +18,6 @@ declare module '@ckeditor/ckeditor5-core' {
 	}
 
 	interface CommandsMap {
-		blockQuote: AdmonitionCommand;
+		admonition: AdmonitionCommand;
 	}
 }

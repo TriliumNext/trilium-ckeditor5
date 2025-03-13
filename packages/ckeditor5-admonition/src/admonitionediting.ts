@@ -4,7 +4,7 @@
  */
 
 /**
- * @module block-quote/blockquoteediting
+ * @module admonition/admonitionediting
  */
 
 import { Plugin } from 'ckeditor5/src/core.js';
@@ -42,13 +42,13 @@ export default class AdmonitionEditing extends Plugin {
 		const editor = this.editor;
 		const schema = editor.model.schema;
 
-		editor.commands.add( 'blockQuote', new AdmonitionCommand( editor ) );
+		editor.commands.add( 'admonition', new AdmonitionCommand( editor ) );
 
-		schema.register( 'blockQuote', {
+		schema.register( 'admonition', {
 			inheritAllFrom: '$container'
 		} );
 
-		editor.conversion.elementToElement( { model: 'blockQuote', view: 'blockquote' } );
+		editor.conversion.elementToElement( { model: 'blockQuote', view: 'admonition' } );
 
 		// Postfixer which cleans incorrect model states connected with block quotes.
 		editor.model.document.registerPostFixer( writer => {
@@ -105,19 +105,19 @@ export default class AdmonitionEditing extends Plugin {
 
 		const viewDocument = this.editor.editing.view.document;
 		const selection = editor.model.document.selection;
-		const blockQuoteCommand: AdmonitionCommand = editor.commands.get( 'blockQuote' )!;
+		const admonitionCommand: AdmonitionCommand = editor.commands.get( 'admonition' )!;
 
 		// Overwrite default Enter key behavior.
 		// If Enter key is pressed with selection collapsed in empty block inside a quote, break the quote.
 		this.listenTo<ViewDocumentEnterEvent>( viewDocument, 'enter', ( evt, data ) => {
-			if ( !selection.isCollapsed || !blockQuoteCommand.value ) {
+			if ( !selection.isCollapsed || !admonitionCommand.value ) {
 				return;
 			}
 
 			const positionParent = selection.getLastPosition()!.parent;
 
 			if ( positionParent.isEmpty ) {
-				editor.execute( 'blockQuote' );
+				editor.execute( 'admonition' );
 				editor.editing.view.scrollToTheSelection();
 
 				data.preventDefault();
@@ -128,14 +128,14 @@ export default class AdmonitionEditing extends Plugin {
 		// Overwrite default Backspace key behavior.
 		// If Backspace key is pressed with selection collapsed in first empty block inside a quote, break the quote.
 		this.listenTo<ViewDocumentDeleteEvent>( viewDocument, 'delete', ( evt, data ) => {
-			if ( data.direction != 'backward' || !selection.isCollapsed || !blockQuoteCommand!.value ) {
+			if ( data.direction != 'backward' || !selection.isCollapsed || !admonitionCommand!.value ) {
 				return;
 			}
 
 			const positionParent = selection.getLastPosition()!.parent;
 
 			if ( positionParent.isEmpty && !positionParent.previousSibling ) {
-				editor.execute( 'blockQuote' );
+				editor.execute( 'admonition' );
 				editor.editing.view.scrollToTheSelection();
 
 				data.preventDefault();

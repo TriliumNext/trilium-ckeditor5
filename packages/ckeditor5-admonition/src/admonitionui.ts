@@ -4,7 +4,7 @@
  */
 
 /**
- * @module block-quote/blockquoteui
+ * @module admonition/admonitionui
  */
 
 import { Plugin, icons } from 'ckeditor5/src/core.js';
@@ -15,7 +15,7 @@ import '../theme/blockquote.css';
 /**
  * The block quote UI plugin.
  *
- * It introduces the `'blockQuote'` button.
+ * It introduces the `'admonition'` button.
  *
  * @extends module:core/plugin~Plugin
  */
@@ -33,7 +33,7 @@ export default class AdmonitionUI extends Plugin {
 	public init(): void {
 		const editor = this.editor;
 
-		editor.ui.componentFactory.add( 'blockQuote', () => {
+		editor.ui.componentFactory.add( 'admonition', () => {
 			const buttonView = this._createButton( ButtonView );
 
 			buttonView.set( {
@@ -43,7 +43,7 @@ export default class AdmonitionUI extends Plugin {
 			return buttonView;
 		} );
 
-		editor.ui.componentFactory.add( 'menuBar:blockQuote', () => {
+		editor.ui.componentFactory.add( 'menuBar:admonition', () => {
 			const buttonView = this._createButton( MenuBarMenuListItemButtonView );
 
 			buttonView.set( {
@@ -60,7 +60,7 @@ export default class AdmonitionUI extends Plugin {
 	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
 		const editor = this.editor;
 		const locale = editor.locale;
-		const command = editor.commands.get( 'blockQuote' )!;
+		const command = editor.commands.get( 'admonition' )!;
 		const view = new ButtonClass( editor.locale ) as InstanceType<T>;
 		const t = locale.t;
 
@@ -75,7 +75,7 @@ export default class AdmonitionUI extends Plugin {
 
 		// Execute the command.
 		this.listenTo( view, 'execute', () => {
-			editor.execute( 'blockQuote' );
+			editor.execute( 'admonition' );
 			editor.editing.view.focus();
 		} );
 
