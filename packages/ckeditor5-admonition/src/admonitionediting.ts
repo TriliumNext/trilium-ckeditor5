@@ -48,7 +48,13 @@ export default class AdmonitionEditing extends Plugin {
 			inheritAllFrom: '$container'
 		} );
 
-		editor.conversion.elementToElement( { model: 'aside', view: 'aside' } );
+		editor.conversion.elementToElement( {
+			model: 'aside',
+			view: {
+				name: "aside",
+				classes: "admonition"
+			}
+		});
 
 		// Postfixer which cleans incorrect model states connected with block quotes.
 		editor.model.document.registerPostFixer( writer => {
