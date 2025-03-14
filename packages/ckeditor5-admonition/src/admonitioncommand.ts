@@ -17,9 +17,9 @@ import type { DocumentFragment, Element, Position, Range, Schema, Writer } from 
  * @extends module:core/command~Command
  */
 
-export const admonitionTypes = [ "note", "tip", "important", "caution", "warning" ] as const;
-export const defaultAdmonitionType = admonitionTypes[0];
-export type AdmonitionType = typeof admonitionTypes[number];
+export const ADMONITION_TYPES = [ "note", "tip", "important", "caution", "warning" ] as const;
+export const DEFAULT_ADMONITION_TYPE = ADMONITION_TYPES[0];
+export type AdmonitionType = typeof ADMONITION_TYPES[number];
 
 interface ExecuteOpts {
 	/**

@@ -11,8 +11,7 @@ import { Plugin } from 'ckeditor5/src/core.js';
 import { Enter, type ViewDocumentEnterEvent } from 'ckeditor5/src/enter.js';
 import { Delete, type ViewDocumentDeleteEvent } from 'ckeditor5/src/typing.js';
 
-import AdmonitionCommand, { AdmonitionType, admonitionTypes, defaultAdmonitionType } from './admonitioncommand.js';
-import { ADMONITION_TYPES } from './admonitionui.js';
+import AdmonitionCommand, { AdmonitionType, ADMONITION_TYPES, DEFAULT_ADMONITION_TYPE } from './admonitioncommand.js';
 
 /**
  * The block quote editing.
@@ -56,9 +55,9 @@ export default class AdmonitionEditing extends Plugin {
 				classes: "admonition",
 			},
 			model: (viewElement, { writer }) => {
-				let type: AdmonitionType = defaultAdmonitionType;
+				let type: AdmonitionType = DEFAULT_ADMONITION_TYPE;
 				for (const className of viewElement.getClassNames()) {
-					if (className !== "admonition" && (admonitionTypes as readonly string[]).includes(className)) {
+					if (className !== "admonition" && (ADMONITION_TYPES as readonly string[]).includes(className)) {
 						type = className as AdmonitionType;
 					}
 				}
