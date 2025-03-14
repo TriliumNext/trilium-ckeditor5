@@ -70,8 +70,7 @@ import removeFormatLinksPlugin from './remove_format_links';
 import {SpecialCharactersEmoji} from "./special_characters_emoji";
 
 // External plugins
-import Math from '@triliumnext/ckeditor5-math/src/math';
-import AutoformatMath from '@triliumnext/ckeditor5-math/src/autoformatmath';
+import { Math, AutoformatMath } from '../../ckeditor5-math/src/index';
 
 import { Mermaid } from "../../ckeditor5-mermaid/src/index";
 
