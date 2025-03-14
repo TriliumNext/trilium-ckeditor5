@@ -11,7 +11,7 @@ import { Plugin } from 'ckeditor5/src/core.js';
 import { Enter, type ViewDocumentEnterEvent } from 'ckeditor5/src/enter.js';
 import { Delete, type ViewDocumentDeleteEvent } from 'ckeditor5/src/typing.js';
 
-import AdmonitionCommand from './admonitioncommand.js';
+import AdmonitionCommand, { AdmonitionType, admonitionTypes, defaultAdmonitionType } from './admonitioncommand.js';
 import { ADMONITION_TYPES } from './admonitionui.js';
 
 /**
@@ -56,11 +56,10 @@ export default class AdmonitionEditing extends Plugin {
 				classes: "admonition",
 			},
 			model: (viewElement, { writer }) => {
-				let type = "note";
-				const allowedTypes = Object.keys(ADMONITION_TYPES);
+				let type: AdmonitionType = defaultAdmonitionType;
 				for (const className of viewElement.getClassNames()) {
-					if (className !== "admonition" && allowedTypes.includes(className)) {
-						type = className;
+					if (className !== "admonition" && (admonitionTypes as readonly string[]).includes(className)) {
+						type = className as AdmonitionType;
 					}
 				}
 

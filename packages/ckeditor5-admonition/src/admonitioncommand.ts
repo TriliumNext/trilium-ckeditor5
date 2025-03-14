@@ -18,6 +18,7 @@ import type { DocumentFragment, Element, Position, Range, Schema, Writer } from 
  */
 
 export const admonitionTypes = [ "note", "tip", "important", "caution", "warning" ] as const;
+export const defaultAdmonitionType = admonitionTypes[0];
 export type AdmonitionType = typeof admonitionTypes[number];
 
 interface ExecuteOpts {

@@ -26,11 +26,17 @@ export default class AdmonitionAutoformat extends Plugin {
 		const instance = (this as any);
 		blockAutoformatEditing(this.editor, instance, /^\!\!\[*\! (.+) $/, ({ match }) => {
 			const type = tryParseAdmonitionType(match);
-			if (!type) {
-				return;
-			}
 
-			this.editor.execute("admonition", { forceValue: type });
+			if (type) {
+				// User has entered the admonition type, so we insert as-is.
+				this.editor.execute("admonition", { forceValue: type });
+			} else {
+				// User has not entered a valid type, assume it's part of the text of the admonition.
+				this.editor.execute("admonition");
+				if (match.length > 1) {
+					this.editor.execute("insertText", { text: (match[1] ?? "") + " " });
+				}
+			}
 		});
 	}
 }
