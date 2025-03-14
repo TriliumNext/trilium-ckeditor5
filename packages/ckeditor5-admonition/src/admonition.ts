@@ -11,6 +11,7 @@ import { Plugin } from 'ckeditor5/src/core.js';
 
 import AdmonitionEditing from './admonitionediting.js';
 import AdmonitionUI from './admonitionui.js';
+import AdmonitionAutoformat from './admonitionautoformat.js';
 
 /**
  * The block quote plugin.
@@ -27,7 +28,7 @@ export default class Admonition extends Plugin {
 	 * @inheritDoc
 	 */
 	public static get requires() {
-		return [ AdmonitionEditing, AdmonitionUI ] as const;
+		return [ AdmonitionEditing, AdmonitionUI, AdmonitionAutoformat ] as const;
 	}
 
 	/**

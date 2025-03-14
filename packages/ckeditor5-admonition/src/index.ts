@@ -10,6 +10,7 @@
 export { default as Admonition } from './admonition.js';
 export { default as AdmonitionEditing } from './admonitionediting.js';
 export { default as AdmonitionUI } from './admonitionui.js';
+export { default as AdmonitionAutoformat } from './admonitionautoformat.js';
 export type { default as AdmonitionCommand } from './admonitioncommand.js';
 
 import './augmentation.js';
