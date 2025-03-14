@@ -11,7 +11,7 @@ import { Plugin } from 'ckeditor5/src/core.js';
 import { Enter, type ViewDocumentEnterEvent } from 'ckeditor5/src/enter.js';
 import { Delete, type ViewDocumentDeleteEvent } from 'ckeditor5/src/typing.js';
 
-import AdmonitionCommand, { AdmonitionType, ADMONITION_TYPES, DEFAULT_ADMONITION_TYPE } from './admonitioncommand.js';
+import AdmonitionCommand, { AdmonitionType, ADMONITION_TYPES, DEFAULT_ADMONITION_TYPE, ADMONITION_TYPE_ATTRIBUTE } from './admonitioncommand.js';
 
 /**
  * The block quote editing.
@@ -46,7 +46,7 @@ export default class AdmonitionEditing extends Plugin {
 
 		schema.register( 'aside', {
 			inheritAllFrom: '$container',
-			allowAttributes: "type"
+			allowAttributes: ADMONITION_TYPE_ATTRIBUTE
 		} );
 
 		editor.conversion.for("upcast").elementToElement({
@@ -62,9 +62,9 @@ export default class AdmonitionEditing extends Plugin {
 					}
 				}
 
-				return writer.createElement("aside", {
-					type
-				});
+				const attributes: Record<string, unknown> = {};
+				attributes[ADMONITION_TYPE_ATTRIBUTE] = type;
+				return writer.createElement("aside", attributes);
 			}
 		});
 
@@ -74,7 +74,7 @@ export default class AdmonitionEditing extends Plugin {
 				view: "aside"
 			})
 			.attributeToAttribute({
-				model: "type",
+				model: ADMONITION_TYPE_ATTRIBUTE,
 				view: (value) => ({
 					key: "class",
 					value: [ "admonition", value as string ]

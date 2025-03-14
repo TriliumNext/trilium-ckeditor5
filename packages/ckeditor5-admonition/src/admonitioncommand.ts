@@ -18,6 +18,7 @@ import type { DocumentFragment, Element, Position, Range, Schema, Writer } from 
  */
 
 export const ADMONITION_TYPES = [ "note", "tip", "important", "caution", "warning" ] as const;
+export const ADMONITION_TYPE_ATTRIBUTE = "admonitionType";
 export const DEFAULT_ADMONITION_TYPE = ADMONITION_TYPES[0];
 export type AdmonitionType = typeof ADMONITION_TYPES[number];
 
@@ -119,7 +120,7 @@ export default class AdmonitionCommand extends Command {
 		// In the current implementation, the admonition must be an immediate parent of a block element.
 		const firstQuote = findQuote( firstBlock );
 		if (firstQuote?.is("element")) {
-			return firstQuote.getAttribute("type") as AdmonitionType;
+			return firstQuote.getAttribute(ADMONITION_TYPE_ATTRIBUTE) as AdmonitionType;
 		}
 
 		return false;
@@ -203,7 +204,7 @@ export default class AdmonitionCommand extends Command {
 				writer.wrap( groupRange, quote );
 			} else if (quote.is("element")) {
 				this.editor.model.change((writer) => {
-					writer.setAttribute("type", type, quote as Element);
+					writer.setAttribute(ADMONITION_TYPE_ATTRIBUTE, type, quote as Element);
 				});
 			}
 
