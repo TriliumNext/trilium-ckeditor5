@@ -17,8 +17,8 @@ import type { DocumentFragment, Element, Position, Range, Schema, Writer } from 
  * @extends module:core/command~Command
  */
 
-// TODO: Change me.
-type AdmonitionType = string;
+export const admonitionTypes = [ "note", "tip", "important", "caution", "warning" ] as const;
+export type AdmonitionType = typeof admonitionTypes[number];
 
 interface ExecuteOpts {
 	/**
@@ -118,7 +118,7 @@ export default class AdmonitionCommand extends Command {
 		// In the current implementation, the admonition must be an immediate parent of a block element.
 		const firstQuote = findQuote( firstBlock );
 		if (firstQuote?.is("element")) {
-			return firstQuote.getAttribute("type") as string;
+			return firstQuote.getAttribute("type") as AdmonitionType;
 		}
 
 		return false;

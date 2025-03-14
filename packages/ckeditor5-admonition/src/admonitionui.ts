@@ -13,26 +13,26 @@ import { addListToDropdown, createDropdown, ListDropdownButtonDefinition, SplitB
 import '../theme/blockquote.css';
 import admonitionIcon from '../theme/icons/admonition.svg';
 import { Collection } from '@ckeditor/ckeditor5-utils';
-import AdmonitionCommand from './admonitioncommand';
+import AdmonitionCommand, { AdmonitionType } from './admonitioncommand';
 
 interface AdmonitionDefinition {
 	title: string;
 }
 
-export const ADMONITION_TYPES: Record<string, AdmonitionDefinition> = {
-	"note": {
+export const ADMONITION_TYPES: Record<AdmonitionType, AdmonitionDefinition> = {
+	note: {
 		title: "Note"
 	},
-	"tip": {
+	tip: {
 		title: "Tip"
 	},
-	"important": {
+	important: {
 		title: "Important"
 	},
-	"caution": {
+	caution: {
 		title: "Caution"
 	},
-	"warning": {
+	warning: {
 		title: "Warning"
 	}
 };
