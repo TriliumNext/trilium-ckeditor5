@@ -59,6 +59,7 @@ import { Style } from "../../ckeditor5-style";
 import MentionCustomization from './mention_customization';
 import UploadimagePlugin from './uploadimage';
 import InternalLinkPlugin from './internallink';
+import ItalicAsEmPlugin from './italic_as_em';
 import MarkdownImportPlugin from './markdownimport';
 import CuttonotePlugin from './cuttonote';
 import IncludeNote from './includenote';
@@ -135,6 +136,7 @@ export const COMMON_PLUGINS = [
 	FindAndReplace,
 	Mention,
 	InternalLinkPlugin,
+	ItalicAsEmPlugin,
 	MarkdownImportPlugin,
 	CuttonotePlugin,
 	MentionCustomization,
