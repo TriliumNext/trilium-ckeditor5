@@ -199,7 +199,9 @@ export default class AdmonitionCommand extends Command {
 			let quote = findQuote( groupRange.start );
 
 			if ( !quote ) {
-				quote = writer.createElement( 'aside', { type });
+				const attributes: Record<string, unknown> = {};
+				attributes[ADMONITION_TYPE_ATTRIBUTE] = type;
+				quote = writer.createElement( 'aside', attributes);
 
 				writer.wrap( groupRange, quote );
 			} else if (quote.is("element")) {
