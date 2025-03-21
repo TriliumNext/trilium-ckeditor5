@@ -41,12 +41,14 @@ const URL_REG_EXP = new RegExp(
 				'(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))' +
 				'|' +
 				'(' +
-					// Do not allow `www.foo` - see https://github.com/ckeditor/ckeditor5/issues/8050.
-					'((?!www\\.)|(www\\.))' +
+					// ~~Do not allow `www.foo` - see https://github.com/ckeditor/ckeditor5/issues/8050.~~~
+					// Re-enabling it... Why not?
+					// '((?!www\\.)|(www\\.))' +
 					// Host & domain names.
-					'(?![-_])(?:[-_a-z0-9\\u00a1-\\uffff]{1,63}\\.)+' +
+					'(?![-_])(?:[-_a-z0-9\\u00a1-\\uffff]{1,63})' +
+					'(?:\\.[-_a-z0-9\\u00a1-\\uffff]{2,63})*' +
 					// TLD identifier name.
-					'(?:[a-z\\u00a1-\\uffff]{2,63})' +
+					'(?:\\.[a-z\\u00a1-\\uffff]{2,63})*' +
 				')' +
 			')' +
 			// port number (optional)
