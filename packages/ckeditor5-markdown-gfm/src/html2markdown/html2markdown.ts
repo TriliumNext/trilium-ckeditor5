@@ -19,7 +19,9 @@ const autolinkRegex = /* #__PURE__ */ new RegExp(
 	/\b(?:(?:https?|ftp):\/\/|www\.)/.source +
 
 	// Domain name.
-	/(?![-_])(?:[-_a-z0-9\u00a1-\uffff]{1,63}\.)+(?:[a-z\u00a1-\uffff]{2,63})/.source +
+	// at least one string, and then as much as needed starting with a dot
+	// finally, the TLD identifier name, made optional
+	/(?![-_])(?:[-_a-z0-9\u00a1-\uffff]{1,63})(?:\.[-_a-z0-9\u00a1-\uffff]{2,63})*(?:\.[a-z\u00a1-\uffff]{2,63})*/.source +
 
 	// The rest.
 	/(?:[^\s<>]*)/.source,
