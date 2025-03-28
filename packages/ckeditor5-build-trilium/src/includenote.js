@@ -113,7 +113,8 @@ class IncludeNoteEditing extends Plugin {
 				} );
 
 				const includedNoteWrapper = viewWriter.createUIElement( 'div', {
-					class: 'include-note-wrapper'
+					class: 'include-note-wrapper',
+					"data-cke-ignore-events": true
 				}, function( domDocument ) {
 					const domElement = this.toDomElement( domDocument );
 
