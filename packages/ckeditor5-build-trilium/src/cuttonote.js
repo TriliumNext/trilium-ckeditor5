@@ -44,6 +44,7 @@ export default class CutToNotePlugin extends Plugin {
 		const model = this.editor.model;
 
 		model.deleteContent(model.document.selection);
+		this.editor.execute("paragraph");
 
 		const component = this.getComponent();
 
