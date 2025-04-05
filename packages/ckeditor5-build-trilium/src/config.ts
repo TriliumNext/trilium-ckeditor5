@@ -78,6 +78,7 @@ import '../../ckeditor5-footnotes/src/footnote.css';
 import { Footnotes } from '../../ckeditor5-footnotes';
 import Kbd from "../../ckeditor5-keyboard-marker/src/Kbd";
 import { Admonition } from "../../ckeditor5-admonition";
+import StrikethroughAsDel from './strikethrough_as_del';
 
 export const COMMON_PLUGINS = [
 	// essentials package expanded to allow selectively disable Enter and ShiftEnter
@@ -136,6 +137,7 @@ export const COMMON_PLUGINS = [
 	Mention,
 	InternalLinkPlugin,
 	ItalicAsEmPlugin,
+	StrikethroughAsDel,
 	MarkdownImportPlugin,
 	CuttonotePlugin,
 	MentionCustomization,
