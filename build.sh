@@ -6,8 +6,8 @@ set -e
 set -u
 
 if [ $# -ne 1 ]; then
-    echo "Usage: $0 /path/to/Notes/repo"
-    exit 1
+	echo "Usage: $0 /path/to/Notes/repo"
+	exit 1
 fi
 
 # convert relative paths to absolute paths
@@ -24,5 +24,5 @@ cp -v build/ckeditor.* "$TARGET_DIR/libraries/ckeditor"
 
 mkdir -p "$TARGET_DIR/libraries/ckeditor/translations"
 for language in es de fr zh-cn zh ro; do
-    cp -v "build/translations/$language.js" "$TARGET_DIR/libraries/ckeditor/translations/$language.js"
+	cp -v "build/translations/$language.js" "$TARGET_DIR/libraries/ckeditor/translations/$language.js"
 done
