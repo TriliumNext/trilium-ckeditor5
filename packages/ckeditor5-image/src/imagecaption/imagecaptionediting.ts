@@ -66,8 +66,12 @@ export default class ImageCaptionEditing extends Plugin {
 		if ( !schema.isRegistered( 'caption' ) ) {
 			schema.register( 'caption', {
 				allowIn: 'imageBlock',
-				allowContentOf: '$block',
-				isLimit: true
+				inheritAllFrom: '$block',
+				// To allow complex content like footnotes
+				allowContentOf: '$root',
+				// Prevent block structures that lead to visual errors
+				disallowChildren: ['paragraph', 'pageBreak'],
+				isLimit: true,
 			} );
 		} else {
 			schema.extend( 'caption', {
